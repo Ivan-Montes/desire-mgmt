@@ -39,4 +39,8 @@
 		</plugins>
 	</build>
 
+	<modules>
+	  	<module>eureka-server</module>
+	</modules>
+	
 </project>
