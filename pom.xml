@@ -41,6 +41,7 @@
 
 	<modules>
 	  	<module>eureka-server</module>
+	  	<module>ms-products</module>
 	</modules>
 	
 </project>
