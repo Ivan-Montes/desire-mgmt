@@ -1,0 +1,41 @@
+# Main settings
+spring:
+  application:
+    name: ms-product
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/productsDb
+    username: root
+    password: 12345
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      
+# ms-product random server
+server:
+  port: 0
+  
+# ms-product name in eureka-server 
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${random.uuid}
+    
+# Enable /actuator/info
+management:
+  info:
+    env:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: info
+        
+# Basic data for /actuator/info
+info:
+  app:
+    name: ms-product
+    version: 1.0.0
+  author: Ivan
+  web: https://github.com/Ivan-Montes
+  
