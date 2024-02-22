@@ -10,11 +10,17 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
+    # Defer data.sql until Spring loads
+    defer-datasource-initialization: true
+  sql:
+    init:
+    # For any script-based initialization
+      mode: always
       
 # ms-product random server
 server:
-  port: 0
+  port: 7701
   
 # ms-product name in eureka-server 
 eureka:
