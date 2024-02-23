@@ -11,6 +11,7 @@ public class SomeConstants {
 	
 	public static final String CATEGORYID = "CategoryId";
 	public static final String PRODUCTID = "ProductId";
+	public static final String NAMEATTR = "Name Attribute";
 		
 	public static final String RESOURCE_NOT_FOUND = "ResourceNotFoundException";
 	
