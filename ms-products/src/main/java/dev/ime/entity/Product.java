@@ -34,7 +34,7 @@ public class Product {
 	@Column( name = "product_id" )
 	private Long id;
 	
-	@Column( nullable = false, length = 50 )
+	@Column( nullable = false, unique = true, length = 50 )
 	@NotNull
 	@NotBlank
 	@Size( min = 1, max = 50 )

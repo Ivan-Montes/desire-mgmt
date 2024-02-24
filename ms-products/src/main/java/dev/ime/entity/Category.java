@@ -34,7 +34,7 @@ public class Category {
 	@Column( name = "category_id" )
 	private Long id;
 	
-	@Column( nullable = false, length = 50 )
+	@Column( nullable = false, unique = true, length = 50 )
 	@NotNull
 	@NotBlank
 	@Size( min = 1, max = 50 )
@@ -43,11 +43,11 @@ public class Category {
 	
 	@Column( length = 100 )
 	@Size( min = 0, max = 100 )
-	@Pattern( regexp = RegexPattern.NAME_BASIC )
+	@Pattern( regexp = RegexPattern.DESCRIPTION_FULL )
 	private String description;
 	
 	@NotNull
-	@OneToMany( mappedBy = "category",  cascade = CascadeType.ALL, orphanRemoval = true )
+	@OneToMany( mappedBy = "category" )
 	@ToString.Exclude
 	private Set<Product>products = new HashSet<>();
 
