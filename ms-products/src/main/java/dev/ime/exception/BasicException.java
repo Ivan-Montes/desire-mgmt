@@ -3,6 +3,9 @@ package dev.ime.exception;
 import java.util.Map;
 import java.util.UUID;
 
+import lombok.Generated;
+
+@Generated
 public class BasicException extends RuntimeException{
 
 	private static final long serialVersionUID = -1312651884253971091L;
