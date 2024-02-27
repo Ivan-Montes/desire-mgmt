@@ -28,7 +28,7 @@
 
 1. First of all clone or download the project.
 
-1.Inside the main folder, you could find the docker-compose.yml file.
+1. Inside the main folder, you could find the docker-compose.yml file.
 
 1. From there use the command line to run this order
     ```
@@ -36,9 +36,9 @@
     ```
 
 1. You could finish with this command
-```
+    ```
     docker-compose down
-```
+    ```
 
 ## Usage
 
@@ -62,8 +62,7 @@ Just me, [Iván](https://github.com/Ivan-Montes) :sweat_smile:
 
 [GPLv3 license](https://choosealicense.com/licenses/gpl-3.0/)
 
-
-## Badges
+---
 
 [![Java](https://badgen.net/static/JavaSE/17/orange)](https://www.java.com/es/)
 [![Maven](https://badgen.net/badge/icon/maven?icon=maven&label&color=red)](https://https://maven.apache.org/)
