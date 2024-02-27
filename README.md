@@ -1,6 +1,6 @@
 # desire-mgmt
 
-Hi there!! :warning::warning::construction::construction:
+:warning::warning::construction::construction: Microservices in a multimodule Maven project with servers, REST API, and MVC system
 
 
 ## Table of contents
@@ -9,12 +9,20 @@ Hi there!! :warning::warning::construction::construction:
 - [Usage](#usage)
 - [It's not a bug, it's a feature](#features)
 - [Maintainers](#maintainers)
-- [Contributing](#contributing)
 - [License](#license)
 
 
 ## Installation
 
+* First of all clone or download the project.
+
+* Inside the main folder, you could find the docker-compose.yml file.
+
+* From there use the command line to run this order
+    docker-compose up
+
+* You could finish with this command
+    docker-compose down
 
 ## Usage
 
@@ -22,7 +30,11 @@ Hi there!! :warning::warning::construction::construction:
 
 ## Features
 
+#### :large_orange_diamond: JUnit test in business logic classes
 
+#### :large_orange_diamond: Multiple profiles system for dev, pro and test environment
+
+#### :large_orange_diamond: Include docker-compose.yml and Dockerfile for easy containerization
 
 
 ## Maintainers
@@ -30,12 +42,12 @@ Hi there!! :warning::warning::construction::construction:
 Just me, [Iván](https://github.com/Ivan-Montes) :sweat_smile:
 
 
-## Contributing
-
-Contributions are always welcome! 
-
-
 ## License
+
+[GPLv3 license](https://choosealicense.com/licenses/gpl-3.0/)
+
+
+## Badges
 
 [![Java](https://badgen.net/static/JavaSE/17/orange)](https://www.java.com/es/)
 [![Maven](https://badgen.net/badge/icon/maven?icon=maven&label&color=red)](https://https://maven.apache.org/)
