@@ -1,7 +1,19 @@
 # desire-mgmt
 
-:warning::warning::construction::construction: Microservices in a multimodule Maven project with servers, REST API, and MVC system
+:warning::warning::construction::construction:  Microservices in a multimodule Maven project with servers, REST API, and MVC system
 
+** Pending **
+- cloud config server
+- Microservice 02 and database
+- Feign Communication
+- Microservice 03 and database
+- MVC Microservice 04
+- API Gateway
+
+** Complete **
+- Eureka-server
+- Microservice 01 and database
+- Docker & docker-compose
 
 ## Table of contents
 
