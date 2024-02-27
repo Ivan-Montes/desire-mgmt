@@ -2,7 +2,7 @@
 
 :warning::warning::construction::construction:  Microservices in a multimodule Maven project with servers, REST API, and MVC system
 
-** Pending **
+**Pending**
 - cloud config server
 - Microservice 02 and database
 - Feign Communication
@@ -10,7 +10,7 @@
 - MVC Microservice 04
 - API Gateway
 
-** Complete **
+**Complete**
 - Eureka-server
 - Microservice 01 and database
 - Docker & docker-compose
@@ -26,15 +26,19 @@
 
 ## Installation
 
-* First of all clone or download the project.
+1. First of all clone or download the project.
 
-* Inside the main folder, you could find the docker-compose.yml file.
+1.Inside the main folder, you could find the docker-compose.yml file.
 
-* From there use the command line to run this order
+1. From there use the command line to run this order
+    ```
     docker-compose up
+    ```
 
-* You could finish with this command
+1. You could finish with this command
+```
     docker-compose down
+```
 
 ## Usage
 
