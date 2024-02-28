@@ -2,6 +2,7 @@
 !README.md
 
 target
+!target/*.jar
 lib/
 dependencies/
 
