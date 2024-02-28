@@ -1,0 +1,41 @@
+version: "3.8"
+
+services:
+  ms-eureka-server:
+    build: ./eureka-server
+    container_name: eureka-server
+    networks:
+      - desire-mgmt-network
+    ports:
+      - "8761:8761"
+    restart: on-failure:3
+    
+  ms-products-db:
+    image: postgres:latest
+    container_name: postgresdb01
+    environment:
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_USER: root
+      POSTGRES_DB: productsDb
+    networks:
+      - desire-mgmt-network
+    ports:
+      - "4321:4321"
+      
+  ms-products-apirest:
+    build: ./ms-products
+    container_name: ms-products
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+    networks:
+      - desire-mgmt-network
+    ports:
+      - "7701:7701"
+    depends_on:
+      - ms-eureka-server
+      - ms-products-db
+      
+networks:
+  desire-mgmt-network:
+  
+    
