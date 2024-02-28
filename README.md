@@ -30,8 +30,9 @@
 
 1. Inside the main folder, you could find the docker-compose.yml file.
 
-1. From there use the command line to run this order
+1. From there use the command line to run these orders
     ```
+    mvn clean package
     docker-compose up
     ```
 
