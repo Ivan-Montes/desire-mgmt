@@ -13,7 +13,12 @@ public class SomeConstants {
 	public static final String PRODUCTID = "ProductId";
 	public static final String NAMEATTR = "Name Attribute";
 		
-	public static final String RESOURCE_NOT_FOUND = "ResourceNotFoundException";
+	public static final String RESOURCE_NOT_FOUND = "ResourceNotFoundException";	
+
+	public static final String FORMAT_TIME = "%1$TH:%1$TM:%1$TS";
 	
+	public static final String EX_METHOD_ARGUMENT_INVALID = "Method Argument Not Valid Exception";
+	public static final String EX_METHOD_ARGUMENT_TYPE = "Method Argument Type Mismatch Exception";
+	public static final String EX_JAKARTA_VAL= "Jakarta Validation Constraint Violation Exception";
 	
 }
