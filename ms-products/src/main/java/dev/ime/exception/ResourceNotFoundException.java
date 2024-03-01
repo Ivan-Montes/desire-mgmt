@@ -11,7 +11,7 @@ public class ResourceNotFoundException extends BasicException{
 		super(
 				UUID.randomUUID(),
 				"ResourceNotFoundException",
-				"Knock, knock McFly, you have a ResourceNotFoundException",
+				"Hello, hello, anybody at home McFly?, you have a ResourceNotFoundException",
 				errors
 				);
 	}
