@@ -21,11 +21,14 @@ import dev.ime.entity.Product;
 import dev.ime.mapper.ProductMapper;
 import dev.ime.service.impl.ProductServiceImpl;
 import dev.ime.tool.SomeConstants;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 
 @RestController
 @RequestMapping("/api/products")
+@Tag(name = "Product", description="Product Operations")
 public class ProductResource implements GenericResource<ProductDto>, ProductSpecificResource{
 
 	private final ProductServiceImpl productService;
@@ -38,6 +41,7 @@ public class ProductResource implements GenericResource<ProductDto>, ProductSpec
 	
 	@GetMapping
 	@Override
+	@Operation(summary="Get a List of all products", description="Get a List of all products, @return an object Response with a List of DTO's")
 	public ResponseEntity<List<ProductDto>> getAll(
 			@RequestParam( value="page", required = false) Integer page,
 			@RequestParam( value="size", required = false) Integer size) {
@@ -61,6 +65,7 @@ public class ProductResource implements GenericResource<ProductDto>, ProductSpec
 
 	@GetMapping("/{id}")
 	@Override
+	@Operation(summary="Get a Product according to an Id", description="Get a Product according to an Id, @return an object Response with the entity required in a DTO")
 	public ResponseEntity<ProductDto> getById(@PathVariable Long id) {
 		
 		Optional<Product> opt =  productService.getById(id);
@@ -71,6 +76,7 @@ public class ProductResource implements GenericResource<ProductDto>, ProductSpec
 
 	@PostMapping
 	@Override
+	@Operation(summary="Create a new Product", description="Create a new Product, @return an object Response with the entity in a DTO")
 	public ResponseEntity<ProductDto> create(@Valid @RequestBody ProductDto entity) {
 		
 		Optional<Product> opt =  productService.create(entity);
@@ -81,6 +87,7 @@ public class ProductResource implements GenericResource<ProductDto>, ProductSpec
 
 	@PutMapping("/{id}")
 	@Override
+	@Operation(summary="Update fields in a Product", description="Update fields in a Product, @return an object Response with the entity modified in a DTO")
 	public ResponseEntity<ProductDto> update(@PathVariable Long id, @Valid @RequestBody ProductDto entity) {
 		
 		Optional<Product> opt =  productService.update(id, entity);
@@ -91,6 +98,7 @@ public class ProductResource implements GenericResource<ProductDto>, ProductSpec
 
 	@DeleteMapping("/{id}")
 	@Override
+	@Operation(summary="Delete a Product by its Id", description="Product a Category by its Id, @return an object Response with a message")
 	public ResponseEntity<Boolean> delete(@PathVariable Long id) {		
 		
 		return (productService.delete(id) == 0)? new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK)
@@ -100,6 +108,7 @@ public class ProductResource implements GenericResource<ProductDto>, ProductSpec
 
 	@PutMapping("/{productId}/categories/{categoryId}")
 	@Override
+	@Operation(summary="Change Product of Category", description="Change Category of a Product, @return an object Response with a message")
 	public ResponseEntity<Boolean> changeCategory(@PathVariable Long productId, @PathVariable Long categoryId) {
 
 		return Boolean.TRUE.equals(productService.changeCategory(productId, categoryId))? new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK)

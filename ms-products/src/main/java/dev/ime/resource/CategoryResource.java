@@ -21,10 +21,13 @@ import dev.ime.entity.Category;
 import dev.ime.mapper.CategoryMapper;
 import dev.ime.service.impl.CategoryServiceImpl;
 import dev.ime.tool.SomeConstants;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/categories")
+@Tag(name = "Category", description="Category Operations")
 public class CategoryResource implements GenericResource<CategoryDto>, CategorySpecificResource{
 
 	private final CategoryServiceImpl categoryService;
@@ -37,6 +40,7 @@ public class CategoryResource implements GenericResource<CategoryDto>, CategoryS
 
 	@GetMapping
 	@Override
+	@Operation(summary="Get a List of all categories", description="Get a List of all categories, @return an object Response with a List of DTO's")
 	public ResponseEntity<List<CategoryDto>> getAll(
 			 @RequestParam( value="page", required = false) Integer page, 
 			@RequestParam( value="size", required = false) Integer size) {
@@ -59,6 +63,7 @@ public class CategoryResource implements GenericResource<CategoryDto>, CategoryS
 	
 	@GetMapping("/{id}")
 	@Override
+	@Operation(summary="Get a Category according to an Id", description="Get a Category according to an Id, @return an object Response with the entity required in a DTO")
 	public ResponseEntity<CategoryDto> getById(@PathVariable Long id) {
 		
 		Optional<Category> opt = categoryService.getById(id);
@@ -69,6 +74,7 @@ public class CategoryResource implements GenericResource<CategoryDto>, CategoryS
 	
 	@PostMapping
 	@Override
+	@Operation(summary="Create a new Category", description="Create a new Category, @return an object Response with the entity in a DTO")
 	public ResponseEntity<CategoryDto> create(@Valid @RequestBody CategoryDto entity) {
 
 		Optional<Category> opt = categoryService.create(entity);
@@ -79,6 +85,7 @@ public class CategoryResource implements GenericResource<CategoryDto>, CategoryS
 	
 	@PutMapping("/{id}")
 	@Override
+	@Operation(summary="Update fields in a Category", description="Update fields in a Category, @return an object Response with the entity modified in a DTO")
 	public ResponseEntity<CategoryDto> update(@PathVariable Long id, @Valid @RequestBody CategoryDto entity) {
 
 		Optional<Category> opt = categoryService.update(id, entity);
@@ -89,6 +96,7 @@ public class CategoryResource implements GenericResource<CategoryDto>, CategoryS
 
 	@DeleteMapping("/{id}")
 	@Override
+	@Operation(summary="Delete a Category by its Id", description="Delete a Category by its Id, @return an object Response with a message")
 	public ResponseEntity<Boolean> delete(@PathVariable Long id) {
 		
 		return (categoryService.delete(id) == 0)? new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK)
@@ -97,6 +105,7 @@ public class CategoryResource implements GenericResource<CategoryDto>, CategoryS
 
 	@PutMapping("/{categoryId}/products/{productId}")
 	@Override
+	@Operation(summary="Add a Category in a Product", description="Add a Product in a Category, @return an object Response with a message")
 	public ResponseEntity<Boolean> addProductToCategory(@PathVariable Long categoryId, @PathVariable Long productId) {
 		return Boolean.TRUE.equals(categoryService.addProductToCategory(categoryId, productId))? new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK)
 				:new ResponseEntity<>(Boolean.FALSE, HttpStatus.NOT_FOUND);
