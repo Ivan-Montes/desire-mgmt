@@ -1,0 +1,26 @@
+# Main settings
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          cloneOnStart: true
+          default-label: main
+        # config-server in local
+        native:
+        # search conf files in the app path
+          searchLocations: config-repo, config-repo/{application}
+  profiles:
+  # config-server in local active
+    active: native    
+server:
+  port: 8888 
+      
+info:
+  app:
+    name: config-server
+    version: 1.0.0
+    profile: default
+    
