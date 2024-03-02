@@ -3,6 +3,7 @@ package dev.ime.resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,6 +40,9 @@ class ProductResourceTest {
 	
 	@Autowired
 	private ObjectMapper objectMapper;
+
+	@MockBean
+	private Logger logger;
 	
 	private final String path = "/api/products";
 	private List<ProductDto>productsDtoS;
