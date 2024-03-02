@@ -1,8 +1,10 @@
-# Main settings
+
 spring:
-  datasource:
-    url: jdbc:postgresql://postgresdb01:5432/productsDb
-eureka:
-  client:
-    service-url:
-      defaultZone: http://eureka-server:8761/eureka/
+  config:
+    import: optional:configserver:http://config-server:8888
+  cloud:
+    config:
+    # Retry if configserver is unavailable
+      fail-fast: true  
+      retry:
+        use-random-policy: true        

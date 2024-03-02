@@ -1,48 +1,12 @@
 # Main settings
 spring:
-  profiles:
-    active: "dev"
   application:
-    name: ms-product
-  datasource:
-    driverClassName: org.postgresql.Driver
-    username: root
-    password: 12345
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: create-drop
-    # Defer data.sql until Spring loads
-    defer-datasource-initialization: true
-  sql:
-    init:
-    # For any script-based initialization
-      mode: always
-      
+    name: ms-products
+  
+  config:
+    import: optional:configserver:http://localhost:8888
+        
 # ms-product random server
 server:
   port: 7701
-  
-# ms-product name in eureka-server 
-eureka:
-  instance:
-    instance-id: ${spring.application.name}:${random.uuid}
-    
-# Enable /actuator/info
-management:
-  info:
-    env:
-      enabled: true
-  endpoints:
-    web:
-      exposure:
-        include: info, health
-        
-# Basic data for /actuator/info
-info:
-  app:
-    name: ms-product
-    version: 1.0.0
-  author: Ivan
-  web: https://github.com/Ivan-Montes
   
