@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,11 +29,12 @@ class GlobalExceptionHandlerTest {
 	private final String name = "Our Exception";
 	private final String description = "Our Exception, born and raised here";
 	private Map<String, String> errors;
+	private Logger logger = Mockito.mock(Logger.class);
 	
 	@BeforeEach
 	private void createObjects() {
 		
-		globalExceptionHandler = new GlobalExceptionHandler();
+		globalExceptionHandler = new GlobalExceptionHandler(logger);
 		errors = new HashMap<String, String>();
 	}
 	
