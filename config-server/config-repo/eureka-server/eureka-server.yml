@@ -1,0 +1,25 @@
+# Main settings
+eureka:
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+ # Delete renewal time warning in eureka front
+  server:
+    renewalPercentThreshold: 0.33
+    
+# Enable /actuator/info
+management:
+  info:
+    env:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: info, health, actuator 
+# Basic data for /actuator/info
+info:
+  app:
+    name: eureka-server
+    version: 1.0.0
+    profile: default
+    

@@ -1,0 +1,4 @@
+# Basic data for /actuator/info
+info:
+  app:
+    profile: prod
