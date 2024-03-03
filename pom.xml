@@ -14,9 +14,11 @@
 	<name>desire-mgmt</name>
 	<description>Project for Spring Boot</description>
 	<packaging>pom</packaging>
+	
 	<properties>
 		<java.version>17</java.version>
 	</properties>
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -42,6 +44,8 @@
 	<modules>
 	  	<module>eureka-server</module>
 	  	<module>ms-products</module>
+	  	<module>config-server</module>
+	  	<module>ms-orders</module>
 	</modules>
 	
 </project>
