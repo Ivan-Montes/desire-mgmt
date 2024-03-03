@@ -2,30 +2,8 @@
 spring:
   application:
     name: eureka-server
+  config:
+    import: optional:configserver:http://localhost:8888
 server:
   port: 8761  
-eureka:
-  client:
-    registerWithEureka: false
-    fetchRegistry: false
- # Delete renewal time warning in eureka front
-  server:
-    renewalPercentThreshold: 0.33
-    
-# Enable /actuator/info
-management:
-  info:
-    env:
-      enabled: true
-  endpoints:
-    web:
-      exposure:
-        include: info, health
-        
-# Basic data for /actuator/info
-info:
-  app:
-    name: eureka-server
-    version: 1.0.0
-  author: Ivan
-  web: https://github.com/Ivan-Montes
+   
