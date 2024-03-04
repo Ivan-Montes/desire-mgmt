@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import dev.ime.dto.CategoryDto;
 import dev.ime.entity.Category;
+import dev.ime.mapper.impl.CategoryMapper;
 
 class CategoryMapperTest {
 	
@@ -53,7 +54,7 @@ class CategoryMapperTest {
 	void CategoryMapper_toListCategoryDto_ReturnListCategoryDto() {
 		
 		categories.add(catTest);
-		List<CategoryDto> categoryDtoS = categoryMapper.toListCategoryDto(categories);
+		List<CategoryDto> categoryDtoS = categoryMapper.toListDto(categories);
 		
 		org.junit.jupiter.api.Assertions.assertAll(
 				()-> Assertions.assertThat(categoryDtoS).isNotNull(),

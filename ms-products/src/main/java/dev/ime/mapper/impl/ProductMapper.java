@@ -1,4 +1,4 @@
-package dev.ime.mapper;
+package dev.ime.mapper.impl;
 
 import java.util.List;
 
@@ -6,14 +6,16 @@ import org.springframework.stereotype.Component;
 
 import dev.ime.dto.ProductDto;
 import dev.ime.entity.Product;
+import dev.ime.mapper.GenericMapper;
 
 @Component
-public class ProductMapper {
+public class ProductMapper implements GenericMapper<Product, ProductDto>{
 	
 	public ProductMapper() {
 		super();
 	}
 
+	@Override
 	public Product fromDto(ProductDto dto) {
 		
 		Product p = new Product();
@@ -26,14 +28,16 @@ public class ProductMapper {
 		
 		return p;
 	}
-	
-	public ProductDto toProductDto(Product p) {
+
+	@Override
+	public ProductDto toDto(Product p) {
 		return new ProductDto(p.getId(),p.getName(),p.getUnitPrice(),p.getUnitInStock(),p.getDiscontinued(), p.getCategory().getId());
 	}
-	
-	public List<ProductDto>toListProductDto(List<Product>products){
+
+	@Override
+	public List<ProductDto>toListDto(List<Product>products){
 		return products.stream()
-				.map(this::toProductDto)
+				.map(this::toDto)
 				.toList();
 	}
 }

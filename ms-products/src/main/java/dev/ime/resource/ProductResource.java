@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dev.ime.dto.ProductDto;
 import dev.ime.entity.Product;
-import dev.ime.mapper.ProductMapper;
+import dev.ime.mapper.impl.ProductMapper;
 import dev.ime.service.impl.ProductServiceImpl;
 import dev.ime.tool.SomeConstants;
 import io.swagger.v3.oas.annotations.Operation;
@@ -59,7 +59,7 @@ public class ProductResource implements GenericResource<ProductDto>, ProductSpec
 		}
 		
 		return list.isEmpty()? new ResponseEntity<>(Collections.emptyList(),HttpStatus.NO_CONTENT)
-				:new ResponseEntity<>(productMapper.toListProductDto(list), HttpStatus.OK);
+				:new ResponseEntity<>(productMapper.toListDto(list), HttpStatus.OK);
 	}
 
 
@@ -70,7 +70,7 @@ public class ProductResource implements GenericResource<ProductDto>, ProductSpec
 		
 		Optional<Product> opt =  productService.getById(id);
 		
-		return opt.isPresent()? new ResponseEntity<>(productMapper.toProductDto(opt.get()),HttpStatus.OK)
+		return opt.isPresent()? new ResponseEntity<>(productMapper.toDto(opt.get()),HttpStatus.OK)
 				:new ResponseEntity<>(new ProductDto(), HttpStatus.NOT_FOUND);		
 	}
 
@@ -81,7 +81,7 @@ public class ProductResource implements GenericResource<ProductDto>, ProductSpec
 		
 		Optional<Product> opt =  productService.create(entity);
 		
-		return opt.isPresent()? new ResponseEntity<>(productMapper.toProductDto(opt.get()),HttpStatus.CREATED)
+		return opt.isPresent()? new ResponseEntity<>(productMapper.toDto(opt.get()),HttpStatus.CREATED)
 				:new ResponseEntity<>(new ProductDto(), HttpStatus.NOT_FOUND);	
 	}
 
@@ -92,7 +92,7 @@ public class ProductResource implements GenericResource<ProductDto>, ProductSpec
 		
 		Optional<Product> opt =  productService.update(id, entity);
 		
-		return opt.isPresent()? new ResponseEntity<>(productMapper.toProductDto(opt.get()),HttpStatus.OK)
+		return opt.isPresent()? new ResponseEntity<>(productMapper.toDto(opt.get()),HttpStatus.OK)
 				:new ResponseEntity<>(new ProductDto(), HttpStatus.NOT_FOUND);	
 	}
 

@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import dev.ime.dto.ProductDto;
 import dev.ime.entity.Category;
 import dev.ime.entity.Product;
+import dev.ime.mapper.impl.ProductMapper;
 
 class ProductMapperTest {
 
@@ -63,7 +64,7 @@ class ProductMapperTest {
 	void ProductMapper_toListProductDto_ReturnListProductDto() {
 		
 		products.add(proTest);
-		List<ProductDto> productDtoS = productMapper.toListProductDto(products);
+		List<ProductDto> productDtoS = productMapper.toListDto(products);
 		
 		org.junit.jupiter.api.Assertions.assertAll(
 				()-> Assertions.assertThat(productDtoS).isNotNull(),

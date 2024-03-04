@@ -12,7 +12,7 @@ import dev.ime.entity.Category;
 import dev.ime.entity.Product;
 import dev.ime.exception.AttributeUniqueException;
 import dev.ime.exception.ResourceNotFoundException;
-import dev.ime.mapper.ProductMapper;
+import dev.ime.mapper.impl.ProductMapper;
 import dev.ime.repository.CategoryRepository;
 import dev.ime.repository.ProductRepository;
 import dev.ime.service.GenericService;

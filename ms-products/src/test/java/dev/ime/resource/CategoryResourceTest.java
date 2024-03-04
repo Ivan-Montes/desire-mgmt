@@ -21,7 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dev.ime.dto.CategoryDto;
 import dev.ime.entity.Category;
-import dev.ime.mapper.CategoryMapper;
+import dev.ime.mapper.impl.CategoryMapper;
 import dev.ime.service.impl.CategoryServiceImpl;
 import dev.ime.tool.SomeConstants;
 
@@ -83,7 +83,7 @@ class CategoryResourceTest {
 		categories.add(catTest);
 		categoriesDtoS.add(catDto);
 		Mockito.when(categoryService.getAllPaged(Mockito.anyInt(), Mockito.anyInt())).thenReturn(categories);
-		Mockito.when(categoryMapper.toListCategoryDto(Mockito.anyList())).thenReturn(categoriesDtoS);
+		Mockito.when(categoryMapper.toListDto(Mockito.anyList())).thenReturn(categoriesDtoS);
 		
 		mockMvc.perform(MockMvcRequestBuilders.get(path)
 				.param("page", "1"))
@@ -103,7 +103,7 @@ class CategoryResourceTest {
 		categories.add(catTest);
 		categoriesDtoS.add(catDto);
 		Mockito.when(categoryService.getAllPaged(Mockito.anyInt(), Mockito.anyInt())).thenReturn(categories);
-		Mockito.when(categoryMapper.toListCategoryDto(Mockito.anyList())).thenReturn(categoriesDtoS);
+		Mockito.when(categoryMapper.toListDto(Mockito.anyList())).thenReturn(categoriesDtoS);
 		
 		mockMvc.perform(MockMvcRequestBuilders.get(path)
 				.param("page", "1")
@@ -121,7 +121,7 @@ class CategoryResourceTest {
 	void CategoryResource_getById_ReturnCategoryDto() throws Exception {
 		
 		Mockito.when(categoryService.getById(Mockito.anyLong())).thenReturn(Optional.of(catTest));
-		Mockito.when(categoryMapper.toCategoryDto(Mockito.any(Category.class))).thenReturn(catDto);
+		Mockito.when(categoryMapper.toDto(Mockito.any(Category.class))).thenReturn(catDto);
 		
 		mockMvc.perform(MockMvcRequestBuilders.get(path + "/{id}", catId))
 		.andExpect(MockMvcResultMatchers.status().isOk())
@@ -149,7 +149,7 @@ class CategoryResourceTest {
 	void CategoryResource_create_ReturnCategoryDto() throws Exception{
 		
 		Mockito.when(categoryService.create(Mockito.any(CategoryDto.class))).thenReturn(Optional.of(catTest));
-		Mockito.when(categoryMapper.toCategoryDto(Mockito.any(Category.class))).thenReturn(catDto);
+		Mockito.when(categoryMapper.toDto(Mockito.any(Category.class))).thenReturn(catDto);
 		
 		mockMvc.perform(MockMvcRequestBuilders.post(path)
 				.contentType(MediaType.APPLICATION_JSON)
@@ -181,7 +181,7 @@ class CategoryResourceTest {
 	void CategoryResource_update_ReturnCategoryDto() throws Exception{
 		
 		Mockito.when(categoryService.update(Mockito.anyLong(), Mockito.any(CategoryDto.class))).thenReturn(Optional.of(catTest));
-		Mockito.when(categoryMapper.toCategoryDto(Mockito.any(Category.class))).thenReturn(catDto);
+		Mockito.when(categoryMapper.toDto(Mockito.any(Category.class))).thenReturn(catDto);
 		
 		mockMvc.perform(MockMvcRequestBuilders.put(path + "/{id}", catId)
 				.contentType(MediaType.APPLICATION_JSON)

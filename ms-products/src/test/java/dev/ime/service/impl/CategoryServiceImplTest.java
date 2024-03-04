@@ -22,7 +22,7 @@ import dev.ime.entity.Product;
 import dev.ime.exception.AttributeUniqueException;
 import dev.ime.exception.EntityAssociatedException;
 import dev.ime.exception.ResourceNotFoundException;
-import dev.ime.mapper.CategoryMapper;
+import dev.ime.mapper.impl.CategoryMapper;
 import dev.ime.repository.CategoryRepository;
 import dev.ime.repository.ProductRepository;
 
@@ -58,7 +58,7 @@ class CategoryServiceImplTest {
 		catTest.setName(catName);
 		catTest.setDescription(catDescription);
 		
-		categoryDto = new CategoryMapper().toCategoryDto(catTest);
+		categoryDto = new CategoryMapper().toDto(catTest);
 		
 		catTest2 = new Category();
 		catTest2.setId(catId2);

@@ -11,7 +11,7 @@ import dev.ime.dto.CategoryDto;
 import dev.ime.entity.Category;
 import dev.ime.entity.Product;
 import dev.ime.exception.*;
-import dev.ime.mapper.CategoryMapper;
+import dev.ime.mapper.impl.CategoryMapper;
 import dev.ime.repository.CategoryRepository;
 import dev.ime.repository.ProductRepository;
 import dev.ime.service.CategorySpecificService;

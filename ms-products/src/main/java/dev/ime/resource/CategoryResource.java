@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dev.ime.dto.CategoryDto;
 import dev.ime.entity.Category;
-import dev.ime.mapper.CategoryMapper;
+import dev.ime.mapper.impl.CategoryMapper;
 import dev.ime.service.impl.CategoryServiceImpl;
 import dev.ime.tool.SomeConstants;
 import io.swagger.v3.oas.annotations.Operation;
@@ -58,7 +58,7 @@ public class CategoryResource implements GenericResource<CategoryDto>, CategoryS
 		}	
 		
 		return list.isEmpty()? new ResponseEntity<>(Collections.emptyList(), HttpStatus.NO_CONTENT)
-				:new ResponseEntity<>(categoryMapper.toListCategoryDto(list), HttpStatus.OK);
+				:new ResponseEntity<>(categoryMapper.toListDto(list), HttpStatus.OK);
 	}
 	
 	@GetMapping("/{id}")
@@ -68,7 +68,7 @@ public class CategoryResource implements GenericResource<CategoryDto>, CategoryS
 		
 		Optional<Category> opt = categoryService.getById(id);
 		
-		return opt.isPresent()? new ResponseEntity<>(categoryMapper.toCategoryDto(opt.get()),HttpStatus.OK)
+		return opt.isPresent()? new ResponseEntity<>(categoryMapper.toDto(opt.get()),HttpStatus.OK)
 				:new ResponseEntity<>(new CategoryDto(), HttpStatus.NOT_FOUND);	
 	}
 	
@@ -79,7 +79,7 @@ public class CategoryResource implements GenericResource<CategoryDto>, CategoryS
 
 		Optional<Category> opt = categoryService.create(entity);
 		
-		return opt.isPresent()? new ResponseEntity<>(categoryMapper.toCategoryDto(opt.get()),HttpStatus.CREATED)
+		return opt.isPresent()? new ResponseEntity<>(categoryMapper.toDto(opt.get()),HttpStatus.CREATED)
 				:new ResponseEntity<>(new CategoryDto(), HttpStatus.NOT_FOUND);	
 	}
 	
@@ -90,7 +90,7 @@ public class CategoryResource implements GenericResource<CategoryDto>, CategoryS
 
 		Optional<Category> opt = categoryService.update(id, entity);
 		
-		return opt.isPresent()? new ResponseEntity<>(categoryMapper.toCategoryDto(opt.get()),HttpStatus.OK)
+		return opt.isPresent()? new ResponseEntity<>(categoryMapper.toDto(opt.get()),HttpStatus.OK)
 				:new ResponseEntity<>(new CategoryDto(), HttpStatus.NOT_FOUND);	
 	}
 

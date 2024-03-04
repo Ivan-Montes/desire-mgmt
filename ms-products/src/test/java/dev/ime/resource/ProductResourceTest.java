@@ -21,7 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dev.ime.dto.ProductDto;
 import dev.ime.entity.Product;
-import dev.ime.mapper.ProductMapper;
+import dev.ime.mapper.impl.ProductMapper;
 import dev.ime.service.impl.ProductServiceImpl;
 import dev.ime.tool.SomeConstants;
 
@@ -88,7 +88,7 @@ class ProductResourceTest {
 		products.add(proTest);
 		productsDtoS.add(proDto);
 		Mockito.when(productService.getAllPaged(Mockito.anyInt(),Mockito.anyInt())).thenReturn(products);
-		Mockito.when(productMapper.toListProductDto(Mockito.anyList())).thenReturn(productsDtoS);
+		Mockito.when(productMapper.toListDto(Mockito.anyList())).thenReturn(productsDtoS);
 		
 		mockMvc.perform(MockMvcRequestBuilders.get(path)
 				.param("page", "1")
@@ -107,7 +107,7 @@ class ProductResourceTest {
 		products.add(proTest);
 		productsDtoS.add(proDto);
 		Mockito.when(productService.getAllPaged(Mockito.anyInt(),Mockito.anyInt())).thenReturn(products);
-		Mockito.when(productMapper.toListProductDto(Mockito.anyList())).thenReturn(productsDtoS);
+		Mockito.when(productMapper.toListDto(Mockito.anyList())).thenReturn(productsDtoS);
 		
 		mockMvc.perform(MockMvcRequestBuilders.get(path)
 				.param("page", "1")
@@ -125,7 +125,7 @@ class ProductResourceTest {
 	void ProductResource_getById_ReturnProductDto() throws Exception {
 		
 		Mockito.when(productService.getById(Mockito.anyLong())).thenReturn(Optional.of(proTest));
-		Mockito.when(productMapper.toProductDto(Mockito.any(Product.class))).thenReturn(proDto);
+		Mockito.when(productMapper.toDto(Mockito.any(Product.class))).thenReturn(proDto);
 		
 		mockMvc.perform(MockMvcRequestBuilders.get(path + "/{id}", proId))
 		.andExpect(MockMvcResultMatchers.status().isOk())
@@ -153,7 +153,7 @@ class ProductResourceTest {
 	void ProductResource_create_ReturnProductDto() throws Exception{
 		
 		Mockito.when(productService.create(Mockito.any(ProductDto.class))).thenReturn(Optional.of(proTest));
-		Mockito.when(productMapper.toProductDto(Mockito.any(Product.class))).thenReturn(proDto);
+		Mockito.when(productMapper.toDto(Mockito.any(Product.class))).thenReturn(proDto);
 
 		mockMvc.perform(MockMvcRequestBuilders.post(path)
 				.contentType(MediaType.APPLICATION_JSON)
@@ -186,7 +186,7 @@ class ProductResourceTest {
 	void ProductResource_update_ReturnProductDto() throws Exception{
 		
 		Mockito.when(productService.update(Mockito.anyLong(), Mockito.any(ProductDto.class))).thenReturn(Optional.of(proTest));
-		Mockito.when(productMapper.toProductDto(Mockito.any(Product.class))).thenReturn(proDto);
+		Mockito.when(productMapper.toDto(Mockito.any(Product.class))).thenReturn(proDto);
 
 		mockMvc.perform(MockMvcRequestBuilders.put(path + "/{id}", proId)
 				.contentType(MediaType.APPLICATION_JSON)

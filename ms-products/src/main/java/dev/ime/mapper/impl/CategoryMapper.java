@@ -1,4 +1,4 @@
-package dev.ime.mapper;
+package dev.ime.mapper.impl;
 
 
 import java.util.List;
@@ -7,14 +7,16 @@ import org.springframework.stereotype.Component;
 
 import dev.ime.dto.CategoryDto;
 import dev.ime.entity.Category;
+import dev.ime.mapper.GenericMapper;
 
 @Component
-public class CategoryMapper {
+public class CategoryMapper implements GenericMapper<Category, CategoryDto>{
 
 	public CategoryMapper() {
 		super();
 	}
 	
+	@Override
 	public Category fromDto(CategoryDto dto) {
 		
 		Category c = new Category();
@@ -24,14 +26,16 @@ public class CategoryMapper {
 		
 		return c;
 	}
-
-	public CategoryDto toCategoryDto(Category c) {
-		return new CategoryDto(c.getId(),c.getName(),c.getDescription());
-	}
 	
-	public List<CategoryDto>toListCategoryDto(List<Category>categories){
-		return categories.stream()
-				.map(this::toCategoryDto)
+	@Override
+	public CategoryDto toDto(Category e) {
+		return new CategoryDto(e.getId(),e.getName(),e.getDescription());
+	}
+
+	@Override
+	public List<CategoryDto> toListDto(List<Category> list) {
+		return list.stream()
+				.map(this::toDto)
 				.toList();
 	}
 }

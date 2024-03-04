@@ -21,7 +21,7 @@ import dev.ime.entity.Category;
 import dev.ime.entity.Product;
 import dev.ime.exception.AttributeUniqueException;
 import dev.ime.exception.ResourceNotFoundException;
-import dev.ime.mapper.ProductMapper;
+import dev.ime.mapper.impl.ProductMapper;
 import dev.ime.repository.CategoryRepository;
 import dev.ime.repository.ProductRepository;
 
@@ -72,7 +72,7 @@ class ProductServiceImplTest {
 		proTest2 = new Product();
 		proTest2.setId(proId2);
 		
-		productDto = new ProductMapper().toProductDto(proTest);
+		productDto = new ProductMapper().toDto(proTest);
 	}
 
 	@Test
