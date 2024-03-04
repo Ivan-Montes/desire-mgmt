@@ -4,11 +4,15 @@ services:
   ms-eureka-server:
     build: ./eureka-server
     container_name: eureka-server
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
     networks:
       - desire-mgmt-network
     ports:
       - "8761:8761"
     restart: on-failure:3
+    depends_on:
+      - ms-config-server
     
   ms-products-db:
     image: postgres:latest
@@ -20,8 +24,20 @@ services:
     networks:
       - desire-mgmt-network
     ports:
-      - "4321:4321"
-      
+      - "5432:5432"
+     
+  ms-orders-db:
+    image: postgres:latest
+    container_name: postgresdb02
+    environment:
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_USER: root
+      POSTGRES_DB: ordersDb
+    networks:
+      - desire-mgmt-network
+    ports:
+      - "5433:5432"
+           
   ms-products-apirest:
     build: ./ms-products
     container_name: ms-products
@@ -31,10 +47,24 @@ services:
       - desire-mgmt-network
     ports:
       - "7701:7701"
+    restart: on-failure:3
     depends_on:
+      - ms-config-server
       - ms-eureka-server
       - ms-products-db
-      
+  
+  ms-config-server:
+    build: ./config-server
+    container_name: config-server
+    environment: # Active profile NATIVE. Related to SPRING_CLOUD_CONFIG_SERVER_NATIVE_SEARCHLOCATIONS
+      #SPRING_PROFILES_ACTIVE: prod
+      SPRING_CLOUD_CONFIG_SERVER_NATIVE_SEARCHLOCATIONS: file:/app/config-repo, file:/app/config-repo/{application}
+    networks:
+      - desire-mgmt-network
+    ports:
+      - "8888:8888"
+    restart: on-failure:3
+          
 networks:
   desire-mgmt-network:
   
