@@ -3,17 +3,17 @@
 :warning::warning::construction::construction:  Microservices in a multimodule Maven project with servers, REST API, and MVC system
 
 **Pending**
-- cloud config server
-- Microservice 02 and database
-- Feign Communication
-- Microservice 03 and database
+- Microservice ms-orders with private PostgreSQL database
+- Feign Communications between microservices
+- Microservice ms-customer with a exclusive PostgreSQL database
 - MVC Microservice 04
 - API Gateway
 
 **Complete**
 - Eureka-server
-- Microservice 01 and database
-- Docker & docker-compose
+- Microservice ms-products with its own PostgreSQL database
+- Dockerfile & docker-compose for each service
+- Cloud config server
 
 ## Table of contents
 
