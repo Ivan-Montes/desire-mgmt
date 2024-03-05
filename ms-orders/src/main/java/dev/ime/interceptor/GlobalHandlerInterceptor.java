@@ -1,4 +1,4 @@
-package dev.ime.logger;
+package dev.ime.interceptor;
 
 import java.util.logging.Logger;
 import org.springframework.stereotype.Component;
