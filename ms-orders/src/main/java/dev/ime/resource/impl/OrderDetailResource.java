@@ -106,7 +106,7 @@ public class OrderDetailResource implements GenericResource<OrderDetailDto>, Ord
 				:new ResponseEntity<>(Boolean.FALSE, HttpStatus.NOT_FOUND);
 	}
 
-	@PutMapping("/{orderDetailId}/products/{orderId}")
+	@PutMapping("/{orderDetailId}/orders/{orderId}")
 	@Operation(summary="Set in a OrderDetail a Order", description="Set in a OrderDetail a Order, @return an object Response with a message")
 	@Override
 	public ResponseEntity<Boolean> setOrder(@PathVariable Long orderDetailId, @PathVariable Long orderId) {
