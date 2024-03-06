@@ -13,7 +13,7 @@ import dev.ime.tool.Transformer;
 @Component
 public class OrderMapper implements GenericMapper <Order, OrderDto> {
 
-	private Transformer transformer;	
+	private final Transformer transformer;	
 
 	public OrderMapper(Transformer transformer) {
 		super();
