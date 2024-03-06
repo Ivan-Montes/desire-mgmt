@@ -1,15 +1,19 @@
 package dev.ime.mapper.impl;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
 import dev.ime.dto.OrderDetailDto;
 import dev.ime.entity.OrderDetail;
 import dev.ime.mapper.GenericMapper;
+import dev.ime.mapper.OrderDetailSpecificMapper;
 
 @Component
-public class OrderDetailMapper  implements GenericMapper <OrderDetail, OrderDetailDto>{
+public class OrderDetailMapper  implements GenericMapper <OrderDetail, OrderDetailDto>, OrderDetailSpecificMapper{
 	
 	public OrderDetailMapper() {
 		super();
@@ -39,6 +43,14 @@ public class OrderDetailMapper  implements GenericMapper <OrderDetail, OrderDeta
 		return list.stream()
 				.map(this::toDto)
 				.toList();	
+	}
+
+	@Override
+	public Set<OrderDetailDto> toSetDto(Collection<OrderDetail> c) {
+		
+		return c.stream()
+				.map(this::toDto)
+				.collect(Collectors.toSet());
 	}
 
 }
