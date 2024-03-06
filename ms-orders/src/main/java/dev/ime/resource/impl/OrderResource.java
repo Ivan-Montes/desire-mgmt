@@ -1,8 +1,10 @@
 package dev.ime.resource.impl;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import dev.ime.dto.OrderDetailDto;
 import dev.ime.dto.OrderDto;
 import dev.ime.entity.Order;
+import dev.ime.mapper.impl.OrderDetailMapper;
 import dev.ime.mapper.impl.OrderMapper;
 import dev.ime.resource.GenericResource;
 import dev.ime.resource.OrderSpecificResource;
@@ -34,11 +38,13 @@ public class OrderResource implements GenericResource<OrderDto>, OrderSpecificRe
 
 	private final OrderServiceImpl orderService;
 	private final OrderMapper orderMapper;	
+	private final OrderDetailMapper orderDetailMapper;
 	
-	public OrderResource(OrderServiceImpl orderService, OrderMapper orderMapper) {
+	public OrderResource(OrderServiceImpl orderService, OrderMapper orderMapper, OrderDetailMapper orderDetailMapper) {
 		super();
 		this.orderService = orderService;
 		this.orderMapper = orderMapper;
+		this.orderDetailMapper = orderDetailMapper;
 	}
 
 	@GetMapping
@@ -106,7 +112,7 @@ public class OrderResource implements GenericResource<OrderDto>, OrderSpecificRe
 				:new ResponseEntity<>(Boolean.FALSE, HttpStatus.NOT_FOUND);
 	}
 
-	@PutMapping("/{orderId}/products/{orderDetailId}")
+	@PutMapping("/{orderId}/orderdetails/{orderDetailId}")
 	@Override
 	@Operation(summary="Add in a Order a OrderDetail", description="Add in a Order a OrderDetail, @return an object Response with a message")
 	public ResponseEntity<Boolean> addOrderDetail(@PathVariable Long orderId, @PathVariable Long orderDetailId) {
@@ -114,5 +120,18 @@ public class OrderResource implements GenericResource<OrderDto>, OrderSpecificRe
 		return Boolean.TRUE.equals(orderService.addOrderDetail(orderId, orderDetailId))? new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK)
 				:new ResponseEntity<>(Boolean.FALSE, HttpStatus.NOT_FOUND);
 	}
+
+	@GetMapping("/{orderId}/orderdetails")
+	@Override
+	@Operation(summary="Get the lines of a Order", description="Get the lines of a Order, AKA OrderDetail objects")
+	public ResponseEntity<Set<OrderDetailDto>> getLinesByOrderId(@PathVariable Long orderId) {
+		
+		Optional<Order> optOrd = orderService.getById(orderId);
+	
+		return ( optOrd.isPresent() && !optOrd.get().getOrderDetails().isEmpty() )?
+				new ResponseEntity<>(orderDetailMapper.toSetDto(optOrd.get().getOrderDetails()), HttpStatus.OK)
+				:new ResponseEntity<>(new HashSet<>(), HttpStatus.NOT_FOUND);
+	}
+	
 	
 }
