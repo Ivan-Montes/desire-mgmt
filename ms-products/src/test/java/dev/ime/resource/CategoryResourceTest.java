@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.ime.dto.CategoryDto;
 import dev.ime.entity.Category;
 import dev.ime.mapper.impl.CategoryMapper;
+import dev.ime.resource.impl.CategoryResource;
 import dev.ime.service.impl.CategoryServiceImpl;
 import dev.ime.tool.SomeConstants;
 

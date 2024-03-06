@@ -1,4 +1,4 @@
-package dev.ime.resource;
+package dev.ime.resource.impl;
 
 import java.util.Collections;
 import java.util.List;
@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 import dev.ime.dto.CategoryDto;
 import dev.ime.entity.Category;
 import dev.ime.mapper.impl.CategoryMapper;
+import dev.ime.resource.CategorySpecificResource;
+import dev.ime.resource.GenericResource;
 import dev.ime.service.impl.CategoryServiceImpl;
 import dev.ime.tool.SomeConstants;
 import io.swagger.v3.oas.annotations.Operation;

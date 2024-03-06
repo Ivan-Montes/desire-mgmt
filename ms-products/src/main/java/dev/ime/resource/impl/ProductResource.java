@@ -1,4 +1,4 @@
-package dev.ime.resource;
+package dev.ime.resource.impl;
 
 import java.util.Collections;
 import java.util.List;
@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 import dev.ime.dto.ProductDto;
 import dev.ime.entity.Product;
 import dev.ime.mapper.impl.ProductMapper;
+import dev.ime.resource.GenericResource;
+import dev.ime.resource.ProductSpecificResource;
 import dev.ime.service.impl.ProductServiceImpl;
 import dev.ime.tool.SomeConstants;
 import io.swagger.v3.oas.annotations.Operation;

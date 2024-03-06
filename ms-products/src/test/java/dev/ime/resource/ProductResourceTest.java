@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.ime.dto.ProductDto;
 import dev.ime.entity.Product;
 import dev.ime.mapper.impl.ProductMapper;
+import dev.ime.resource.impl.ProductResource;
 import dev.ime.service.impl.ProductServiceImpl;
 import dev.ime.tool.SomeConstants;
 
