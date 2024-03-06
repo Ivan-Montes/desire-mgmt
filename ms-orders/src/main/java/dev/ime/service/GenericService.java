@@ -9,7 +9,7 @@ public interface GenericService<T,U> {
 	List<T>getAll();
 	List<T>getAllPaged(Integer pageNumber, Integer pageSize);
 	Optional<T>getById(Long id);
-	Optional<T>create(U entity);
-	Optional<T>update(Long id, U entity);
+	Optional<T>create(U dto);
+	Optional<T>update(Long id, U dto);
 	Integer delete(Long id);
 }
