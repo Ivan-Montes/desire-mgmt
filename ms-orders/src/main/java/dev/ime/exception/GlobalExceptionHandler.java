@@ -30,7 +30,6 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler({
 			dev.ime.exception.ResourceNotFoundException.class,
 			dev.ime.exception.EntityAssociatedException.class,
-			dev.ime.exception.AttributeUniqueException.class,
 			dev.ime.exception.DateBadFormatException.class
 			})
 	public ResponseEntity<ExceptionResponse> basicException(BasicException ex){
