@@ -12,4 +12,8 @@ eureka:
 
 info:
   app:
-    profile: prod 
+    profile: prod
+    
+feign:
+  ms-products:
+    url: http://ms-products:7701 

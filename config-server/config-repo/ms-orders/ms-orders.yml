@@ -37,6 +37,11 @@ management:
 # Basic data for /actuator/info
 info:
   app:
-    name: ms-product
+    name: ms-orders
     version: 1.0.0
     profile: default
+
+feign:
+  ms-products:
+    url: http://localhost:7701 
+    
