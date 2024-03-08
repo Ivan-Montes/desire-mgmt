@@ -28,6 +28,7 @@ public class GlobalExceptionHandler {
 
 	@Operation( summary = "Basic Exception", description = "Several implementations of it")
 	@ExceptionHandler({
+			dev.ime.exception.BasicException.class,
 			dev.ime.exception.ResourceNotFoundException.class,
 			dev.ime.exception.EntityAssociatedException.class,
 			dev.ime.exception.DateBadFormatException.class
