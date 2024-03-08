@@ -55,7 +55,7 @@ public class OrderDetailServiceImpl implements GenericService<OrderDetail, Order
 	public Optional<OrderDetail> create(OrderDetailDto dto) {
 		
 		Order o = orderRepo.findById(dto.orderId()).orElseThrow( () -> new ResourceNotFoundException(Map.of(SomeConstants.ORDERID, String.valueOf(dto.orderId()) ) ) );
-		//Check customerId feign
+		
 		if ( !checker.checkProductId(dto.productId() ) ) throw new ResourceNotFoundException( Map.of(SomeConstants.PRODUCTID, String.valueOf(dto.productId() ) ) );
 		OrderDetail od = orderDetailMapper.fromDto(dto);		
 		od.setOrder(o);
@@ -68,7 +68,7 @@ public class OrderDetailServiceImpl implements GenericService<OrderDetail, Order
 		
 		OrderDetail od = orderDetailRepo.findById(id).orElseThrow( ()-> new ResourceNotFoundException(Map.of( SomeConstants.ORDERDETAILID, String.valueOf(id) ) ) );
 		Order o = orderRepo.findById(dto.orderId()).orElseThrow( () -> new ResourceNotFoundException(Map.of(SomeConstants.ORDERID, String.valueOf(dto.orderId()) ) ) );
-		//Check customerId feign
+		
 		if ( !checker.checkProductId(dto.productId() ) ) throw new ResourceNotFoundException( Map.of(SomeConstants.PRODUCTID, String.valueOf(dto.productId() ) ) );
 		
 		od.setQuantity(dto.quantity());
