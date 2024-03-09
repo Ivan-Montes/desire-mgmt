@@ -4,7 +4,7 @@ spring:
     import: optional:configserver:http://config-server:8888
   cloud:
     config:
-    # Retry if configserver is unavailable
+    # Retry if configserver is unavailable...but compatible with import: optional:configserver ??
       fail-fast: true  
       retry:
         use-random-policy: true        
