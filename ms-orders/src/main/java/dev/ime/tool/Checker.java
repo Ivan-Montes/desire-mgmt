@@ -6,15 +6,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
-import dev.ime.client.MsProductsClient;
+import dev.ime.client.impl.MsProductsClientImpl;
 import dev.ime.dto.ProductDto;
 
 @Component
 public class Checker {
 
-	private final MsProductsClient msProductsClient;
+	private final MsProductsClientImpl msProductsClient;
 	
-	public Checker(MsProductsClient msProductsClient) {
+	public Checker(MsProductsClientImpl msProductsClient) {
 		super();
 		this.msProductsClient = msProductsClient;
 	}
@@ -43,17 +43,18 @@ public class Checker {
 	
 	public boolean checkCustomerId(Long customerId) {
 		/*
-		ResponseEntity<CustomerDto> response = msCustomersClient.getById(productId);
+		ResponseEntity<CustomerDto> response = msCustomersClient.getCustomerById(customerId);
 		return response.getStatusCode() == HttpStatus.OK;*/
 		
 		return true;
 	}
 	
-	public boolean checkProductId(Long productId) {
-		
+    public boolean checkProductId(Long productId) {
+    
 		ResponseEntity<ProductDto> response = msProductsClient.getProductById(productId);
 		return response.getStatusCode() == HttpStatus.OK;
+		
 	}
-	
-	
+    
+    
 }
