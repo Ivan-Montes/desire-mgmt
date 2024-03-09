@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dev.ime.exception.*;
+import dev.ime.exceptionresponse.ExceptionResponse;
 import dev.ime.tool.SomeConstants;
 import feign.Response;
 import feign.codec.ErrorDecoder;
@@ -67,8 +68,7 @@ public class CustomErrorDecoder implements ErrorDecoder {
 		errorMap.put("Status",String.valueOf(response.status()));
 		errorMap.put("Url", response.request().url());
 		
-		return new BasicException(UUID.randomUUID(), "BasicException", "", errorMap);	
-		
+		return new BasicException(UUID.randomUUID(), "BasicException", "", errorMap);
 	}
 
 }

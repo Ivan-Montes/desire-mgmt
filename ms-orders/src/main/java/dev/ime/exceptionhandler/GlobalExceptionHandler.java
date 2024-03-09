@@ -1,4 +1,4 @@
-package dev.ime.exception;
+package dev.ime.exceptionhandler;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import dev.ime.exception.*;
+import dev.ime.exceptionresponse.ExceptionResponse;
 import dev.ime.tool.SomeConstants;
 import io.swagger.v3.oas.annotations.Operation;
 

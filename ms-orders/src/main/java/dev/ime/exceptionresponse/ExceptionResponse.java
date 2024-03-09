@@ -1,4 +1,4 @@
-package dev.ime.exception;
+package dev.ime.exceptionresponse;
 
 import java.util.Map;
 import java.util.UUID;
