@@ -8,8 +8,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import dev.ime.client.MsProductsClient;
-
+import dev.ime.client.impl.MsProductsClientImpl;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -18,7 +17,7 @@ class CheckerTest {
 	private Checker checker;
 	
 	@Autowired
-	private MsProductsClient msProductsClient;
+	private MsProductsClientImpl msProductsClient;
 	
 	@BeforeEach
 	private void createObjects() {
