@@ -41,7 +41,7 @@ info:
     version: 1.0.0
     profile: default
 
-feign:
-  ms-products:
-    url: http://localhost:7701 
+ms-products:
+  url: http://localhost:7701
+
     

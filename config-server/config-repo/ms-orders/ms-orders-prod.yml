@@ -14,6 +14,5 @@ info:
   app:
     profile: prod
     
-feign:
-  ms-products:
-    url: http://ms-products:7701 
+ms-products:
+  url: http://ms-products:7701 
