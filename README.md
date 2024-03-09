@@ -3,17 +3,18 @@
 :warning::warning::construction::construction:  Microservices in a multimodule Maven project with servers, REST API, and MVC system
 
 **Pending**
-- Microservice ms-orders with private PostgreSQL database
-- Feign Communications between microservices
 - Microservice ms-customer with a exclusive PostgreSQL database
+- Feign Communications between microservices ms-customer and ms-orders
 - MVC Microservice 04
 - API Gateway
 
 **Complete**
 - Eureka-server
 - Microservice ms-products with its own PostgreSQL database
-- Dockerfile & docker-compose for each service
 - Cloud config server
+- Microservice ms-orders with private PostgreSQL database
+- Feign Communications between microservices ms-products and ms-orders
+- Add circuit breaker with resilience4j
 
 ## Table of contents
 
@@ -38,7 +39,7 @@
 
 1. You could finish with this command
     ```
-    docker-compose down
+    docker-compose down --rmi local
     ```
 
 ## Usage
@@ -52,6 +53,8 @@
 #### :large_orange_diamond: Multiple profiles system for dev, pro and test environment
 
 #### :large_orange_diamond: Include docker-compose.yml and Dockerfile for easy containerization
+
+#### :large_orange_diamond: Feign Communications between microservices with circuit breaker fallback
 
 
 ## Maintainers
