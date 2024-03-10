@@ -1,6 +1,19 @@
 version: "3.8"
 
 services:
+
+  ms-config-server:
+    build: ./config-server
+    container_name: config-server
+    environment: # Active profile NATIVE. Related to SPRING_CLOUD_CONFIG_SERVER_NATIVE_SEARCHLOCATIONS
+      #SPRING_PROFILES_ACTIVE: prod
+      SPRING_CLOUD_CONFIG_SERVER_NATIVE_SEARCHLOCATIONS: file:/app/config-repo, file:/app/config-repo/{application}
+    networks:
+      - desire-mgmt-network
+    ports:
+      - "8888:8888"
+    restart: on-failure:3
+    
   ms-eureka-server:
     build: ./eureka-server
     container_name: eureka-server
@@ -53,17 +66,20 @@ services:
       - ms-eureka-server
       - ms-products-db
   
-  ms-config-server:
-    build: ./config-server
-    container_name: config-server
-    environment: # Active profile NATIVE. Related to SPRING_CLOUD_CONFIG_SERVER_NATIVE_SEARCHLOCATIONS
-      #SPRING_PROFILES_ACTIVE: prod
-      SPRING_CLOUD_CONFIG_SERVER_NATIVE_SEARCHLOCATIONS: file:/app/config-repo, file:/app/config-repo/{application}
+  ms-orders-apirest:
+    build:  ./ms-orders
+    container_name: ms-orders
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
     networks:
       - desire-mgmt-network
     ports:
-      - "8888:8888"
+      - "7702:7702"
     restart: on-failure:3
+    depends_on:
+      - ms-config-server
+      - ms-eureka-server
+      - ms-orders-db
           
 networks:
   desire-mgmt-network:
