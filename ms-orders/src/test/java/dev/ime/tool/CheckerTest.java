@@ -2,28 +2,28 @@ package dev.ime.tool;
 
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import dev.ime.client.impl.MsProductsClientImpl;
+import dev.ime.dto.ProductDto;
 
 
 @ExtendWith(MockitoExtension.class)
 class CheckerTest {	
 	
+	@InjectMocks
 	private Checker checker;
 	
-	@Autowired
+	@Mock
 	private MsProductsClientImpl msProductsClient;
-	
-	@BeforeEach
-	private void createObjects() {
-		
-		checker = new Checker(msProductsClient);
-	}
+
 	
 	@Test
 	void Checker_localDateFormat_ReturnBooleans() {
@@ -49,5 +49,35 @@ class CheckerTest {
 				);
 	}
 	
+	
+	@Test
+	void Checker_checkProductId_ReturnBooleanTrue() {
+		
+		@SuppressWarnings("unchecked")
+		ResponseEntity<ProductDto> responseTest = Mockito.mock(ResponseEntity.class);		
+		Mockito.when(msProductsClient.getProductById(Mockito.anyLong())).thenReturn(responseTest);
+		Mockito.when(responseTest.getStatusCode()).thenReturn(HttpStatus.OK);
+		
+		boolean resultValue = checker.checkProductId(1L);
+		
+		org.junit.jupiter.api.Assertions.assertAll(
+				()-> Assertions.assertTrue(resultValue)
+				);
+	}
+	
+	@Test
+	void Checker_checkProductId_ReturnBooleanFalse() {
+		
+		@SuppressWarnings("unchecked")
+		ResponseEntity<ProductDto> responseTest = Mockito.mock(ResponseEntity.class);		
+		Mockito.when(msProductsClient.getProductById(Mockito.anyLong())).thenReturn(responseTest);
+		Mockito.when(responseTest.getStatusCode()).thenReturn(HttpStatus.NOT_FOUND);
+		
+		boolean resultValue = checker.checkProductId(1L);
+		
+		org.junit.jupiter.api.Assertions.assertAll(
+				()-> Assertions.assertFalse(resultValue)
+				);
+	}
 	
 }
