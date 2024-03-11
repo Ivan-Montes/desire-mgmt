@@ -8,14 +8,14 @@ import org.springframework.stereotype.Component;
 
 import dev.ime.client.MsProductsClient;
 import dev.ime.dto.ProductDto;
-import io.github.resilience4j.circuitbreaker.CircuitBreaker;
 import io.vavr.control.Try;
+import io.github.resilience4j.circuitbreaker.CircuitBreaker;
 
 @Component
 public class MsProductsClientImpl implements MsProductsClient{
 
 	private final MsProductsClient msProductsClient;
-
+    
 	public MsProductsClientImpl(MsProductsClient msProductsClient) {
 		super();
 		this.msProductsClient = msProductsClient;
@@ -32,6 +32,6 @@ public class MsProductsClientImpl implements MsProductsClient{
     	return Try.ofSupplier(decoratedSupplier)
     		    .recover(throwable -> new ResponseEntity<>(new ProductDto(),HttpStatus.NOT_FOUND))
     		    .get();
-	}
+	}	
 
 }

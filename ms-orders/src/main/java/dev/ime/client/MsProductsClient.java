@@ -10,8 +10,8 @@ import dev.ime.dto.ProductDto;
 @FeignClient( name = "ms-products", url = "${ms-products.url}")
 public interface MsProductsClient {
 
-	@GetMapping("/api/products/{id}")
-	ResponseEntity<ProductDto> getProductById(@PathVariable Long id);
+	@GetMapping("/api/products/{id}")    
+	ResponseEntity<ProductDto> getProductById(@PathVariable Long id);	
 	
 	
 }
