@@ -46,6 +46,7 @@
 	  	<module>ms-products</module>
 	  	<module>config-server</module>
 	  	<module>ms-orders</module>
+	  	<module>ms-customers</module>
 	</modules>
 	
 </project>
