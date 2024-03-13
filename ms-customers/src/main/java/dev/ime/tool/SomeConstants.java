@@ -7,7 +7,7 @@ public class SomeConstants {
 	}
 	
 	public static final int SIZE_REQUEST = 5;
-	public static final String DATELESS = "N0 Data";
+	public static final String DATELESS = "No Data";
 
 	public static final String FORMAT_TIME = "%1$TH:%1$TM:%1$TS";
 	
@@ -18,6 +18,7 @@ public class SomeConstants {
 	public static final String ORDERDETAILID = "OrderDetailId";		
 	public static final String DATEFORMAT = "Date attribute";
 	public static final String CUSTOMERID = "CustomerId";		
+	public static final String ADDRESSID = "AddressId";
 
 
 	public static final String ANYBODYHOME = "Hello, hello, anybody home?, Think McFly, think";
