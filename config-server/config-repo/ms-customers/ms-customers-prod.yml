@@ -1,0 +1,15 @@
+
+spring:
+  datasource:
+    url: jdbc:postgresql://postgresdb03:5432/customersDb   
+        
+  
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka/
+
+
+info:
+  app:
+    profile: prod 
