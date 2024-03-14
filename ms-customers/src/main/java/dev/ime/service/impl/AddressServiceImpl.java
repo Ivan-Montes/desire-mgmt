@@ -1,0 +1,97 @@
+package dev.ime.service.impl;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
+
+import dev.ime.dto.AddressDto;
+import dev.ime.entity.Address;
+import dev.ime.entity.Customer;
+import dev.ime.exception.ResourceNotFoundException;
+import dev.ime.mapper.impl.AddressMapper;
+import dev.ime.repository.AddressRepository;
+import dev.ime.repository.CustomerRepository;
+import dev.ime.service.AddressSpecificService;
+import dev.ime.service.GenericService;
+import dev.ime.tool.SomeConstants;
+
+@Service
+public class AddressServiceImpl implements GenericService<Address,AddressDto>, AddressSpecificService{
+	
+	private final AddressRepository addressRepo;
+	private final AddressMapper addressMapper;
+	private final CustomerRepository customerRepo;
+	
+	
+	public AddressServiceImpl(AddressRepository addressRepo, AddressMapper addressMapper,
+			CustomerRepository customerRepo) {
+		this.addressRepo = addressRepo;
+		this.addressMapper = addressMapper;
+		this.customerRepo = customerRepo;
+	}
+
+	@Override
+	public List<Address> getAll() {
+		return addressRepo.findAll();
+	}
+
+	@Override
+	public List<Address> getAllPaged(Integer pageNumber, Integer pageSize) {
+		return addressRepo.findAll(PageRequest.of(pageNumber, pageSize)).toList();
+	}
+
+	@Override
+	public Optional<Address> getById(Long id) {
+		return Optional.ofNullable( addressRepo.findById(id).orElseThrow( ()-> new ResourceNotFoundException( Map.of(SomeConstants.ADDRESSID, String.valueOf(id) ) ) ) );
+	}
+
+	@Override
+	public Optional<Address> create(AddressDto entity) {
+		
+		Customer c = customerRepo.findById(entity.customerId()).orElseThrow( ()-> new ResourceNotFoundException( Map.of( SomeConstants.CUSTOMERID, String.valueOf(entity.customerId())) ) );
+		Address a = addressMapper.fromDto(entity);
+		a.setCustomer(c);
+		return Optional.ofNullable( addressRepo.save( a ));
+		
+	}
+
+	@Override
+	public Optional<Address> update(Long id, AddressDto entity) {
+		
+		Address a = addressRepo.findById(id).orElseThrow( ()-> new ResourceNotFoundException( Map.of(SomeConstants.ADDRESSID, String.valueOf(id) ) ) );
+		Customer c = customerRepo.findById(entity.customerId()).orElseThrow( ()-> new ResourceNotFoundException( Map.of( SomeConstants.CUSTOMERID, String.valueOf(entity.customerId())) ) );
+		
+		a.setLocation(entity.location());
+		a.setCity(entity.city());
+		a.setCountry(entity.country());
+		a.setEmail(entity.email());
+		a.setCustomer(c);
+		
+		return Optional.ofNullable( addressRepo.save( a ));
+	}
+
+	@Override
+	public Integer delete(Long id) {
+		
+		Address a = addressRepo.findById(id).orElseThrow( ()-> new ResourceNotFoundException( Map.of(SomeConstants.ADDRESSID, String.valueOf(id) ) ) );
+		addressRepo.deleteById(a.getId());
+		
+		return addressRepo.findById(a.getId()).isEmpty()? 0:1;
+	}
+
+	@Override
+	public Boolean setCustomer(Long addressId, Long customerId) {
+		
+		Address a = addressRepo.findById(addressId).orElseThrow( ()-> new ResourceNotFoundException( Map.of(SomeConstants.ADDRESSID, String.valueOf(addressId) ) ) );
+		Customer c = customerRepo.findById(customerId).orElseThrow( ()-> new ResourceNotFoundException( Map.of( SomeConstants.CUSTOMERID, String.valueOf(customerId) ) ) );
+
+		a.setCustomer(c);
+		c.getAddresses().add(a);
+		
+		return Optional.ofNullable(addressRepo.save(a)).isPresent();
+	}
+
+}
