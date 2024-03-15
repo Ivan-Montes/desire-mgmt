@@ -50,6 +50,18 @@ services:
       - desire-mgmt-network
     ports:
       - "5433:5432"
+      
+  ms-customers-db:
+    image: postgres:latest
+    container_name: postgresdb03
+    environment:
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_USER: root
+      POSTGRES_DB: customersDb
+    networks:
+      - desire-mgmt-network
+    ports:
+      - "5434:5432"
            
   ms-products-apirest:
     build: ./ms-products
@@ -80,6 +92,21 @@ services:
       - ms-config-server
       - ms-eureka-server
       - ms-orders-db
+  
+  ms-customers-apirest:
+    build: ./ms-customers
+    container_name: ms-customers
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+    networks:
+      - desire-mgmt-network
+    ports:
+      - "7703:7703"
+    restart: on-failure:3
+    depends_on:
+      - ms-config-server
+      - ms-eureka-server
+      - ms-customers-db
           
 networks:
   desire-mgmt-network:

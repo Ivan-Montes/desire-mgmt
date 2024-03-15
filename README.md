@@ -3,8 +3,6 @@
 :warning::warning::construction::construction:  Microservices in a multimodule Maven project with servers, REST API, and MVC system
 
 **Pending**
-- Microservice ms-customer with a exclusive PostgreSQL database
-- Feign Communications between microservices ms-customer and ms-orders
 - MVC Microservice 04
 - API Gateway
 
@@ -13,8 +11,9 @@
 - Microservice ms-products with its own PostgreSQL database
 - Cloud config server
 - Microservice ms-orders with private PostgreSQL database
-- Feign Communications between microservices ms-products and ms-orders
-- Add circuit breaker with resilience4j
+- Feign Communications between microservices ms-products and ms-orders with resilience4j circuit breaker
+- Microservice ms-customer with a exclusive PostgreSQL database
+- Feign Communications between microservices ms-customer and ms-orders with resilience4j circuit breaker
 
 ## Table of contents
 
@@ -44,7 +43,9 @@
 
 ## Usage
 
+Nowadays, main microservices are available at 7701,7702 and 7703 ports. You could visit its own swagger-ui on http://${hostname}:${port}/swagger-ui/index.html
 
+Servers are available at 8761 and 8888 for eureka-server and config-server respectively
 
 ## Features
 
@@ -54,7 +55,7 @@
 
 #### :large_orange_diamond: Include docker-compose.yml and Dockerfile for easy containerization
 
-#### :large_orange_diamond: Feign Communications between microservices with circuit breaker fallback
+#### :large_orange_diamond: Feign Communications between microservices with resilience4j circuit breaker fallback
 
 
 ## Maintainers
