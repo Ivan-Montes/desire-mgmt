@@ -26,7 +26,7 @@ public class AddressMapper implements GenericMapper<Address, AddressDto>{
 		a.setEmail(dto.email());
 		a.setCustomer(null);
 		
-		return null;
+		return a;
 	}
 
 	@Override

@@ -32,8 +32,7 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler({
 			dev.ime.exception.BasicException.class,
 			dev.ime.exception.ResourceNotFoundException.class,
-			dev.ime.exception.EntityAssociatedException.class,
-			dev.ime.exception.AttributeUniqueException.class
+			dev.ime.exception.EntityAssociatedException.class
 			})
 	public ResponseEntity<ExceptionResponse> basicException(BasicException ex){
 
