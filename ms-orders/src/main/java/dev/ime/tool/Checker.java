@@ -7,16 +7,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import dev.ime.client.impl.MsProductsClientImpl;
+import dev.ime.client.impl.MsCustomersClientImpl;
+import dev.ime.dto.CustomerDto;
 import dev.ime.dto.ProductDto;
 
 @Component
 public class Checker {
 
 	private final MsProductsClientImpl msProductsClient;
+	private final MsCustomersClientImpl msCustomersClient;
 	
-	public Checker(MsProductsClientImpl msProductsClient) {
+	public Checker(MsProductsClientImpl msProductsClient, MsCustomersClientImpl msCustomersClient) {
 		super();
 		this.msProductsClient = msProductsClient;
+		this.msCustomersClient = msCustomersClient;
 	}
 
 	public boolean localDateFormat(String dateString) {
@@ -42,11 +46,10 @@ public class Checker {
 	}
 	
 	public boolean checkCustomerId(Long customerId) {
-		/*
-		ResponseEntity<CustomerDto> response = msCustomersClient.getCustomerById(customerId);
-		return response.getStatusCode() == HttpStatus.OK;*/
 		
-		return true;
+		ResponseEntity<CustomerDto> response = msCustomersClient.getCustomerById(customerId);
+		return response.getStatusCode() == HttpStatus.OK;
+		
 	}
 	
     public boolean checkProductId(Long productId) {
