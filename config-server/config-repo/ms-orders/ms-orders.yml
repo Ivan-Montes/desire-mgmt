@@ -43,5 +43,7 @@ info:
 
 ms-products:
   url: http://localhost:7701
-
+ms-customers:
+  url: http://localhost:7703
+  
     

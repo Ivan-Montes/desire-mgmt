@@ -15,4 +15,6 @@ info:
     profile: prod
     
 ms-products:
-  url: http://ms-products:7701 
+  url: http://ms-products:7701
+ms-customers:
+  url: http://ms-customers:7703
