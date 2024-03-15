@@ -11,7 +11,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import dev.ime.client.impl.MsCustomersClientImpl;
 import dev.ime.client.impl.MsProductsClientImpl;
+import dev.ime.dto.CustomerDto;
 import dev.ime.dto.ProductDto;
 
 
@@ -23,6 +25,9 @@ class CheckerTest {
 	
 	@Mock
 	private MsProductsClientImpl msProductsClient;
+	
+	@Mock
+	private MsCustomersClientImpl msCustomersClient;
 
 	
 	@Test
@@ -80,4 +85,33 @@ class CheckerTest {
 				);
 	}
 	
+	@Test
+	void Checker_checkCustomerId_ReturnBooleanTrue() {
+		
+		@SuppressWarnings("unchecked")
+		ResponseEntity<CustomerDto> responseTest = Mockito.mock(ResponseEntity.class);		
+		Mockito.when(msCustomersClient.getCustomerById(Mockito.anyLong())).thenReturn(responseTest);
+		Mockito.when(responseTest.getStatusCode()).thenReturn(HttpStatus.OK);
+		
+		boolean resultValue = checker.checkCustomerId(1L);
+		
+		org.junit.jupiter.api.Assertions.assertAll(
+				()-> Assertions.assertTrue(resultValue)
+				);
+	}
+	
+	@Test
+	void Checker_checkCustomerId_ReturnBooleanFalse() {
+		
+		@SuppressWarnings("unchecked")
+		ResponseEntity<CustomerDto> responseTest = Mockito.mock(ResponseEntity.class);		
+		Mockito.when(msCustomersClient.getCustomerById(Mockito.anyLong())).thenReturn(responseTest);
+		Mockito.when(responseTest.getStatusCode()).thenReturn(HttpStatus.NOT_FOUND);
+		
+		boolean resultValue = checker.checkCustomerId(1L);
+		
+		org.junit.jupiter.api.Assertions.assertAll(
+				()-> Assertions.assertFalse(resultValue)
+				);
+	}
 }
