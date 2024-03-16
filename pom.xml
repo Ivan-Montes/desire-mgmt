@@ -47,6 +47,7 @@
 	  	<module>config-server</module>
 	  	<module>ms-orders</module>
 	  	<module>ms-customers</module>
+	  	<module>api-gateway</module>
 	</modules>
 	
 </project>
