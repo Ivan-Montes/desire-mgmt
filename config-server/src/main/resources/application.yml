@@ -17,10 +17,32 @@ spring:
     active: native    
 server:
   port: 8888 
-      
+     
+management:
+  endpoint:
+    health:
+      probes:
+        enabled: true  
+  health:
+    livenessState:
+      enabled: true
+    readinessState:
+      enabled: true
+            
+  info:
+    env:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: info, health, actuator     
+        
 info:
   app:
-    name: config-server
+    name: ${spring.application.name}
     version: 1.0.0
     profile: default
+    author: Ivan
+    web: https://github.com/Ivan-Montes
+    
     
