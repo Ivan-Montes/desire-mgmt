@@ -1,13 +1,4 @@
-# Main settings
-eureka:
-  client:
-    registerWithEureka: false
-    fetchRegistry: false
- # Delete renewal time warning in eureka front
-  server:
-    renewalPercentThreshold: 0.33
-    
-# Enable /actuator/info
+
 management:
   info:
     env:
@@ -15,11 +6,20 @@ management:
   endpoints:
     web:
       exposure:
-        include: info, health, actuator 
-# Basic data for /actuator/info
+        include: info, health
+  endpoint:
+    health:
+      probes:
+        enabled: true     
+  health:
+    livenessState:
+      enabled: true
+    readinessState:
+      enabled: true  
+      
 info:
   app:
-    name: eureka-server
+    name: ${spring.application.name}
     version: 1.0.0
     profile: default
     

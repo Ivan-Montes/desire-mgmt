@@ -17,23 +17,57 @@ management:
   endpoint:
     gateway:
       enabled: true
-            
+    health:
+      probes:
+        enabled: true        
+  health:
+    livenessState:
+      enabled: true
+    readinessState:
+      enabled: true  
+                 
 info:
   app:
-    name: api-gateway
+    name: ${spring.application.name}
     version: 1.0.0
     profile: default
-   
+
+  endpoint:
+    health:
+      probes:
+        enabled: true        
+  health:
+    livenessState:
+      enabled: true
+    readinessState:
+      enabled: true  
+       
 spring:
   cloud:
     gateway:
       routes:
-        - id: ms-products   
+        - id: ms-products-pro
           uri: lb://MS-PRODUCTS
           predicates:
             - Path=/api/products/**
-        - id: ms-products   
+        - id: ms-products-cat   
           uri: lb://MS-PRODUCTS
           predicates:
             - Path=/api/categories/**
+        - id: ms-orders-o
+          uri: lb://MS-ORDERS
+          predicates:
+            - Path=/api/orders/**
+        - id: ms-orders-od
+          uri: lb://MS-ORDERS
+          predicates:
+            - Path=/api/orderdetails/**
+        - id: ms-customers-cus
+          uri: lb://MS-CUSTOMERS
+          predicates:
+            - Path=/api/customers/**
+        - id: ms-customers-addr
+          uri: lb://MS-CUSTOMERS
+          predicates:
+            - Path=/api/addresses/**
           
