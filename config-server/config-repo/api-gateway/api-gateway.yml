@@ -31,16 +31,6 @@ info:
     name: ${spring.application.name}
     version: 1.0.0
     profile: default
-
-  endpoint:
-    health:
-      probes:
-        enabled: true        
-  health:
-    livenessState:
-      enabled: true
-    readinessState:
-      enabled: true  
        
 spring:
   cloud:
