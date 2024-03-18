@@ -4,7 +4,6 @@
 
 **Pending**
 - MVC Microservice 04
-- API Gateway
 
 **Complete**
 - Eureka-server
@@ -14,6 +13,7 @@
 - Feign Communications between microservices ms-products and ms-orders with resilience4j circuit breaker
 - Microservice ms-customer with a exclusive PostgreSQL database
 - Feign Communications between microservices ms-customer and ms-orders with resilience4j circuit breaker
+- API Gateway
 
 ## Table of contents
 
@@ -43,9 +43,14 @@
 
 ## Usage
 
-Nowadays, main microservices are available at 7701,7702 and 7703 ports. You could visit its own swagger-ui on http://${hostname}:${port}/swagger-ui/index.html
+Nowadays, main microservices are available at 7701,7702 and 7703 ports. You could visit its own swagger-ui on http://${hostname}:${port}/swagger-ui/index.html to know more about the API.
+Api Gateway responds on 8080 port, so you could call them using the URL http://${hostname}:8080/api/${entity} as well. For instance:
+    ```
+    http://localhost:8080/api/addresses
+    ```
+ 
+More servers are available at 8761 and 8888 for eureka-server and config-server respectively
 
-Servers are available at 8761 and 8888 for eureka-server and config-server respectively
 
 ## Features
 
