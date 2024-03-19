@@ -35,7 +35,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: info, health, actuator     
+        include: info, health, prometheus     
         
 info:
   app:
