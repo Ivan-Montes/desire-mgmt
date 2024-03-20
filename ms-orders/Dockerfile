@@ -13,10 +13,7 @@ LABEL dev.ime.ms-products.maintainer="IvanM"
 LABEL dev.ime.ms-products.description="Just a simple dockerfile"
 
 # Copy files
-COPY target/*.jar ./app.jar
-
-# Port
-EXPOSE 7702
+COPY ./target/*.jar ./app.jar
 
 # Init command
 ENTRYPOINT ["java","-jar","./app.jar"]
