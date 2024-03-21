@@ -43,7 +43,55 @@ services:
       - ms-products-apirest
       - ms-orders-apirest
       - ms-customers-apirest
-      
+  
+  ms-prometheus-server:
+    image: prom/prometheus:latest
+    container_name: prometheus-server
+    volumes:
+      - ./prometheus/config:/etc/prometheus
+    command: --config.file=/etc/prometheus/prometheus.yml --log.level=debug
+    networks:
+      - desire-mgmt-network
+    ports:
+      - "9090:9090"
+    restart: on-failure:3
+    depends_on:
+      - ms-config-server
+      - ms-eureka-server
+      - ms-products-db      
+      - ms-products-apirest
+      - ms-orders-db
+      - ms-orders-apirest
+      - ms-customers-db
+      - ms-customers-apirest      
+  
+  ms-grafana-server:
+    image: grafana/grafana:latest
+    container_name: grafana-server 
+    user: '0'
+    volumes:
+      - ./grafana/datasources/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
+      - ./grafana/dashboards/dashboard.yml:/etc/grafana/provisioning/dashboards/dashboard.yml
+      - ./grafana/dashboards/3662_rev2.json:/etc/grafana/provisioning/dashboards/3662_rev2.json
+      - ./grafana/dashboards/prometheus_stats.json:/etc/grafana/provisioning/dashboards/prometheus_stats.json
+      - grafana_storage01:/var/lib/grafana
+      - grafana_storage02:/etc/grafana 
+    networks:
+      - desire-mgmt-network
+    ports:
+      - "3000:3000"    
+    restart: on-failure:3
+    depends_on:
+      - ms-config-server
+      - ms-eureka-server
+      - ms-products-db      
+      - ms-products-apirest
+      - ms-orders-db
+      - ms-orders-apirest
+      - ms-customers-db
+      - ms-customers-apirest    
+      - ms-prometheus-server    
+          
   ms-products-db:
     image: postgres:latest
     container_name: postgresdb01
@@ -87,8 +135,6 @@ services:
       SPRING_PROFILES_ACTIVE: prod
     networks:
       - desire-mgmt-network
-    ports:
-      - "7701:7701"
     restart: on-failure:3
     depends_on:
       - ms-config-server
@@ -102,8 +148,6 @@ services:
       SPRING_PROFILES_ACTIVE: prod
     networks:
       - desire-mgmt-network
-    ports:
-      - "7702:7702"
     restart: on-failure:3
     depends_on:
       - ms-config-server
@@ -117,8 +161,6 @@ services:
       SPRING_PROFILES_ACTIVE: prod
     networks:
       - desire-mgmt-network
-    ports:
-      - "7703:7703"
     restart: on-failure:3
     depends_on:
       - ms-config-server
@@ -127,5 +169,10 @@ services:
           
 networks:
   desire-mgmt-network:
+
+volumes:
+  grafana_storage01: {}
+  grafana_storage02: {}
   
+    
     
