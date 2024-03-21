@@ -48,15 +48,15 @@
 
 Main microservices have dynamic ports, you could know more about the API in future releases from the MVC ms-ui. In DEV/IDE environment you could visit their own swagger-ui on http://${hostname}:${port}/swagger-ui/index.html to . For example:
 
-    ```
+   ```
     http://localhost:33333/swagger-ui/index.html
-    ```
+   ```
 
 Api Gateway responds on 8080 port, so you could call them directly using the URL http://${hostname}:8080/api/${entity} as well. For instance:
 
-    ```
+   ```
     http://localhost:8080/api/addresses
-    ```
+   ```
  
 Prometheus interface is reachable at port 9090 and Grafana is accessible at 3000 instead. Initial credentials are both "admin". Main datasource and two dashboards are already loaded thanks to docker-compose settings.
 
@@ -72,6 +72,7 @@ Other servers are available at 8761 and 8888 for eureka-server and config-server
 #### :large_orange_diamond: Include docker-compose.yml and Dockerfile for easy containerization
 
 #### :large_orange_diamond: Feign Communications between microservices with resilience4j circuit breaker fallback
+
 
 
 ## Maintainers
