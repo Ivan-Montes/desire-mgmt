@@ -51,9 +51,6 @@ info:
     version: 1.0.0
     profile: default
 
-ms-products:
-  url: http://localhost:7701
-ms-customers:
-  url: http://localhost:7703
+
   
     
