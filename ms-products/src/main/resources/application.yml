@@ -1,4 +1,4 @@
-# Main settings
+
 spring:
   application:
     name: ms-products
@@ -6,7 +6,6 @@ spring:
   config:
     import: optional:configserver:http://localhost:8888
         
-# ms-product random server
 server:
-  port: 7701
+  port: ${ms-products.server.port:0}
   

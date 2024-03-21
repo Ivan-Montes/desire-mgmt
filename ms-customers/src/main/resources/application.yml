@@ -1,8 +1,9 @@
 spring:
   application:
     name: ms-customers
+    
   config:
     import: optional:configserver:http://localhost:8888
     
 server:
-  port: 7703
+  port: ${ms-customers.server.port:0}
