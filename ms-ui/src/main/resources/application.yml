@@ -1,0 +1,9 @@
+
+spring:
+  application:
+    name: ms-ui    
+  config:
+    import: optional:configserver:http://localhost:8888
+    
+server:
+  port: ${ms-ui.server.port:8081}
