@@ -54,6 +54,7 @@
 	  	<module>ms-orders</module>
 	  	<module>ms-customers</module>
 	  	<module>api-gateway</module>
+	  	<module>ms-ui</module>
 	</modules>
 	
 </project>
