@@ -3,7 +3,7 @@
 :warning::warning::construction::construction:  Microservices in a multimodule Maven project with servers, REST API, and MVC system
 
 **Pending**
-- MVC ms-ui for presentation layer
+- MVC ms-ui for presentation layer [8081]
 
 **Complete**
 - Eureka-server [8761]
@@ -42,6 +42,8 @@
     ```
     docker-compose down --rmi local -v
     ```
+
+But if you just want to run it from your IDE, please visit the project folder for the databases for a correct initialization
 
 
 ## Usage
