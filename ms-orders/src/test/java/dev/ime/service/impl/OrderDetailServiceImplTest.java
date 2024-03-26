@@ -351,4 +351,33 @@ class OrderDetailServiceImplTest {
 				()-> Assertions.assertThat(ex.getClass()).isEqualTo(ResourceNotFoundException.class)
 				);
 	}
+	
+	@Test
+	void OrderSDetailerviceImpl_getAnyByProductId_ReturnTrue() {
+		
+		orderDetails.add(orderDetailTest);
+		Mockito.when(orderDetailRepo.findByProductId(Mockito.anyLong())).thenReturn(orderDetails);
+		
+		Boolean resultValue = orderDetailService.getAnyByProductId(orderDetailId);
+		
+		org.junit.jupiter.api.Assertions.assertAll(
+				()-> Assertions.assertThat(resultValue).isNotNull(),
+				()-> Assertions.assertThat(resultValue).isTrue()
+				);	
+		Mockito.verify(orderDetailRepo, Mockito.times(1)).findByProductId(Mockito.anyLong());
+	}
+	
+	@Test
+	void OrderSDetailerviceImpl_getAnyByProductId_ReturnFalse() {
+		
+		Mockito.when(orderDetailRepo.findByProductId(Mockito.anyLong())).thenReturn(orderDetails);
+		
+		Boolean resultValue = orderDetailService.getAnyByProductId(orderDetailId);
+		
+		org.junit.jupiter.api.Assertions.assertAll(
+				()-> Assertions.assertThat(resultValue).isNotNull(),
+				()-> Assertions.assertThat(resultValue).isFalse()
+				);	
+		Mockito.verify(orderDetailRepo, Mockito.times(1)).findByProductId(Mockito.anyLong());
+	}
 }

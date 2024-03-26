@@ -266,4 +266,30 @@ class OrderDetailResourceTest {
 		.andExpect(MockMvcResultMatchers.jsonPath("$").value(false))
 		;
 	}
+	
+	@Test
+	void OrderDetailResource_getAnyByProductId_ReturnResponseWithBooleanTrue() throws Exception {
+		
+		Mockito.when(orderDetailService.getAnyByProductId(Mockito.anyLong())).thenReturn(true);
+		
+		mockMvc.perform(MockMvcRequestBuilders.put(path + "/products/{productId}", productId))
+		.andExpect(MockMvcResultMatchers.status().isOk())
+		.andExpect(MockMvcResultMatchers.jsonPath("$").exists())
+		.andExpect(MockMvcResultMatchers.jsonPath("$").isBoolean())
+		.andExpect(MockMvcResultMatchers.jsonPath("$").value(true))
+		;
+	}
+
+	@Test
+	void OrderDetailResource_getAnyByProductId_ReturnResponseWithBooleanFalse() throws Exception {
+		
+		Mockito.when(orderDetailService.getAnyByProductId(Mockito.anyLong())).thenReturn(false);
+		
+		mockMvc.perform(MockMvcRequestBuilders.put(path + "/products/{productId}", productId))
+		.andExpect(MockMvcResultMatchers.status().isNotFound())
+		.andExpect(MockMvcResultMatchers.jsonPath("$").exists())
+		.andExpect(MockMvcResultMatchers.jsonPath("$").isBoolean())
+		.andExpect(MockMvcResultMatchers.jsonPath("$").value(false))
+		;
+	}
 }

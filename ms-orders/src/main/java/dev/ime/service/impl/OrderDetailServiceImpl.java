@@ -100,4 +100,10 @@ public class OrderDetailServiceImpl implements GenericService<OrderDetail, Order
 		return opt.isPresent();
 	}
 
+	@Override
+	public Boolean getAnyByProductId(Long productId) {
+		
+		return !orderDetailRepo.findByProductId(productId).isEmpty();
+	}
+
 }

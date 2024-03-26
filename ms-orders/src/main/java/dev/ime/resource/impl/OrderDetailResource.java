@@ -115,4 +115,13 @@ public class OrderDetailResource implements GenericResource<OrderDetailDto>, Ord
 				:new ResponseEntity<>(Boolean.FALSE, HttpStatus.NOT_FOUND);
 	}
 
+	@PutMapping("/products/{productId}")
+	@Operation(summary="Find by Product Id", description="Find by Product Id, @return a Response with True/False whether exists any coincidence ")
+	@Override
+	public ResponseEntity<Boolean> getAnyByProductId(@PathVariable Long productId) {
+		
+		return Boolean.TRUE.equals(orderDetailService.getAnyByProductId(productId))? new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK)
+				:new ResponseEntity<>(Boolean.FALSE, HttpStatus.NOT_FOUND);
+	}
+
 }
