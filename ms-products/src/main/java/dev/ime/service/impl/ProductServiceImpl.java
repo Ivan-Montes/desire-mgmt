@@ -17,6 +17,7 @@ import dev.ime.repository.CategoryRepository;
 import dev.ime.repository.ProductRepository;
 import dev.ime.service.GenericService;
 import dev.ime.service.ProductSpecificService;
+import dev.ime.tool.Checker;
 import dev.ime.tool.SomeConstants;
 
 @Service
@@ -25,11 +26,13 @@ public class ProductServiceImpl implements GenericService<Product, ProductDto>, 
 	private final ProductRepository productRepo;
 	private final ProductMapper productMapper;
 	private final CategoryRepository categoryRepo;
+	private final Checker checker;
 	
-	public ProductServiceImpl(ProductRepository productRepo, ProductMapper productMapper, CategoryRepository categoryRepo) {
+	public ProductServiceImpl(ProductRepository productRepo, ProductMapper productMapper, CategoryRepository categoryRepo, Checker checker) {
 		this.productRepo = productRepo;
 		this.productMapper = productMapper;
 		this.categoryRepo = categoryRepo;
+		this.checker = checker;
 	}
 
 	@Override
@@ -85,6 +88,9 @@ public class ProductServiceImpl implements GenericService<Product, ProductDto>, 
 	@Override
 	public Integer delete(Long id) {
 		
+		if ( checker.checkProductId(id) ) {
+			return 1;
+		}
 		productRepo.deleteById(id);		
 		Optional<Product>opt = productRepo.findById(id);
 		

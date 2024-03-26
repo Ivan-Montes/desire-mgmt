@@ -30,5 +30,8 @@ public class SomeConstants {
 	public static final String EX_METHOD_ARGUMENT_INVALID = "MethodArgumentNotValidException";
 	public static final String EX_METHOD_ARGUMENT_TYPE = "MethodArgumentTypeMismatchException";
 	public static final String EX_JAKARTA_VAL= "ConstraintViolationException";
-	
+
+	public static final String R4_CB = "cbDef";
+	public static final String R4_R = "rDef";
+	public static final String R4_BH = "bhDef";
 }

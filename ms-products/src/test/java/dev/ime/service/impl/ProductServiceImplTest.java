@@ -24,6 +24,7 @@ import dev.ime.exception.ResourceNotFoundException;
 import dev.ime.mapper.impl.ProductMapper;
 import dev.ime.repository.CategoryRepository;
 import dev.ime.repository.ProductRepository;
+import dev.ime.tool.Checker;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -37,6 +38,9 @@ class ProductServiceImplTest {
 	
 	@Mock
 	private CategoryRepository categoryRepo;
+	
+	@Mock
+	private Checker checker;
 	
 	@InjectMocks
 	private ProductServiceImpl productService;
@@ -278,7 +282,8 @@ class ProductServiceImplTest {
 
 	@Test
 	void ProductServiceImpl_delete_ReturnIntOk() {
-		
+
+		Mockito.when(checker.checkProductId(Mockito.anyLong())).thenReturn(false);
 		Mockito.doNothing().when(productRepo).deleteById(Mockito.anyLong());
 		Mockito.when(productRepo.findById(Mockito.anyLong())).thenReturn(Optional.empty());
 		
@@ -296,6 +301,7 @@ class ProductServiceImplTest {
 	@Test
 	void ProductServiceImpl_delete_ReturnIntFail() {
 		
+		Mockito.when(checker.checkProductId(Mockito.anyLong())).thenReturn(false);
 		Mockito.doNothing().when(productRepo).deleteById(Mockito.anyLong());
 		Mockito.when(productRepo.findById(Mockito.anyLong())).thenReturn(Optional.of(proTest));
 		
