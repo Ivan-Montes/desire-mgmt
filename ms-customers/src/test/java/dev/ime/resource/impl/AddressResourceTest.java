@@ -84,7 +84,7 @@ class AddressResourceTest {
 		Mockito.when(addressService.getAll()).thenReturn(addresses);
 		
 		mockMvc.perform(MockMvcRequestBuilders.get(path))
-		.andExpect(MockMvcResultMatchers.status().isNoContent())
+		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.empty()))
 		;
@@ -156,7 +156,7 @@ class AddressResourceTest {
 		Mockito.when(addressService.getById(Mockito.anyLong())).thenReturn(Optional.empty());
 
 		mockMvc.perform(MockMvcRequestBuilders.get(path + "/{id}", addressId))
-		.andExpect(MockMvcResultMatchers.status().isNotFound())
+		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.id",  org.hamcrest.Matchers.equalTo(0)))
 		;
@@ -191,7 +191,7 @@ class AddressResourceTest {
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(addressTestDto))
 				)
-		.andExpect(MockMvcResultMatchers.status().isNotFound())
+		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.id",  org.hamcrest.Matchers.equalTo(0)))
 		;		
@@ -226,7 +226,7 @@ class AddressResourceTest {
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(addressTestDto))
 				)
-		.andExpect(MockMvcResultMatchers.status().isNotFound())
+		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.id",  org.hamcrest.Matchers.equalTo(0)))
 		;		
@@ -251,7 +251,7 @@ class AddressResourceTest {
 		Mockito.when(addressService.delete(Mockito.anyLong())).thenReturn(1);
 		
 		mockMvc.perform(MockMvcRequestBuilders.delete(path + "/{id}", addressId))	
-		.andExpect(MockMvcResultMatchers.status().isNotFound())
+		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$").exists())
 		.andExpect(MockMvcResultMatchers.jsonPath("$").isBoolean())
 		.andExpect(MockMvcResultMatchers.jsonPath("$").value(false))		
@@ -277,7 +277,7 @@ class AddressResourceTest {
 		Mockito.when(addressService.setCustomer(Mockito.anyLong(), Mockito.anyLong())).thenReturn(false);
 		
 		mockMvc.perform(MockMvcRequestBuilders.put(path + "/{addressId}/customers/{customerId}", addressId, customerId))
-		.andExpect(MockMvcResultMatchers.status().isNotFound())
+		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$").exists())
 		.andExpect(MockMvcResultMatchers.jsonPath("$").isBoolean())
 		.andExpect(MockMvcResultMatchers.jsonPath("$").value(false))	

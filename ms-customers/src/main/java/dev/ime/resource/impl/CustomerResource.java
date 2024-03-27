@@ -61,7 +61,7 @@ public class CustomerResource implements GenericResource<CustomerDto>, CustomerS
 			list = customerService.getAll();
 		}
 		
-		return list.isEmpty()? new ResponseEntity<>(Collections.emptyList(), HttpStatus.NO_CONTENT):
+		return list.isEmpty()? new ResponseEntity<>(Collections.emptyList(), HttpStatus.OK):
 								new ResponseEntity<>(customerMapper.toListDto(list), HttpStatus.OK);
 	}
 	
@@ -73,7 +73,7 @@ public class CustomerResource implements GenericResource<CustomerDto>, CustomerS
 		Optional<Customer> opt = customerService.getById(id);
 		
 		return opt.isPresent()? new ResponseEntity<>(customerMapper.toDto(opt.get()), HttpStatus.OK)
-								: new ResponseEntity<>(new CustomerDto(), HttpStatus.NOT_FOUND);
+								: new ResponseEntity<>(new CustomerDto(), HttpStatus.OK);
 	}
 
 	@PostMapping
@@ -84,7 +84,7 @@ public class CustomerResource implements GenericResource<CustomerDto>, CustomerS
 		Optional<Customer>opt = customerService.create(entity);
 		
 		return opt.isPresent()? new ResponseEntity<>(customerMapper.toDto(opt.get()),HttpStatus.CREATED)
-							: new ResponseEntity<>(new CustomerDto(), HttpStatus.NOT_FOUND);
+							: new ResponseEntity<>(new CustomerDto(), HttpStatus.OK);
 		
 	}
 	
@@ -96,7 +96,7 @@ public class CustomerResource implements GenericResource<CustomerDto>, CustomerS
 		Optional<Customer>opt = customerService.update(id, entity);
 		
 		return opt.isPresent()? new ResponseEntity<>(customerMapper.toDto(opt.get()),HttpStatus.OK)
-				: new ResponseEntity<>(new CustomerDto(), HttpStatus.NOT_FOUND);
+				: new ResponseEntity<>(new CustomerDto(), HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/{id}")
@@ -105,7 +105,7 @@ public class CustomerResource implements GenericResource<CustomerDto>, CustomerS
 	public ResponseEntity<Boolean> delete(@PathVariable Long id) {
 		
 		return customerService.delete(id) == 0 ? new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK)
-				:new ResponseEntity<>(Boolean.FALSE, HttpStatus.NOT_FOUND);
+				:new ResponseEntity<>(Boolean.FALSE, HttpStatus.OK);
 	}
 	
 	@PutMapping("/{customerId}/addresses/{addressId}")
@@ -114,7 +114,7 @@ public class CustomerResource implements GenericResource<CustomerDto>, CustomerS
 	public ResponseEntity<Boolean> addAddress(@PathVariable Long customerId, @PathVariable Long addressId) {
 				
 		return Boolean.TRUE.equals(customerService.addAddress(customerId, addressId))? new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK)
-																: new ResponseEntity<>(Boolean.FALSE,HttpStatus.NOT_FOUND);
+																: new ResponseEntity<>(Boolean.FALSE,HttpStatus.OK);
 	}
 
 	@GetMapping("/{customerId}/addresses")
@@ -128,7 +128,7 @@ public class CustomerResource implements GenericResource<CustomerDto>, CustomerS
 			return new ResponseEntity<>(addressMapper.toListDto(opt.get().getAddresses()), HttpStatus.OK);
 		}
 		
-		return new ResponseEntity<>(addressMapper.toListDto(Collections.emptyList()), HttpStatus.NO_CONTENT);
+		return new ResponseEntity<>(addressMapper.toListDto(Collections.emptyList()), HttpStatus.OK);
 	}
 
 	

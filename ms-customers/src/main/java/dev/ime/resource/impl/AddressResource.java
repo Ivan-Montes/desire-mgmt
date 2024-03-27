@@ -57,7 +57,7 @@ public class AddressResource implements GenericResource<AddressDto>, AddressSpec
 			list = addressService.getAll();
 		}
 		
-		return list.isEmpty()? new ResponseEntity<>(Collections.emptyList(), HttpStatus.NO_CONTENT):
+		return list.isEmpty()? new ResponseEntity<>(Collections.emptyList(), HttpStatus.OK):
 								new ResponseEntity<>(addressMapper.toListDto(list), HttpStatus.OK);
 	}
 
@@ -68,7 +68,7 @@ public class AddressResource implements GenericResource<AddressDto>, AddressSpec
 		Optional<Address> opt = addressService.getById(id);
 		
 		return opt.isPresent()? new ResponseEntity<>(addressMapper.toDto(opt.get()), HttpStatus.OK)
-								: new ResponseEntity<>(new AddressDto(), HttpStatus.NOT_FOUND);
+								: new ResponseEntity<>(new AddressDto(), HttpStatus.OK);
 	}
 
 	@PostMapping
@@ -78,7 +78,7 @@ public class AddressResource implements GenericResource<AddressDto>, AddressSpec
 		Optional<Address>opt = addressService.create(entity);
 		
 		return opt.isPresent()? new ResponseEntity<>(addressMapper.toDto(opt.get()),HttpStatus.CREATED)
-							: new ResponseEntity<>(new AddressDto(), HttpStatus.NOT_FOUND);
+							: new ResponseEntity<>(new AddressDto(), HttpStatus.OK);
 	}
 
 	@PutMapping("/{id}")
@@ -88,7 +88,7 @@ public class AddressResource implements GenericResource<AddressDto>, AddressSpec
 		Optional<Address>opt = addressService.update(id, entity);
 		
 		return opt.isPresent()? new ResponseEntity<>(addressMapper.toDto(opt.get()),HttpStatus.OK)
-				: new ResponseEntity<>(new AddressDto(), HttpStatus.NOT_FOUND);
+				: new ResponseEntity<>(new AddressDto(), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{id}")
@@ -96,7 +96,7 @@ public class AddressResource implements GenericResource<AddressDto>, AddressSpec
 	@Override
 	public ResponseEntity<Boolean> delete(@PathVariable Long id) {
 		return addressService.delete(id) == 0 ? new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK)
-				:new ResponseEntity<>(Boolean.FALSE, HttpStatus.NOT_FOUND);
+				:new ResponseEntity<>(Boolean.FALSE, HttpStatus.OK);
 	}
 	
 	@PutMapping("/{addressId}/customers/{customerId}")
@@ -106,7 +106,7 @@ public class AddressResource implements GenericResource<AddressDto>, AddressSpec
 		
 		return Boolean.TRUE.equals(addressService.setCustomer(addressId, customerId)) ? 
 															new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK)
-															:new ResponseEntity<>(Boolean.FALSE,HttpStatus.NOT_FOUND);
+															:new ResponseEntity<>(Boolean.FALSE,HttpStatus.OK);
 	}
 
 }
