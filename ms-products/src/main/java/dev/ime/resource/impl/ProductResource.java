@@ -60,7 +60,7 @@ public class ProductResource implements GenericResource<ProductDto>, ProductSpec
 			list = productService.getAll();			
 		}
 		
-		return list.isEmpty()? new ResponseEntity<>(Collections.emptyList(),HttpStatus.NO_CONTENT)
+		return list.isEmpty()? new ResponseEntity<>(Collections.emptyList(),HttpStatus.OK)
 				:new ResponseEntity<>(productMapper.toListDto(list), HttpStatus.OK);
 	}
 
@@ -73,7 +73,7 @@ public class ProductResource implements GenericResource<ProductDto>, ProductSpec
 		Optional<Product> opt =  productService.getById(id);
 		
 		return opt.isPresent()? new ResponseEntity<>(productMapper.toDto(opt.get()),HttpStatus.OK)
-				:new ResponseEntity<>(new ProductDto(), HttpStatus.NOT_FOUND);		
+				:new ResponseEntity<>(new ProductDto(), HttpStatus.OK);		
 	}
 
 	@PostMapping
@@ -84,7 +84,7 @@ public class ProductResource implements GenericResource<ProductDto>, ProductSpec
 		Optional<Product> opt =  productService.create(entity);
 		
 		return opt.isPresent()? new ResponseEntity<>(productMapper.toDto(opt.get()),HttpStatus.CREATED)
-				:new ResponseEntity<>(new ProductDto(), HttpStatus.NOT_FOUND);	
+				:new ResponseEntity<>(new ProductDto(), HttpStatus.OK);	
 	}
 
 	@PutMapping("/{id}")
@@ -95,7 +95,7 @@ public class ProductResource implements GenericResource<ProductDto>, ProductSpec
 		Optional<Product> opt =  productService.update(id, entity);
 		
 		return opt.isPresent()? new ResponseEntity<>(productMapper.toDto(opt.get()),HttpStatus.OK)
-				:new ResponseEntity<>(new ProductDto(), HttpStatus.NOT_FOUND);	
+				:new ResponseEntity<>(new ProductDto(), HttpStatus.OK);	
 	}
 
 	@DeleteMapping("/{id}")
@@ -104,7 +104,7 @@ public class ProductResource implements GenericResource<ProductDto>, ProductSpec
 	public ResponseEntity<Boolean> delete(@PathVariable Long id) {		
 		
 		return (productService.delete(id) == 0)? new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK)
-				:new ResponseEntity<>(Boolean.FALSE, HttpStatus.NOT_FOUND);
+				:new ResponseEntity<>(Boolean.FALSE, HttpStatus.OK);
 	}
 
 
@@ -114,7 +114,7 @@ public class ProductResource implements GenericResource<ProductDto>, ProductSpec
 	public ResponseEntity<Boolean> changeCategory(@PathVariable Long productId, @PathVariable Long categoryId) {
 
 		return Boolean.TRUE.equals(productService.changeCategory(productId, categoryId))? new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK)
-				:new ResponseEntity<>(Boolean.FALSE, HttpStatus.NOT_FOUND);
+				:new ResponseEntity<>(Boolean.FALSE, HttpStatus.OK);
 	}
 	
 }

@@ -59,7 +59,7 @@ public class CategoryResource implements GenericResource<CategoryDto>, CategoryS
 			list = categoryService.getAll();			
 		}	
 		
-		return list.isEmpty()? new ResponseEntity<>(Collections.emptyList(), HttpStatus.NO_CONTENT)
+		return list.isEmpty()? new ResponseEntity<>(Collections.emptyList(), HttpStatus.OK)
 				:new ResponseEntity<>(categoryMapper.toListDto(list), HttpStatus.OK);
 	}
 	
@@ -71,7 +71,7 @@ public class CategoryResource implements GenericResource<CategoryDto>, CategoryS
 		Optional<Category> opt = categoryService.getById(id);
 		
 		return opt.isPresent()? new ResponseEntity<>(categoryMapper.toDto(opt.get()),HttpStatus.OK)
-				:new ResponseEntity<>(new CategoryDto(), HttpStatus.NOT_FOUND);	
+				:new ResponseEntity<>(new CategoryDto(), HttpStatus.OK);	
 	}
 	
 	@PostMapping
@@ -82,7 +82,7 @@ public class CategoryResource implements GenericResource<CategoryDto>, CategoryS
 		Optional<Category> opt = categoryService.create(entity);
 		
 		return opt.isPresent()? new ResponseEntity<>(categoryMapper.toDto(opt.get()),HttpStatus.CREATED)
-				:new ResponseEntity<>(new CategoryDto(), HttpStatus.NOT_FOUND);	
+				:new ResponseEntity<>(new CategoryDto(), HttpStatus.OK);	
 	}
 	
 	@PutMapping("/{id}")
@@ -93,7 +93,7 @@ public class CategoryResource implements GenericResource<CategoryDto>, CategoryS
 		Optional<Category> opt = categoryService.update(id, entity);
 		
 		return opt.isPresent()? new ResponseEntity<>(categoryMapper.toDto(opt.get()),HttpStatus.OK)
-				:new ResponseEntity<>(new CategoryDto(), HttpStatus.NOT_FOUND);	
+				:new ResponseEntity<>(new CategoryDto(), HttpStatus.OK);	
 	}
 
 	@DeleteMapping("/{id}")
@@ -102,7 +102,7 @@ public class CategoryResource implements GenericResource<CategoryDto>, CategoryS
 	public ResponseEntity<Boolean> delete(@PathVariable Long id) {
 		
 		return (categoryService.delete(id) == 0)? new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK)
-				:new ResponseEntity<>(Boolean.FALSE, HttpStatus.NOT_FOUND);
+				:new ResponseEntity<>(Boolean.FALSE, HttpStatus.OK);
 	}
 
 	@PutMapping("/{categoryId}/products/{productId}")
@@ -110,7 +110,7 @@ public class CategoryResource implements GenericResource<CategoryDto>, CategoryS
 	@Operation(summary="Add a Category in a Product", description="Add a Product in a Category, @return an object Response with a message")
 	public ResponseEntity<Boolean> addProductToCategory(@PathVariable Long categoryId, @PathVariable Long productId) {
 		return Boolean.TRUE.equals(categoryService.addProductToCategory(categoryId, productId))? new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK)
-				:new ResponseEntity<>(Boolean.FALSE, HttpStatus.NOT_FOUND);
+				:new ResponseEntity<>(Boolean.FALSE, HttpStatus.OK);
 	}
 	
 }
