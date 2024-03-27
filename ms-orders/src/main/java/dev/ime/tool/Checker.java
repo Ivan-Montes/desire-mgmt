@@ -1,6 +1,7 @@
 package dev.ime.tool;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,16 +47,22 @@ public class Checker {
 	}
 	
 	public boolean checkCustomerId(Long customerId) {
-		
-		ResponseEntity<CustomerDto> response = msCustomersClient.getCustomerById(customerId);
-		return response.getStatusCode() == HttpStatus.OK;
-		
+
+		Optional<CustomerDto> optionalDto = Optional.ofNullable(msCustomersClient.getCustomerById(customerId))
+			    .filter(response -> response.getStatusCode() == HttpStatus.OK)
+			    .map(ResponseEntity::getBody);
+
+		return optionalDto.map(dto -> dto.id() > 0).orElse(false);
+	
 	}
 	
     public boolean checkProductId(Long productId) {
     
-		ResponseEntity<ProductDto> response = msProductsClient.getProductById(productId);
-		return response.getStatusCode() == HttpStatus.OK;
+		Optional<ProductDto> optionalDto = Optional.ofNullable(msProductsClient.getProductById(productId))
+			    .filter(response -> response.getStatusCode() == HttpStatus.OK)
+			    .map(ResponseEntity::getBody);
+
+		return optionalDto.map(dto -> dto.productId() > 0).orElse(false);
 		
 	}
     

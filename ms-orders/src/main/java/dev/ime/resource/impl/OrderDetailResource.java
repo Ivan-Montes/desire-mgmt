@@ -60,7 +60,7 @@ public class OrderDetailResource implements GenericResource<OrderDetailDto>, Ord
 			list = orderDetailService.getAll();			
 		}	
 		
-		return list.isEmpty()? new ResponseEntity<>(Collections.emptyList(), HttpStatus.NO_CONTENT)
+		return list.isEmpty()? new ResponseEntity<>(Collections.emptyList(), HttpStatus.OK)
 				:new ResponseEntity<>(orderDetailMapper.toListDto(list), HttpStatus.OK);
 	}
 
@@ -72,7 +72,7 @@ public class OrderDetailResource implements GenericResource<OrderDetailDto>, Ord
 		Optional<OrderDetail> opt = orderDetailService.getById(id);
 		
 		return opt.isPresent()? new ResponseEntity<>(orderDetailMapper.toDto(opt.get()),HttpStatus.OK)
-				:new ResponseEntity<>(new OrderDetailDto(), HttpStatus.NOT_FOUND);
+				:new ResponseEntity<>(new OrderDetailDto(), HttpStatus.OK);
 	}
 	
 	@PostMapping
@@ -83,7 +83,7 @@ public class OrderDetailResource implements GenericResource<OrderDetailDto>, Ord
 		Optional<OrderDetail> opt = orderDetailService.create(entity);
 		
 		return opt.isPresent()? new ResponseEntity<>(orderDetailMapper.toDto(opt.get()),HttpStatus.CREATED)
-				:new ResponseEntity<>(new OrderDetailDto(), HttpStatus.NOT_FOUND);
+				:new ResponseEntity<>(new OrderDetailDto(), HttpStatus.OK);
 	}
 
 	@PutMapping("/{id}")
@@ -94,7 +94,7 @@ public class OrderDetailResource implements GenericResource<OrderDetailDto>, Ord
 		Optional<OrderDetail> opt = orderDetailService.update(id, entity);		
 
 		return opt.isPresent()? new ResponseEntity<>(orderDetailMapper.toDto(opt.get()),HttpStatus.OK)
-				:new ResponseEntity<>(new OrderDetailDto(), HttpStatus.NOT_FOUND);
+				:new ResponseEntity<>(new OrderDetailDto(), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{id}")
@@ -103,7 +103,7 @@ public class OrderDetailResource implements GenericResource<OrderDetailDto>, Ord
 	public ResponseEntity<Boolean> delete(@PathVariable Long id) {
 		
 		return orderDetailService.delete(id) == 0 ? new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK)
-				:new ResponseEntity<>(Boolean.FALSE, HttpStatus.NOT_FOUND);
+				:new ResponseEntity<>(Boolean.FALSE, HttpStatus.OK);
 	}
 
 	@PutMapping("/{orderDetailId}/orders/{orderId}")
@@ -112,7 +112,7 @@ public class OrderDetailResource implements GenericResource<OrderDetailDto>, Ord
 	public ResponseEntity<Boolean> setOrder(@PathVariable Long orderDetailId, @PathVariable Long orderId) {
 		
 		return Boolean.TRUE.equals(orderDetailService.setOrder(orderDetailId, orderId))? new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK)
-				:new ResponseEntity<>(Boolean.FALSE, HttpStatus.NOT_FOUND);
+				:new ResponseEntity<>(Boolean.FALSE, HttpStatus.OK);
 	}
 
 	@PutMapping("/products/{productId}")
@@ -121,7 +121,7 @@ public class OrderDetailResource implements GenericResource<OrderDetailDto>, Ord
 	public ResponseEntity<Boolean> getAnyByProductId(@PathVariable Long productId) {
 		
 		return Boolean.TRUE.equals(orderDetailService.getAnyByProductId(productId))? new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK)
-				:new ResponseEntity<>(Boolean.FALSE, HttpStatus.NOT_FOUND);
+				:new ResponseEntity<>(Boolean.FALSE, HttpStatus.OK);
 	}
 
 }

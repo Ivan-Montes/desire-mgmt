@@ -29,7 +29,20 @@ class CheckerTest {
 	@Mock
 	private MsCustomersClientImpl msCustomersClient;
 
-	
+
+	private final Long customerId = 4L;
+	private final String companyName = "Konohagakure";
+	private final String contactName = "Kakashi";
+	private CustomerDto customerTestDto = new CustomerDto(customerId, companyName, contactName);	
+
+	private Long proId = 77L;
+	private String proName = "Yukine";
+	private Double unitPrice;
+	private Integer unitInStock = 13;
+	private Boolean discontinued = false;
+	private Long catId = 43L;
+	private ProductDto proTestDto = new ProductDto(proId, proName, unitPrice, unitInStock, discontinued, catId);
+
 	@Test
 	void Checker_localDateFormat_ReturnBooleans() {
 		
@@ -62,6 +75,7 @@ class CheckerTest {
 		ResponseEntity<ProductDto> responseTest = Mockito.mock(ResponseEntity.class);		
 		Mockito.when(msProductsClient.getProductById(Mockito.anyLong())).thenReturn(responseTest);
 		Mockito.when(responseTest.getStatusCode()).thenReturn(HttpStatus.OK);
+		Mockito.when(responseTest.getBody()).thenReturn(proTestDto);
 		
 		boolean resultValue = checker.checkProductId(1L);
 		
@@ -87,12 +101,12 @@ class CheckerTest {
 	
 	@Test
 	void Checker_checkCustomerId_ReturnBooleanTrue() {
-		
+
 		@SuppressWarnings("unchecked")
 		ResponseEntity<CustomerDto> responseTest = Mockito.mock(ResponseEntity.class);		
 		Mockito.when(msCustomersClient.getCustomerById(Mockito.anyLong())).thenReturn(responseTest);
 		Mockito.when(responseTest.getStatusCode()).thenReturn(HttpStatus.OK);
-		
+		Mockito.when(responseTest.getBody()).thenReturn(customerTestDto);
 		boolean resultValue = checker.checkCustomerId(1L);
 		
 		org.junit.jupiter.api.Assertions.assertAll(

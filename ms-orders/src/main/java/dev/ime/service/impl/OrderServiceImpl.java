@@ -58,7 +58,7 @@ public class OrderServiceImpl implements GenericService<Order,OrderDto>, OrderSp
 	public Optional<Order> create(OrderDto dto) {
 		
 		if ( !checker.localDateValid( dto.orderDate() ) ) throw new DateBadFormatException( Map.of(SomeConstants.DATEFORMAT, String.valueOf(dto.orderDate() ) ) ); 
-		//Check customerId feign
+		
 		if ( !checker.checkCustomerId(dto.customerId() ) ) throw new ResourceNotFoundException( Map.of(SomeConstants.CUSTOMERID, String.valueOf(dto.customerId() ) ) );
 		
 		Order o = orderMapper.fromDto(dto);
@@ -71,7 +71,7 @@ public class OrderServiceImpl implements GenericService<Order,OrderDto>, OrderSp
 		Order o = orderRepo.findById(id).orElseThrow( () -> new ResourceNotFoundException(Map.of(SomeConstants.ORDERID, String.valueOf(id) ) ) );
 
 		if ( !checker.localDateValid( dto.orderDate() ) ) throw new DateBadFormatException( Map.of(SomeConstants.DATEFORMAT, String.valueOf(dto.orderDate() ) ) ); 
-		//Check customerId feign
+		
 		if ( !checker.checkCustomerId(dto.customerId() ) ) throw new ResourceNotFoundException( Map.of(SomeConstants.CUSTOMERID, String.valueOf(dto.customerId() ) ) );
 		
 		o.setCustomerId(dto.customerId());

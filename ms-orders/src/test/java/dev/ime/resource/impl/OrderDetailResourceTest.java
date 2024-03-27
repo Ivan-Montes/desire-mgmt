@@ -84,7 +84,7 @@ class OrderDetailResourceTest {
 		Mockito.when(orderDetailService.getAll()).thenReturn(orderDetails);
 		
 		mockMvc.perform(MockMvcRequestBuilders.get(path))
-		.andExpect(MockMvcResultMatchers.status().isNoContent())
+		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.empty()))
 		;
@@ -142,7 +142,7 @@ class OrderDetailResourceTest {
 		Mockito.when(orderDetailService.getById(Mockito.anyLong())).thenReturn(Optional.empty());
 
 		mockMvc.perform(MockMvcRequestBuilders.get(path + "/{id}", orderDetailId))
-		.andExpect(MockMvcResultMatchers.status().isNotFound())
+		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.orderDetailId", org.hamcrest.Matchers.equalTo(0)))
 		;
@@ -175,7 +175,7 @@ class OrderDetailResourceTest {
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(orderDetailDto))
 				)
-		.andExpect(MockMvcResultMatchers.status().isNotFound())
+		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.orderDetailId", org.hamcrest.Matchers.equalTo(0)))
 		;
@@ -209,7 +209,7 @@ class OrderDetailResourceTest {
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(orderDetailDto))
 				)
-		.andExpect(MockMvcResultMatchers.status().isNotFound())
+		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.orderDetailId", org.hamcrest.Matchers.equalTo(0)))
 		;
@@ -234,7 +234,7 @@ class OrderDetailResourceTest {
 		Mockito.when(orderDetailService.delete(Mockito.anyLong())).thenReturn(1);
 		
 		mockMvc.perform(MockMvcRequestBuilders.delete(path + "/{id}", orderDetailId))
-		.andExpect(MockMvcResultMatchers.status().isNotFound())
+		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$").exists())
 		.andExpect(MockMvcResultMatchers.jsonPath("$").isBoolean())
 		.andExpect(MockMvcResultMatchers.jsonPath("$").value(false))
@@ -260,7 +260,7 @@ class OrderDetailResourceTest {
 		Mockito.when(orderDetailService.setOrder(Mockito.anyLong(),Mockito.anyLong())).thenReturn(false);
 		
 		mockMvc.perform(MockMvcRequestBuilders.put(path + "/{orderDetailId}/orders/{orderId}", orderDetailId, orderId))
-		.andExpect(MockMvcResultMatchers.status().isNotFound())
+		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$").exists())
 		.andExpect(MockMvcResultMatchers.jsonPath("$").isBoolean())
 		.andExpect(MockMvcResultMatchers.jsonPath("$").value(false))
@@ -286,7 +286,7 @@ class OrderDetailResourceTest {
 		Mockito.when(orderDetailService.getAnyByProductId(Mockito.anyLong())).thenReturn(false);
 		
 		mockMvc.perform(MockMvcRequestBuilders.put(path + "/products/{productId}", productId))
-		.andExpect(MockMvcResultMatchers.status().isNotFound())
+		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$").exists())
 		.andExpect(MockMvcResultMatchers.jsonPath("$").isBoolean())
 		.andExpect(MockMvcResultMatchers.jsonPath("$").value(false))

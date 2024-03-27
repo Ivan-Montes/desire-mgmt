@@ -95,7 +95,7 @@ class OrderResourceTest {
 		Mockito.when(orderService.getAll()).thenReturn(orders);
 		
 		mockMvc.perform(MockMvcRequestBuilders.get(path))
-		.andExpect(MockMvcResultMatchers.status().isNoContent())
+		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.empty()))
 		;		
@@ -156,7 +156,7 @@ class OrderResourceTest {
 		Mockito.when(orderService.getById(Mockito.anyLong())).thenReturn(Optional.empty());
 
 		mockMvc.perform(MockMvcRequestBuilders.get(path + "/{id}", orderId))
-		.andExpect(MockMvcResultMatchers.status().isNotFound())
+		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.orderId",  org.hamcrest.Matchers.equalTo(0)))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.customerId",  org.hamcrest.Matchers.equalTo(0)))
@@ -189,7 +189,7 @@ class OrderResourceTest {
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(orderDtoTest))
 				)
-		.andExpect(MockMvcResultMatchers.status().isNotFound())
+		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.orderId",  org.hamcrest.Matchers.equalTo(0)))
@@ -224,7 +224,7 @@ class OrderResourceTest {
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(orderDtoTest))
 				)
-		.andExpect(MockMvcResultMatchers.status().isNotFound())
+		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.orderId",  org.hamcrest.Matchers.equalTo(0)))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.customerId",  org.hamcrest.Matchers.equalTo(0)))
@@ -250,7 +250,7 @@ class OrderResourceTest {
 		Mockito.when(orderService.delete(Mockito.anyLong())).thenReturn(1);
 		
 		mockMvc.perform(MockMvcRequestBuilders.delete(path + "/{id}", orderId))
-		.andExpect(MockMvcResultMatchers.status().isNotFound())
+		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$").exists())
 		.andExpect(MockMvcResultMatchers.jsonPath("$").isBoolean())
 		.andExpect(MockMvcResultMatchers.jsonPath("$").value(false))		
@@ -276,7 +276,7 @@ class OrderResourceTest {
 		Mockito.when(orderService.addOrderDetail(Mockito.anyLong(),Mockito.anyLong())).thenReturn(false);
 
 		mockMvc.perform(MockMvcRequestBuilders.put(path + "/{orderId}/orderdetails/{orderDetailId}", orderId, orderDetailId))
-		.andExpect(MockMvcResultMatchers.status().isNotFound())
+		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$").exists())
 		.andExpect(MockMvcResultMatchers.jsonPath("$").isBoolean())
 		.andExpect(MockMvcResultMatchers.jsonPath("$").value(false))		
@@ -306,7 +306,7 @@ class OrderResourceTest {
 		Mockito.when(orderService.getById(Mockito.anyLong())).thenReturn(Optional.empty());
 		
 		mockMvc.perform(MockMvcRequestBuilders.get(path + "/{orderId}" + "/orderdetails", orderId))
-		.andExpect(MockMvcResultMatchers.status().isNotFound())
+		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.empty()))
 		;
@@ -318,7 +318,7 @@ class OrderResourceTest {
 		Mockito.when(orderService.getById(Mockito.anyLong())).thenReturn(Optional.of(orderTest));
 		
 		mockMvc.perform(MockMvcRequestBuilders.get(path + "/{orderId}" + "/orderdetails", orderId))
-		.andExpect(MockMvcResultMatchers.status().isNotFound())
+		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.empty()))
 		;
