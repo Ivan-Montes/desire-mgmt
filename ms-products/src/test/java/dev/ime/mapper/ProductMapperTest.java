@@ -45,7 +45,7 @@ class ProductMapperTest {
 		proTest.setDiscontinued(discontinued);
 		proTest.setCategory(catTest);
 		
-		proDto = new ProductDto(proId, proName, unitPrice, unitInStock, false, catId);
+		proDto = new ProductDto(proId, proName, unitPrice, unitInStock, discontinued, catId);
 	}
 	
 	@Test

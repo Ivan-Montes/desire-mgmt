@@ -283,7 +283,7 @@ class ProductServiceImplTest {
 	@Test
 	void ProductServiceImpl_delete_ReturnIntOk() {
 
-		Mockito.when(checker.checkProductId(Mockito.anyLong())).thenReturn(false);
+		Mockito.when(checker.checkGetAnyByProductId(Mockito.anyLong())).thenReturn(false);
 		Mockito.doNothing().when(productRepo).deleteById(Mockito.anyLong());
 		Mockito.when(productRepo.findById(Mockito.anyLong())).thenReturn(Optional.empty());
 		
@@ -301,7 +301,7 @@ class ProductServiceImplTest {
 	@Test
 	void ProductServiceImpl_delete_ReturnIntFail() {
 		
-		Mockito.when(checker.checkProductId(Mockito.anyLong())).thenReturn(false);
+		Mockito.when(checker.checkGetAnyByProductId(Mockito.anyLong())).thenReturn(false);
 		Mockito.doNothing().when(productRepo).deleteById(Mockito.anyLong());
 		Mockito.when(productRepo.findById(Mockito.anyLong())).thenReturn(Optional.of(proTest));
 		

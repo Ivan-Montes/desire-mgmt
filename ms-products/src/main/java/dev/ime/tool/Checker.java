@@ -1,5 +1,7 @@
 package dev.ime.tool;
 
+import java.util.Optional;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -16,10 +18,13 @@ public class Checker {
 		this.msOrdersClient = msOrdersClient;
 	}
 
-    public boolean checkProductId(Long productId) {
+    public boolean checkGetAnyByProductId(Long productId) {
     
-		ResponseEntity<Boolean> response = msOrdersClient.getAnyByProductId(productId);
-		return response.getStatusCode() == HttpStatus.OK;
+		Optional<Boolean> optionalDto = Optional.ofNullable(msOrdersClient.getAnyByProductId(productId))
+			    .filter(response -> response.getStatusCode() == HttpStatus.OK)
+			    .map(ResponseEntity::getBody);
+
+		return optionalDto.orElse(false);
 		
 	}
     

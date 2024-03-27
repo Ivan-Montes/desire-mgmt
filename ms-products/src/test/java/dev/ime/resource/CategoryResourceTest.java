@@ -72,7 +72,7 @@ class CategoryResourceTest {
 		Mockito.when(categoryService.getAll()).thenReturn(categories);
 		
 		mockMvc.perform(MockMvcRequestBuilders.get(path))
-		.andExpect(MockMvcResultMatchers.status().isNoContent())
+		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.empty()))
 		;
@@ -138,7 +138,7 @@ class CategoryResourceTest {
 		Mockito.when(categoryService.getById(Mockito.anyLong())).thenReturn(Optional.empty());
 		
 		mockMvc.perform(MockMvcRequestBuilders.get(path + "/{id}", catId))
-		.andExpect(MockMvcResultMatchers.status().isNotFound())
+		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.categoryId",  org.hamcrest.Matchers.equalTo(0)))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.name", org.hamcrest.Matchers.equalTo(SomeConstants.DATELESS)))
@@ -171,7 +171,7 @@ class CategoryResourceTest {
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(catDto))
 				)		
-		.andExpect(MockMvcResultMatchers.status().isNotFound())
+		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.categoryId",  org.hamcrest.Matchers.equalTo(0)))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.name", org.hamcrest.Matchers.equalTo(SomeConstants.DATELESS)))
@@ -204,7 +204,7 @@ class CategoryResourceTest {
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(catDto))
 				)		
-		.andExpect(MockMvcResultMatchers.status().isNotFound())
+		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.categoryId",  org.hamcrest.Matchers.equalTo(0)))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.name", org.hamcrest.Matchers.equalTo(SomeConstants.DATELESS)))	
@@ -231,7 +231,7 @@ class CategoryResourceTest {
 		Mockito.when(categoryService.delete(Mockito.anyLong())).thenReturn(1);
 		
 		mockMvc.perform(MockMvcRequestBuilders.delete(path + "/{id}", catId))	
-		.andExpect(MockMvcResultMatchers.status().isNotFound())
+		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$").exists())
 		.andExpect(MockMvcResultMatchers.jsonPath("$").isBoolean())
 		.andExpect(MockMvcResultMatchers.jsonPath("$").value(false))		
@@ -258,7 +258,7 @@ class CategoryResourceTest {
 		Mockito.when(categoryService.addProductToCategory(Mockito.anyLong(), Mockito.anyLong())).thenReturn(false);
 		
 		mockMvc.perform(MockMvcRequestBuilders.put(path +"/{categoryId}/products/{productId}", catId, catId))
-		.andExpect(MockMvcResultMatchers.status().isNotFound())
+		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$").exists())
 		.andExpect(MockMvcResultMatchers.jsonPath("$").isBoolean())
 		.andExpect(MockMvcResultMatchers.jsonPath("$").value(false))

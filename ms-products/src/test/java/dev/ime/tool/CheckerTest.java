@@ -40,10 +40,9 @@ class CheckerTest {
 		
 		Mockito.when(msOrdersClient.getAnyByProductId(Mockito.anyLong())).thenReturn(responseEntityBooleanTrue);
 		
-		boolean resultValue = checker.checkProductId(2L);
+		boolean resultValue = checker.checkGetAnyByProductId(2L);
 		
 		org.junit.jupiter.api.Assertions.assertAll(
-				()-> Assertions.assertThat(resultValue).isNotNull(),
 				()-> Assertions.assertThat(resultValue).isTrue()
 				);
 	}
@@ -53,10 +52,9 @@ class CheckerTest {
 		
 		Mockito.when(msOrdersClient.getAnyByProductId(Mockito.anyLong())).thenReturn(responseEntityBooleanFalse);
 		
-		boolean resultValue = checker.checkProductId(2L);
+		boolean resultValue = checker.checkGetAnyByProductId(2L);
 		
 		org.junit.jupiter.api.Assertions.assertAll(
-				()-> Assertions.assertThat(resultValue).isNotNull(),
 				()-> Assertions.assertThat(resultValue).isFalse()
 				);
 	}

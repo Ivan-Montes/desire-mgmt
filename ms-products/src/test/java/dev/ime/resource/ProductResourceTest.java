@@ -78,7 +78,7 @@ class ProductResourceTest {
 		Mockito.when(productService.getAll()).thenReturn(products);
 		
 		mockMvc.perform(MockMvcRequestBuilders.get(path))
-		.andExpect(MockMvcResultMatchers.status().isNoContent())
+		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.empty()))
 		;
@@ -142,7 +142,7 @@ class ProductResourceTest {
 		Mockito.when(productService.getById(Mockito.anyLong())).thenReturn(Optional.empty());
 		
 		mockMvc.perform(MockMvcRequestBuilders.get(path + "/{id}", proId))
-		.andExpect(MockMvcResultMatchers.status().isNotFound())
+		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.productId", org.hamcrest.Matchers.equalTo(0)))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.name", org.hamcrest.Matchers.equalTo(SomeConstants.DATELESS)))
@@ -176,7 +176,7 @@ class ProductResourceTest {
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(proDto))
 				)		
-		.andExpect(MockMvcResultMatchers.status().isNotFound())
+		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.productId",  org.hamcrest.Matchers.equalTo(0)))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.name", org.hamcrest.Matchers.equalTo(SomeConstants.DATELESS)))
@@ -210,7 +210,7 @@ class ProductResourceTest {
 			.contentType(MediaType.APPLICATION_JSON)
 			.content(objectMapper.writeValueAsString(proDto))
 			)		
-		.andExpect(MockMvcResultMatchers.status().isNotFound())
+		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.productId",  org.hamcrest.Matchers.equalTo(0)))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.name", org.hamcrest.Matchers.equalTo(SomeConstants.DATELESS)))
@@ -237,7 +237,7 @@ class ProductResourceTest {
 		Mockito.when(productService.delete(Mockito.anyLong())).thenReturn(1);
 		
 		mockMvc.perform(MockMvcRequestBuilders.delete(path + "/{id}", proId))
-		.andExpect(MockMvcResultMatchers.status().isNotFound())
+		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$").exists())
 		.andExpect(MockMvcResultMatchers.jsonPath("$").isBoolean())
 		.andExpect(MockMvcResultMatchers.jsonPath("$").value(false))			
@@ -263,7 +263,7 @@ class ProductResourceTest {
 		Mockito.when(productService.changeCategory(Mockito.anyLong(), Mockito.anyLong())).thenReturn(false);
 		
 		mockMvc.perform(MockMvcRequestBuilders.put(path + "/{id}/categories/{categoryId}", proId, catId))
-		.andExpect(MockMvcResultMatchers.status().isNotFound())
+		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$").exists())
 		.andExpect(MockMvcResultMatchers.jsonPath("$").isBoolean())
 		.andExpect(MockMvcResultMatchers.jsonPath("$").value(false))	

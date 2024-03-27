@@ -88,7 +88,7 @@ public class ProductServiceImpl implements GenericService<Product, ProductDto>, 
 	@Override
 	public Integer delete(Long id) {
 		
-		if ( checker.checkProductId(id) ) {
+		if ( checker.checkGetAnyByProductId(id) ) {
 			return 1;
 		}
 		productRepo.deleteById(id);		
