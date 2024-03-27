@@ -30,10 +30,10 @@ public class GlobalExceptionHandler {
 
 	@Operation( summary = "Basic Exception", description = "Several implementations of it")
 	@ExceptionHandler({
-			dev.ime.exception.BasicException.class,
 			dev.ime.exception.ResourceNotFoundException.class,
 			dev.ime.exception.EntityAssociatedException.class,
-			dev.ime.exception.DateBadFormatException.class
+			dev.ime.exception.DateBadFormatException.class,
+			dev.ime.exception.BasicException.class
 			})
 	public ResponseEntity<ExceptionResponse> basicException(BasicException ex){
 
@@ -65,7 +65,7 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(org.springframework.web.method.annotation.MethodArgumentTypeMismatchException.class)
 	public ResponseEntity<ExceptionResponse>methodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex){
 
-		logger.severe("Lauch " + SomeConstants.EX_METHOD_ARGUMENT_TYPE);
+		logger.severe("Launch " + SomeConstants.EX_METHOD_ARGUMENT_TYPE);
 		String attrName = ex.getName();
 		String typeName = "Unknown type";				
 		Class<?> requiredType = ex.getRequiredType();
@@ -92,5 +92,16 @@ public class GlobalExceptionHandler {
 				Map.of( ex.getLocalizedMessage(), ex.getMessage())  ),
 				HttpStatus.BAD_REQUEST );
 	}	
-	
+
+	@Operation( summary = SomeConstants.EX_EX, description = " A GeneralException")
+	@ExceptionHandler(Exception.class)		
+	public ResponseEntity<ExceptionResponse> generalException(Exception ex){
+
+		logger.severe("Spit "+ SomeConstants.EX_EX);
+		return new ResponseEntity<>( new ExceptionResponse( UUID.randomUUID(),
+				SomeConstants.EX_EX,
+				"Whats wrong McFly?, you Chicken got GeneralException",
+				Map.of( ex.getLocalizedMessage(), ex.getMessage())  ),
+				HttpStatus.BAD_REQUEST );
+	}	
 }
