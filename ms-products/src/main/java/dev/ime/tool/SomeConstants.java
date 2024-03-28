@@ -25,6 +25,7 @@ public class SomeConstants {
 
 	public static final String EX_RESOURCE_NOT_FOUND = "ResourceNotFoundException";	
 	public static final String EX_ENTITY_ASSOCIATED = "EntityAssociatedException";	
+	public static final String EX_ENTITY_ASSOCIATED_DESC = "Some entity is still associated in the element";	
 	public static final String EX_DATE_BAD = "DateBadFormatException";
 	public static final String EX_ATTR_UNIQUE = "AttributeUniqueException";	
 	public static final String EX_METHOD_ARGUMENT_INVALID = "MethodArgumentNotValidException";

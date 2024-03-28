@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import dev.ime.dto.ProductDto;
@@ -42,7 +43,7 @@ public class ProductServiceImpl implements GenericService<Product, ProductDto>, 
 
 	@Override
 	public List<Product> getAll() {		
-		return productRepo.findAll();
+		return productRepo.findAll(Sort.by("id"));
 	}
 
 	@Override

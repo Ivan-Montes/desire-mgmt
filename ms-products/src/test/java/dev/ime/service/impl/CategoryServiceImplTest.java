@@ -15,6 +15,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 import dev.ime.dto.CategoryDto;
 import dev.ime.entity.Category;
@@ -69,7 +70,7 @@ class CategoryServiceImplTest {
 	void CategoryServiceImpl_getAll_ReturnListCategory() {
 		
 		categories.add(catTest);
-		Mockito.when(categoryRepo.findAll()).thenReturn(categories);
+		Mockito.when(categoryRepo.findAll(Mockito.any(Sort.class))).thenReturn(categories);
 		
 		List<Category>list = categoryService.getAll();
 		
@@ -79,7 +80,7 @@ class CategoryServiceImplTest {
 				()-> Assertions.assertThat(list).hasSize(1),
 				()-> Assertions.assertThat(list.get(0).getId()).isEqualTo(catId)
 				);
-		Mockito.verify(categoryRepo, Mockito.times(1)).findAll();
+		Mockito.verify(categoryRepo, Mockito.times(1)).findAll(Mockito.any(Sort.class));
 	}
 
 	@Test	

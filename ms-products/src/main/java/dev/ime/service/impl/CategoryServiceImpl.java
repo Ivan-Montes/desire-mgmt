@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import dev.ime.dto.CategoryDto;
@@ -38,7 +39,7 @@ public class CategoryServiceImpl implements GenericService<Category, CategoryDto
 
 	@Override
 	public List<Category> getAll() {
-		return categoryRepo.findAll();
+		return categoryRepo.findAll(Sort.by("id"));
 	}
 
 	@Override

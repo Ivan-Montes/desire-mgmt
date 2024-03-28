@@ -15,6 +15,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 import dev.ime.dto.ProductDto;
 import dev.ime.entity.Category;
@@ -83,7 +84,7 @@ class ProductServiceImplTest {
 	void ProductServiceImpl_getAll_ReturnListProduct() {
 		
 		products.add(proTest);
-		Mockito.when(productRepo.findAll()).thenReturn(products);
+		Mockito.when(productRepo.findAll(Sort.by("id"))).thenReturn(products);
 		
 		List<Product>list = productService.getAll();
 		
@@ -93,7 +94,7 @@ class ProductServiceImplTest {
 				()-> Assertions.assertThat(list).hasSize(1),
 				()-> Assertions.assertThat(list.get(0).getId()).isEqualTo(proId)
 				);
-		Mockito.verify(productRepo, Mockito.times(1)).findAll();
+		Mockito.verify(productRepo, Mockito.times(1)).findAll(Sort.by("id"));
 	}
 	
 
