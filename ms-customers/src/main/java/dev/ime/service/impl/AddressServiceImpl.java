@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import dev.ime.dto.AddressDto;
@@ -35,7 +36,7 @@ public class AddressServiceImpl implements GenericService<Address,AddressDto>, A
 
 	@Override
 	public List<Address> getAll() {
-		return addressRepo.findAll();
+		return addressRepo.findAll(Sort.by("id"));
 	}
 
 	@Override

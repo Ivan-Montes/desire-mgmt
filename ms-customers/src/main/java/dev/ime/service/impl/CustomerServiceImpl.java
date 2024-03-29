@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import dev.ime.dto.CustomerDto;
@@ -35,7 +36,7 @@ public class CustomerServiceImpl implements GenericService<Customer, CustomerDto
 
 	@Override
 	public List<Customer> getAll() {
-		return customerRepo.findAll();
+		return customerRepo.findAll(Sort.by("id"));
 	}
 
 	@Override

@@ -14,6 +14,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 import dev.ime.dto.CustomerDto;
 import dev.ime.entity.Address;
@@ -63,7 +64,7 @@ class CustomerServiceImplTest {
 	void CustomerServiceImpl_getAll_ResturnListCustomer() {
 		
 		customers.add(customerTest);
-		Mockito.when(customerRepo.findAll()).thenReturn(customers);
+		Mockito.when(customerRepo.findAll(Mockito.any(Sort.class))).thenReturn(customers);
 		
 		List<Customer>list = customerService.getAll();
 		
@@ -74,7 +75,7 @@ class CustomerServiceImplTest {
 				()-> Assertions.assertThat(list.get(0).getId()).isEqualTo(customerId),
 				()-> Assertions.assertThat(list.get(0).getCompanyName()).isEqualTo(companyName)
 				);
-		Mockito.verify(customerRepo, Mockito.times(1)).findAll();
+		Mockito.verify(customerRepo, Mockito.times(1)).findAll(Mockito.any(Sort.class));
 	}
 
 	@Test

@@ -15,6 +15,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 import dev.ime.dto.OrderDetailDto;
 import dev.ime.entity.Order;
@@ -74,7 +75,7 @@ class OrderDetailServiceImplTest {
 	void OrderDetailServiceImpl_ReturnListOrderDetail() {
 		
 		orderDetails.add(orderDetailTest);
-		Mockito.when(orderDetailRepo.findAll()).thenReturn(orderDetails);
+		Mockito.when(orderDetailRepo.findAll(Mockito.any(Sort.class))).thenReturn(orderDetails);
 		
 		List<OrderDetail>list = orderDetailService.getAll();
 		
@@ -84,7 +85,7 @@ class OrderDetailServiceImplTest {
 				()-> Assertions.assertThat(list).hasSize(1),
 				()-> Assertions.assertThat(list.get(0).getId()).isEqualTo(orderDetailId)					
 				);
-		Mockito.verify(orderDetailRepo, Mockito.times(1)).findAll();
+		Mockito.verify(orderDetailRepo, Mockito.times(1)).findAll(Mockito.any(Sort.class));
 		}
 
 	@Test

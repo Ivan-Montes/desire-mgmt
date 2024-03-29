@@ -14,6 +14,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 import dev.ime.dto.AddressDto;
 import dev.ime.entity.Address;
@@ -74,7 +75,7 @@ class AddressServiceImplTest {
 	void AddressServiceImpl_getAll_ReturnListAddress() {
 		
 		addresses.add(addressTest);
-		Mockito.when(addressRepo.findAll()).thenReturn(addresses);
+		Mockito.when(addressRepo.findAll(Mockito.any(Sort.class))).thenReturn(addresses);
 		
 		List<Address>list = addressService.getAll();
 		
@@ -88,7 +89,7 @@ class AddressServiceImplTest {
 				()-> Assertions.assertThat(list.get(0).getCountry()).isEqualTo(country),
 				()-> Assertions.assertThat(list.get(0).getEmail()).isEqualTo(email)
 				);
-		Mockito.verify(addressRepo, Mockito.times(1)).findAll();		
+		Mockito.verify(addressRepo, Mockito.times(1)).findAll(Mockito.any(Sort.class));		
 	}
 
 	@Test

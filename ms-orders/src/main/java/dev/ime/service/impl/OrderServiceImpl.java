@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import dev.ime.dto.OrderDto;
@@ -41,7 +42,7 @@ public class OrderServiceImpl implements GenericService<Order,OrderDto>, OrderSp
 
 	@Override
 	public List<Order> getAll() {
-		return orderRepo.findAll();
+		return orderRepo.findAll(Sort.by("id"));
 	}
 
 	@Override

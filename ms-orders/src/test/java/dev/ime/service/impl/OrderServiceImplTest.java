@@ -1,8 +1,6 @@
 package dev.ime.service.impl;
 
 
-
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +16,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 import dev.ime.dto.OrderDto;
 import dev.ime.entity.Order;
@@ -78,7 +77,7 @@ class OrderServiceImplTest {
 	void OrderServiceImpl_getAll_ReturnListOrder() {
 		
 		orders.add(orderTest);
-		Mockito.when(orderRepo.findAll()).thenReturn(orders);
+		Mockito.when(orderRepo.findAll(Mockito.any(Sort.class))).thenReturn(orders);
 		
 		List<Order>list = orderService.getAll();
 		
@@ -89,7 +88,7 @@ class OrderServiceImplTest {
 				()-> Assertions.assertThat(list.get(0).getId()).isEqualTo(orderId),
 				()-> Assertions.assertThat(list.get(0).getCustomerId()).isEqualTo(customerId)
 				);
-		Mockito.verify(orderRepo, Mockito.times(1)).findAll();
+		Mockito.verify(orderRepo, Mockito.times(1)).findAll(Mockito.any(Sort.class));
 	}
 	
 
