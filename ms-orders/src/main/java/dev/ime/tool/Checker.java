@@ -52,7 +52,7 @@ public class Checker {
 			    .filter(response -> response.getStatusCode() == HttpStatus.OK)
 			    .map(ResponseEntity::getBody);
 
-		return optionalDto.map(dto -> dto.id() > 0).orElse(false);
+		return optionalDto.map(dto -> dto.customerId() > 0).orElse(false);
 	
 	}
 	
