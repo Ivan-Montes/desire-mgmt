@@ -13,7 +13,7 @@ public class EntityAssociatedException  extends BasicException{
 		super(
 				UUID.randomUUID(), 
 				SomeConstants.EX_ENTITY_ASSOCIATED, 
-				SomeConstants.ANYBODYHOME,
+				SomeConstants.EX_ENTITY_ASSOCIATED_DESC,
 				errors
 				);
 	}
