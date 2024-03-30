@@ -67,7 +67,7 @@ class CustomerMapperTest {
 		org.junit.jupiter.api.Assertions.assertAll(
 				()-> Assertions.assertThat(list).isNotNull(),
 				()-> Assertions.assertThat(list).hasSize(1),
-				()-> Assertions.assertThat(list.get(0).id()).isEqualTo(customerId.intValue()),
+				()-> Assertions.assertThat(list.get(0).customerId()).isEqualTo(customerId.intValue()),
 				()-> Assertions.assertThat(list.get(0).companyName()).isEqualTo(companyName),
 				()-> Assertions.assertThat(list.get(0).contactName()).isEqualTo(contactName)
 				);

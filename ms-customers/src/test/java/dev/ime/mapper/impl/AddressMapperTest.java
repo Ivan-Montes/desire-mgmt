@@ -80,7 +80,7 @@ class AddressMapperTest {
 		org.junit.jupiter.api.Assertions.assertAll(
 				()-> Assertions.assertThat(list).isNotNull(),
 				()-> Assertions.assertThat(list).hasSize(1),
-				()-> Assertions.assertThat(list.get(0).id()).isEqualTo(addressId),
+				()-> Assertions.assertThat(list.get(0).addressId()).isEqualTo(addressId),
 				()-> Assertions.assertThat(list.get(0).location()).isEqualTo(location),
 				()-> Assertions.assertThat(list.get(0).city()).isEqualTo(city),
 				()-> Assertions.assertThat(list.get(0).country()).isEqualTo(country),

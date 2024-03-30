@@ -103,7 +103,7 @@ class AddressResourceTest {
 		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.hasSize(1)))
-		.andExpect(MockMvcResultMatchers.jsonPath("$[0].id", org.hamcrest.Matchers.equalTo(addressIdDto.intValue())))
+		.andExpect(MockMvcResultMatchers.jsonPath("$[0].addressId", org.hamcrest.Matchers.equalTo(addressIdDto.intValue())))
 		.andExpect(MockMvcResultMatchers.jsonPath("$[0].location", org.hamcrest.Matchers.equalTo(locationDto)))
 		.andExpect(MockMvcResultMatchers.jsonPath("$[0].city", org.hamcrest.Matchers.equalTo(cityDto)))
 		.andExpect(MockMvcResultMatchers.jsonPath("$[0].country", org.hamcrest.Matchers.equalTo(countryDto)))
@@ -125,7 +125,7 @@ class AddressResourceTest {
 		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.hasSize(1)))
-		.andExpect(MockMvcResultMatchers.jsonPath("$[0].id", org.hamcrest.Matchers.equalTo(addressIdDto.intValue())))
+		.andExpect(MockMvcResultMatchers.jsonPath("$[0].addressId", org.hamcrest.Matchers.equalTo(addressIdDto.intValue())))
 		.andExpect(MockMvcResultMatchers.jsonPath("$[0].location", org.hamcrest.Matchers.equalTo(locationDto)))
 		.andExpect(MockMvcResultMatchers.jsonPath("$[0].city", org.hamcrest.Matchers.equalTo(cityDto)))
 		.andExpect(MockMvcResultMatchers.jsonPath("$[0].country", org.hamcrest.Matchers.equalTo(countryDto)))
@@ -142,7 +142,7 @@ class AddressResourceTest {
 		mockMvc.perform(MockMvcRequestBuilders.get(path + "/{id}", addressId))
 		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.id", org.hamcrest.Matchers.equalTo(addressIdDto.intValue())))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.addressId", org.hamcrest.Matchers.equalTo(addressIdDto.intValue())))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.location", org.hamcrest.Matchers.equalTo(locationDto)))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.city", org.hamcrest.Matchers.equalTo(cityDto)))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.country", org.hamcrest.Matchers.equalTo(countryDto)))
@@ -158,7 +158,7 @@ class AddressResourceTest {
 		mockMvc.perform(MockMvcRequestBuilders.get(path + "/{id}", addressId))
 		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.id",  org.hamcrest.Matchers.equalTo(0)))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.addressId",  org.hamcrest.Matchers.equalTo(0)))
 		;
 	}
 
@@ -174,7 +174,7 @@ class AddressResourceTest {
 				)
 		.andExpect(MockMvcResultMatchers.status().isCreated())
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.id", org.hamcrest.Matchers.equalTo(addressIdDto.intValue())))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.addressId", org.hamcrest.Matchers.equalTo(addressIdDto.intValue())))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.location", org.hamcrest.Matchers.equalTo(locationDto)))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.city", org.hamcrest.Matchers.equalTo(cityDto)))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.country", org.hamcrest.Matchers.equalTo(countryDto)))
@@ -193,7 +193,7 @@ class AddressResourceTest {
 				)
 		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.id",  org.hamcrest.Matchers.equalTo(0)))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.addressId",  org.hamcrest.Matchers.equalTo(0)))
 		;		
 	}
 
@@ -209,7 +209,7 @@ class AddressResourceTest {
 				)
 		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.id", org.hamcrest.Matchers.equalTo(addressIdDto.intValue())))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.addressId", org.hamcrest.Matchers.equalTo(addressIdDto.intValue())))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.location", org.hamcrest.Matchers.equalTo(locationDto)))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.city", org.hamcrest.Matchers.equalTo(cityDto)))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.country", org.hamcrest.Matchers.equalTo(countryDto)))
@@ -228,7 +228,7 @@ class AddressResourceTest {
 				)
 		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.id",  org.hamcrest.Matchers.equalTo(0)))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.addressId",  org.hamcrest.Matchers.equalTo(0)))
 		;		
 	}
 

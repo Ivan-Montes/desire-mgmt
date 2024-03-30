@@ -103,7 +103,7 @@ class CustomerResourceTest {
 		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.hasSize(1)))
-		.andExpect(MockMvcResultMatchers.jsonPath("$[0].id", org.hamcrest.Matchers.equalTo(customerDtoId.intValue())))
+		.andExpect(MockMvcResultMatchers.jsonPath("$[0].customerId", org.hamcrest.Matchers.equalTo(customerDtoId.intValue())))
 		.andExpect(MockMvcResultMatchers.jsonPath("$[0].companyName", org.hamcrest.Matchers.equalTo(companyNameDto)))
 		.andExpect(MockMvcResultMatchers.jsonPath("$[0].contactName", org.hamcrest.Matchers.equalTo(contactNameDto)))
 		;
@@ -123,7 +123,7 @@ class CustomerResourceTest {
 		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.hasSize(1)))
-		.andExpect(MockMvcResultMatchers.jsonPath("$[0].id", org.hamcrest.Matchers.equalTo(customerDtoId.intValue())))
+		.andExpect(MockMvcResultMatchers.jsonPath("$[0].customerId", org.hamcrest.Matchers.equalTo(customerDtoId.intValue())))
 		.andExpect(MockMvcResultMatchers.jsonPath("$[0].companyName", org.hamcrest.Matchers.equalTo(companyNameDto)))
 		.andExpect(MockMvcResultMatchers.jsonPath("$[0].contactName", org.hamcrest.Matchers.equalTo(contactNameDto)))
 		;
@@ -138,7 +138,7 @@ class CustomerResourceTest {
 		mockMvc.perform(MockMvcRequestBuilders.get(path + "/{id}", customerId))
 		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.id",  org.hamcrest.Matchers.equalTo(customerDtoId.intValue())))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.customerId",  org.hamcrest.Matchers.equalTo(customerDtoId.intValue())))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.companyName", org.hamcrest.Matchers.equalTo(companyNameDto)))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.contactName", org.hamcrest.Matchers.equalTo(contactNameDto)))
 		;
@@ -152,7 +152,7 @@ class CustomerResourceTest {
 		mockMvc.perform(MockMvcRequestBuilders.get(path + "/{id}", customerId))
 		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.id",  org.hamcrest.Matchers.equalTo(0)))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.customerId",  org.hamcrest.Matchers.equalTo(0)))
 		;
 	}
 
@@ -168,7 +168,7 @@ class CustomerResourceTest {
 				)
 		.andExpect(MockMvcResultMatchers.status().isCreated())
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.id",  org.hamcrest.Matchers.equalTo(customerDtoId.intValue())))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.customerId",  org.hamcrest.Matchers.equalTo(customerDtoId.intValue())))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.companyName", org.hamcrest.Matchers.equalTo(companyNameDto)))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.contactName", org.hamcrest.Matchers.equalTo(contactNameDto)))
 		;		
@@ -185,7 +185,7 @@ class CustomerResourceTest {
 				)
 		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.id",  org.hamcrest.Matchers.equalTo(0)))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.customerId",  org.hamcrest.Matchers.equalTo(0)))
 		;		
 	}
 
@@ -201,7 +201,7 @@ class CustomerResourceTest {
 				)
 		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.id",  org.hamcrest.Matchers.equalTo(customerDtoId.intValue())))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.customerId",  org.hamcrest.Matchers.equalTo(customerDtoId.intValue())))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.companyName", org.hamcrest.Matchers.equalTo(companyNameDto)))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.contactName", org.hamcrest.Matchers.equalTo(contactNameDto)))
 		;		
@@ -218,7 +218,7 @@ class CustomerResourceTest {
 				)
 		.andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.jsonPath("$", org.hamcrest.Matchers.notNullValue()))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.id",  org.hamcrest.Matchers.equalTo(0)))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.customerId",  org.hamcrest.Matchers.equalTo(0)))
 		;		
 	}
 
