@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import dev.ime.client.MsCustomersClient;
 import dev.ime.dto.CustomerDto;
+import dev.ime.tool.SomeConstants;
 import io.github.resilience4j.bulkhead.Bulkhead;
 import io.github.resilience4j.circuitbreaker.CircuitBreaker;
 import io.github.resilience4j.decorators.Decorators;
@@ -27,9 +28,9 @@ public class MsCustomersClientImpl implements MsCustomersClient{
 	@Override
 	public ResponseEntity<CustomerDto> getCustomerById(Long id) {
 		
-		CircuitBreaker circuitBreaker = CircuitBreaker.ofDefaults("cbDef");
-		Retry retry = Retry.ofDefaults("rDef");
-		Bulkhead bulkhead = Bulkhead.ofDefaults("bhDef");
+		CircuitBreaker circuitBreaker = CircuitBreaker.ofDefaults(SomeConstants.R4_CB);
+		Retry retry = Retry.ofDefaults(SomeConstants.R4_R);
+		Bulkhead bulkhead = Bulkhead.ofDefaults(SomeConstants.R4_BH);
 		Supplier<ResponseEntity<CustomerDto>> supplier = () -> msCustomersClient.getCustomerById(id) ;
 
 		Supplier<ResponseEntity<CustomerDto>> decoratedSupplier = Decorators.ofSupplier(supplier)

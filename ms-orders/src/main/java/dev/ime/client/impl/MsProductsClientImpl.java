@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import dev.ime.client.MsProductsClient;
 import dev.ime.dto.ProductDto;
+import dev.ime.tool.SomeConstants;
 import io.vavr.control.Try;
 import io.github.resilience4j.bulkhead.Bulkhead;
 import io.github.resilience4j.circuitbreaker.CircuitBreaker;
@@ -27,9 +28,9 @@ public class MsProductsClientImpl implements MsProductsClient{
 	@Override
 	public ResponseEntity<ProductDto> getProductById(Long id) {
 		
-		CircuitBreaker circuitBreaker = CircuitBreaker.ofDefaults("cbDef");
-		Retry retry = Retry.ofDefaults("rDef");
-		Bulkhead bulkhead = Bulkhead.ofDefaults("bhDef");
+		CircuitBreaker circuitBreaker = CircuitBreaker.ofDefaults(SomeConstants.R4_CB);
+		Retry retry = Retry.ofDefaults(SomeConstants.R4_R);
+		Bulkhead bulkhead = Bulkhead.ofDefaults(SomeConstants.R4_BH);
 		Supplier<ResponseEntity<ProductDto>> supplier = () -> msProductsClient.getProductById(id) ;
 
 		Supplier<ResponseEntity<ProductDto>> decoratedSupplier = Decorators.ofSupplier(supplier)
