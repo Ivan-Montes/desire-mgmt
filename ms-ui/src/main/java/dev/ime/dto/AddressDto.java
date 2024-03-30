@@ -11,7 +11,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 public record AddressDto(
-		Long id,		
+		Long addressId,		
 		@NotNull @NotBlank @Size( min = 1, max = 100 ) @Pattern( regexp = RegexPattern.LOCATION_FULL )
 		String location,
 		@NotNull @NotBlank @Size( min = 1, max = 50 ) @Pattern( regexp = RegexPattern.NAME_FULL )

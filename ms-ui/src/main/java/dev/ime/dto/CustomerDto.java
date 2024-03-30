@@ -8,7 +8,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 public record CustomerDto(
-		Long id,
+		Long customerId,
 		@NotNull @NotBlank @Size( min = 1, max = 100 ) @Pattern( regexp = RegexPattern.DESCRIPTION_FULL )
 		String companyName,
 		@NotNull @NotBlank @Size( min = 1, max = 50 ) @Pattern( regexp = RegexPattern.NAME_FULL )
