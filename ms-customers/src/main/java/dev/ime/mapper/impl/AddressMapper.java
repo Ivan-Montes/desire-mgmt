@@ -19,7 +19,7 @@ public class AddressMapper implements GenericMapper<Address, AddressDto>{
 	public Address fromDto(AddressDto dto) {
 
 		Address a = new Address();
-		a.setId(dto.id());
+		a.setId(dto.addressId());
 		a.setLocation(dto.location());
 		a.setCity(dto.city());
 		a.setCountry(dto.country());

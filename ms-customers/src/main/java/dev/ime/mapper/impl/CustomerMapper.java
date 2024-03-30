@@ -20,7 +20,7 @@ public class CustomerMapper implements GenericMapper<Customer, CustomerDto> {
 	public Customer fromDto(CustomerDto dto) {
 		
 		Customer c = new Customer();
-		c.setId(dto.id());
+		c.setId(dto.customerId());
 		c.setCompanyName(dto.companyName());
 		c.setContactName(dto.contactName());
 		
