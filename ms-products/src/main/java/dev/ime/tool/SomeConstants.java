@@ -18,8 +18,7 @@ public class SomeConstants {
 	public static final String ORDERDETAILID = "OrderDetailId";		
 	public static final String DATEFORMAT = "Date attribute";
 	public static final String CUSTOMERID = "CustomerId";		
-	public static final String ADDRESSID = "AddressId";		
-
+	public static final String ADDRESSID = "AddressId";
 
 	public static final String ANYBODYHOME = "Hello, hello, anybody home?, Think McFly, think";
 

@@ -20,7 +20,6 @@ public class SomeConstants {
 	public static final String CUSTOMERID = "CustomerId";		
 	public static final String ADDRESSID = "AddressId";
 
-
 	public static final String ANYBODYHOME = "Hello, hello, anybody home?, Think McFly, think";
 
 	public static final String EX_RESOURCE_NOT_FOUND = "ResourceNotFoundException";	
