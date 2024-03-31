@@ -42,6 +42,12 @@ textarea {
      overflow: auto;
 }
    
+button.btn-danger{
+	margin-right: 2em;
+}
+button.btn-success{
+	margin-right: 2em;
+}
 
 /*---------------------*\
         $FONT-FACE
@@ -172,6 +178,11 @@ background-color: rgb(229, 165, 10);
 	right: 2px;
 }
 
+
+/* Others */
+.btn-info, .btn-info:hover{
+	color:#fff;
+}
 
 /*---------------------*\
     $ANIMATION
