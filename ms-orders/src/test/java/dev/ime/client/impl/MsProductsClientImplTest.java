@@ -28,7 +28,7 @@ class MsProductsClientImplTest {
 	@BeforeEach
 	private void createObjects() {
 		
-		responseEntityWithDtoEmpty = new ResponseEntity<>(new ProductDto(),HttpStatus.NOT_FOUND)	;
+		responseEntityWithDtoEmpty = new ResponseEntity<>(new ProductDto(),HttpStatus.OK);
 	}
 	
 	@Test
@@ -39,7 +39,21 @@ class MsProductsClientImplTest {
 		ResponseEntity<ProductDto> response = msProductsClientImpl.getProductById(3L);
 		
 		org.junit.jupiter.api.Assertions.assertAll(
-				()-> Assertions.assertThat(response).isNotNull()
+				()-> Assertions.assertThat(response).isNotNull(),
+				()-> Assertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK)
+				);
+	}
+
+	@Test
+	void MsProductsClientImpl_getProductById_ReturnesponseEntityProductDtoError() {
+		
+		Mockito.when(msProductsClient.getProductById(Mockito.anyLong())).thenThrow(new RuntimeException());
+		
+		ResponseEntity<ProductDto> response = msProductsClientImpl.getProductById(3L);
+		
+		org.junit.jupiter.api.Assertions.assertAll(
+				()-> Assertions.assertThat(response).isNotNull(),
+				()-> Assertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND)
 				);
 	}
 
