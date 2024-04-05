@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+  <div class="container" th:replace="~{fragments/head::head}"/>
+	
+  <body>
+
+    <div class="container" th:replace="~{fragments/nav}"/>
+
+	<div class="container-fluid">
+		
+	  <div class="row">
+	    
+	    <div class="container" th:replace="~{fragments/sidebar}"/>
+	    
+	    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+	      
+	      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+	        
+	        <h1 class="h2">Categories Dashboard</h1>
+	        
+	      </div>
+ 		    <div class="container">
+				<h2 class="h3">Delete Category</h2>
+				<h3 class="h4 mt-4 mb-4">Are you sure of deleting this item?</h3>
+				<form th:action="@{/categories/delete/{id} (id=${category.categoryId})}" th:objet="${newCategory}" method="get">
+					<div class="row g-3">
+					  <div class="col-md-2 form-floating">
+					    <input type="text" th:field="*{category.categoryId}" class="form-control form-control-lg bg-gradient text-center" placeholder="Element id" readonly disabled>
+					    <label for="productId">Id</label>
+					    </div>
+					  <div class="col-md-10 form-floating">  
+						<input type="text" th:field="*{category.name}" class="form-control form-control-lg" placeholder="Enter name" pattern="^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+[a-zA-ZñÑáéíóúÁÉÍÓÚ\s\-\.,&:]*" minlength="1" maxlength="50" required readonly disabled>
+					    <label for="name">Name</label>
+					  </div>
+					  <div class="col-md-12 form-floating">
+						  <input type="text" th:field="*{category.description}" class="form-control form-control-lg" pattern="[a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\s\-\?!\.&,:]*" minlength="0" maxlength="100" readonly disabled>
+						  <label for="description">Description</label>
+					  </div>	
+					</div>
+					<div class="mt-4 text-center">
+						<button type="submit" class="btn btn-danger bg-gradient">Delete</button>
+						<a role="button" class="btn btn-info bg-gradient" th:href="@{/categories}">Back</a>											
+					</div>						
+			    </form>
+			</div>
+					
+	    </main>
+	    
+	  </div>
+	  
+	</div>
+	<div th:replace="~{fragments/script_table}"/>
+  </body>
+ 
+</html>
