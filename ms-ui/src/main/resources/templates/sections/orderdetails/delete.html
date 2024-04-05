@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+			
+	<div class="container" th:replace="~{fragments/head::head}"/>		
+	
+	<body>
+   		
+   		<div class="container" th:replace="~{fragments/nav}"/>	
+		    
+		<div class="container-fluid">
+			
+			<div class="row">
+				
+				<div class="container" th:replace="~{fragments/sidebar}"/> 
+				
+				<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+	      
+			      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+			        
+			        <h1 class="h2">Order Details Dashboard</h1>
+					
+			      </div>
+			      	
+	     		    <div class="container">
+						 
+						<h2 class="h3">Delete Order Details</h2>
+						 <h3 class="h4 mt-4 mb-4">Are you sure of deleting this item?</h3>
+						 						 
+						<form th:action="@{/orderdetails/delete/{id} (id=${orderDetail.orderDetailId})}" th:objet="${newOrderDetail}" method="get">
+							<div class="row g-3">
+							  <div class="col-md-4 form-floating">
+							    <input type="text" th:field="*{orderDetail.orderDetailId}" class="form-control form-control-lg bg-gradient text-center" placeholder="Element id" readonly disabled>
+							    <label for="orderDetailId">Id</label>
+							   </div>
+							 <div class="col-md-4 form-floating">
+							    <input type="number" th:field="*{orderDetail.quantity}" class="form-control form-control-lg" placeholder="Enter Quantity" min="0" max="9999" required readonly disabled>
+							    <label for="quantity">Quantity</label>
+							  </div>						  
+							  <div class="col-md-4 form-floating">
+							    <input type="number" th:field="*{orderDetail.discount}" class="form-control form-control-lg" placeholder="Enter Discount" min="0" max="9999" step="0.01" required readonly disabled>
+							    <label for="discount">Discount</label>
+							  </div>
+							  <div class="col-md-6 form-floating">
+								<input type="text" th:value="'[ ' + ${product.productId} + ' ] : [ ' + ${product.name} + ' ]'" class="form-control form-control-lg bg-gradient" placeholder="Enter Product Id" required readonly disabled>
+								<label for="productId">Product Id</label>
+							  </div>
+							  <div class="col-md-6 form-floating">					
+								<input type="text" id="orderId" th:value="'[ Order Id : ' + ${order.orderId} + ' ] : [ Customer Id : ' + ${order.customerId} + ' ]'" class="form-control form-control-lg bg-gradient" placeholder="Enter Order Id"required readonly disabled>
+								<label for="orderId">Order Id</label>
+							  </div>					 
+						    </div>
+ 							<div class="mt-4 text-center">
+								<button type="submit" class="btn btn-danger bg-gradient">Delete</button>
+								<a role="button" class="btn btn-info bg-gradient" th:href="@{/orderdetails}">Back</a>											
+							</div>
+								
+							</div>	
+							  
+						</form>
+				
+					</div>
+					
+	    		</main>
+				
+			</div>			
+			
+		</div>		   
+		
+	</body>
+	
+</html>

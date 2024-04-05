@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+			
+	<div class="container" th:replace="~{fragments/head::head}"/>		
+	
+	<body>
+   		
+   		<div class="container" th:replace="~{fragments/nav}"/>	
+		    
+		<div class="container-fluid">
+			
+			<div class="row">
+				
+				<div class="container" th:replace="~{fragments/sidebar}"/> 
+				
+				<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+	      
+			      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+			        
+			        <h1 class="h2">Order Details Dashboard</h1>
+					
+			      </div>
+			      	
+	     		    <div class="container">
+						 
+						<h2 class="h3">Add Order Details</h2>
+						 						 
+						<form th:action="@{/orderdetails/create}" th:objet="${newOrderDetail}" method="post">
+							<div class="row g-3">
+							 <div class="col-md-3 form-floating">
+							    <input type="number" th:field="*{newOrderDetail.quantity}" class="form-control form-control-lg" placeholder="Enter Quantity" min="0" max="9999" required>
+							    <label for="quantity">Quantity</label>
+							  </div>						  
+							  <div class="col-md-3 form-floating">
+							    <input type="number" th:field="*{newOrderDetail.discount}" class="form-control form-control-lg" placeholder="Enter Discount" min="0" max="9999" step="0.01" required>
+							    <label for="discount">Discount</label>
+							  </div>
+							  <div class="col-md-3 form-floating">
+							    <select class="form-select" th:field="*{newOrderDetail.productId}" required>							
+		    					  <option selected th:value="null">Select Product Id</option>
+								  <option th:each="product:${productList}" th:value="${product.productId}" th:text="'[ ' + ${product.productId} + ' ] : [ ' + ${product.name} + ' ]'"></option>
+								</select>
+								<label for="productId">Product Id</label>
+							  </div>
+							  <div class="col-md-3 form-floating">
+							    <select class="form-select" th:field="*{newOrderDetail.orderId}" required>							
+		    					  <option selected th:value="null">Select Order Id</option>
+								  <option th:each="order:${orderList}" th:value="${order.orderId}" th:text="'[ Order Id : ' + ${order.orderId} + ' ] : [ Customer Id : ' + ${order.customerId} + ' ]'"></option>
+								</select>
+								<label for="orderId">Order Id</label>
+							  </div>					 
+						    </div> 
+							  <div class="mt-3 text-center">
+								<button type="submit" class="btn btn-success bg-gradient">Save</button>
+								<a role="button" class="btn btn-info bg-gradient" th:href="@{/orderdetails}">Back</a>
+							  </div>
+							  
+						</form>
+				
+					</div>
+					
+	    		</main>
+				
+			</div>			
+			
+		</div>		   
+		
+	</body>
+	
+</html>
