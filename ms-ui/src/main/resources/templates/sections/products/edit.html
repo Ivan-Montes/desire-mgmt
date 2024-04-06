@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+			
+	<div class="container" th:replace="~{fragments/head::head}"/>		
+	
+	<body>
+   		
+   		<div class="container" th:replace="~{fragments/nav}"/>	
+		    
+		<div class="container-fluid">
+			
+			<div class="row">
+				
+				<div class="container" th:replace="~{fragments/sidebar}"/> 
+				
+				<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+	      
+			      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+			        
+			        <h1 class="h2">Products Dashboard</h1>
+					
+			      </div>
+			      	
+	     		    <div class="container">
+						 
+						<h2 class="h3">Edit Product</h2>
+						
+						<form th:action="@{/products/update/{id} (id=${product.productId})}" th:objet="${newProduct}" method="post">
+							
+							<div class="row g-3">
+							  <div class="col-md-2 form-floating">
+							    <input type="text" th:field="*{product.productId}" class="form-control form-control-lg bg-gradient text-center" placeholder="Element id" readonly disabled>
+							    <label for="productId">Id</label>
+							  </div>
+							  <div class="col-md-10 form-floating">  
+								<input type="text" th:field="*{product.name}" class="form-control form-control-lg" placeholder="Enter name" pattern="^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+[a-zA-ZñÑáéíóúÁÉÍÓÚ\s\-\.,&:]*" minlength="1" maxlength="50" required>
+							    <label for="name">Name</label>
+							  </div>					  
+							  <div class="col-md-4 form-floating">
+							    <input type="number" th:field="*{product.unitPrice}" class="form-control form-control-lg" placeholder="Enter Unit Price" min="0" max="99999" step="0.01" required>
+							    <label for="unitPrice">Unit Price</label></div>						  
+							  <div class="col-md-4 form-floating">
+							    <input type="number" th:field="*{product.unitInStock}" class="form-control form-control-lg" placeholder="Enter Unit in Stock" min="0" max="99999" required>
+							    <label for="unitInStock">Unit in Stock</label>
+							  </div>						  
+							  <div class="col-md-4 form-floating">
+							    <select class="form-select" th:field="*{product.categoryId}" required>							
+		    					  <option selected th:value="null">Select Category Id</option>
+								  <option th:each="category:${categoryList}" th:value="${category.categoryId}" th:text="${category.name}"></option>
+								</select>
+							    <label for="categoryId">Category Id</label></div>
+							  <div class="col-12">
+								  <div class="form-check">
+								    <input type="checkbox" th:field="*{product.discontinued}" class="form-check-input">
+								    <label class="form-check-label" for="discontinued">Activate for inactive or discontinued product</label>
+								  </div>
+							  </div>							  
+ 							</div> 
+							<div class="mt-3 text-center">
+								<button type="submit" class="btn btn-success bg-gradient">Save</button>
+								<a role="button" class="btn btn-info bg-gradient" th:href="@{/products}">Back</a>
+							</div>
+													
+					    </form>
+					    
+					</div>
+					
+	    		</main>
+				
+			</div>			
+			
+		</div>		   
+		
+	</body>
+	
+</html>
