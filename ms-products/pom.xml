@@ -81,11 +81,6 @@
 		    <artifactId>vavr</artifactId>
 		    <version>0.10.4</version>
 		</dependency>
-		<dependency>
-				<groupId>io.micrometer</groupId>
-				<artifactId>micrometer-registry-prometheus</artifactId>
-				<scope>runtime</scope>
-		</dependency>
 		
 	</dependencies>
 	
