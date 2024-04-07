@@ -2,6 +2,7 @@
 eureka:
   instance:
     instance-id: ${spring.application.name}:${random.uuid}
+    preferIpAddress: true
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
@@ -40,24 +41,61 @@ spring:
           uri: lb://MS-PRODUCTS
           predicates:
             - Path=/api/products/**
+            
+        - id: ms-products-pro-swagger
+          uri: lb://MS-PRODUCTS
+          predicates:
+            - Path=/products/**,/categories/**
+          filters:
+            - RewritePath=/(?<base>.*?)/(?<path>.*), /$\{path}
+            
         - id: ms-products-cat   
           uri: lb://MS-PRODUCTS
           predicates:
             - Path=/api/categories/**
+            
         - id: ms-orders-o
           uri: lb://MS-ORDERS
           predicates:
             - Path=/api/orders/**
+            
+        - id: ms-orders-o-swagger
+          uri: lb://MS-ORDERS
+          predicates:
+            - Path=/orders/**,/orderdetails/**
+          filters:
+            - RewritePath=/orders/(?<path>.*), /$\{path}
+            - RewritePath=/orderdetails/(?<path>.*), /$\{path}
+            
         - id: ms-orders-od
           uri: lb://MS-ORDERS
           predicates:
             - Path=/api/orderdetails/**
+            
         - id: ms-customers-cus
           uri: lb://MS-CUSTOMERS
           predicates:
             - Path=/api/customers/**
+               
+        - id: ms-customers-cus-swagger
+          uri: lb://MS-CUSTOMERS
+          predicates:
+            - Path=/customers/**,/addresses/**
+          filters:
+            - RewritePath=/(?<base>.*?)/(?<path>.*), /$\{path}
+            
         - id: ms-customers-addr
           uri: lb://MS-CUSTOMERS
           predicates:
-            - Path=/api/addresses/**
-          
+            - Path=/api/addresses/** 
+                       
+# Above Dropdown for select ms API             
+springdoc:
+  swagger-ui:
+    urls:
+      - name: products
+        url: /products/v3/api-docs
+      - name: orders
+        url: /orders/v3/api-docs
+      - name: customers
+        url: /customers/v3/api-docs    
