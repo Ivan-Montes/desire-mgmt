@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.ime.dto.AddressDto;
@@ -47,7 +48,9 @@ public class CustomerResource implements GenericResource<CustomerDto>, CustomerS
 	@GetMapping
 	@Operation(summary="Get a List of all Customer", description="Get a List of all Customer, @return an object Response with a List of DTO's")
 	@Override
-	public ResponseEntity<List<CustomerDto>> getAll(Integer page, Integer size) {
+	public ResponseEntity<List<CustomerDto>> getAll(
+			@RequestParam( value="page", required = false) Integer page, 
+			@RequestParam( value="size", required = false) Integer size) {
 		
 		List<Customer> list;
 		

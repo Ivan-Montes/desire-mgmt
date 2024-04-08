@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.ime.dto.AddressDto;
@@ -43,7 +44,9 @@ public class AddressResource implements GenericResource<AddressDto>, AddressSpec
 	@GetMapping
 	@Operation(summary="Get a List of all Address", description="Get a List of all Address, @return an object Response with a List of DTO's")
 	@Override
-	public ResponseEntity<List<AddressDto>> getAll(Integer page, Integer size) {
+	public ResponseEntity<List<AddressDto>> getAll(
+			@RequestParam( value="page", required = false) Integer page, 
+			@RequestParam( value="size", required = false) Integer size) {
 		
 		List<Address> list;
 		
