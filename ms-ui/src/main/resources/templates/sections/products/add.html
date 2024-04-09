@@ -42,7 +42,7 @@
 							  <div class="col-md-4 form-floating">
 							    <select class="form-select" th:field="*{newProduct.categoryId}" required>							
 		    					  <option selected th:value="null">Select Category Id</option>
-								  <option th:each="category:${categoryList}" th:value="${category.categoryId}" th:text="${category.name}"></option>
+								  <option th:each="category:${categoryList}" th:value="${category.categoryId}" th:text="'[ ' + ${category.categoryId} + ' ] : [ ' + ${category.name}+ ' ]'"></option>
 								</select>
 								<label for="categoryId">Category Id</label>
 							  </div>
