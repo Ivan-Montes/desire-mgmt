@@ -7,3 +7,9 @@ spring:
     
 server:
   port: ${ms-ui.server.port:8081}
+
+dev:
+  ime:
+    value:
+      pass-value: SecretPass
+    
