@@ -36,4 +36,19 @@ class MainControllerTest {
 		.andExpect(MockMvcResultMatchers.view().name("index"));
 	}
 
+	@Test
+	void MainController_success_ReturnView() throws Exception {
+		
+		mockMvc.perform(MockMvcRequestBuilders.get("/success"))
+		.andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
+		.andExpect(MockMvcResultMatchers.view().name("success"));
+	}
+
+	@Test
+	void MainController_login_ReturnView() throws Exception {
+		
+		mockMvc.perform(MockMvcRequestBuilders.get("/login"))
+		.andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
+		.andExpect(MockMvcResultMatchers.view().name("login"));
+	}
 }
