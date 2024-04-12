@@ -300,6 +300,19 @@ class ProductServiceImplTest {
 	
 
 	@Test
+	void ProductServiceImpl_delete_ReturnIntFailByCheckProductId() {
+		
+		Mockito.when(checker.checkGetAnyByProductId(Mockito.anyLong())).thenReturn(true);
+		
+		Integer resultValue = productService.delete(proId);
+		
+		org.junit.jupiter.api.Assertions.assertAll(
+				()-> Assertions.assertThat(resultValue).isNotNull(),
+				()-> Assertions.assertThat(resultValue).isEqualTo(1)
+				);
+	}
+	
+	@Test
 	void ProductServiceImpl_delete_ReturnIntFail() {
 		
 		Mockito.when(checker.checkGetAnyByProductId(Mockito.anyLong())).thenReturn(false);

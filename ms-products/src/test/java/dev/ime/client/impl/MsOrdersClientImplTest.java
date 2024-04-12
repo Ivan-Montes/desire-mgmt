@@ -29,7 +29,7 @@ class MsOrdersClientImplTest {
 	@BeforeEach
 	private void createObjects() {
 		
-		responseEntityWithTrue = new ResponseEntity<>( Boolean.TRUE, HttpStatus.NOT_FOUND)	;
+		responseEntityWithTrue = new ResponseEntity<>( Boolean.TRUE, HttpStatus.OK)	;
 	}
 	
 	@Test
@@ -40,7 +40,21 @@ class MsOrdersClientImplTest {
 		ResponseEntity<Boolean> response = msOrdersClientImpl.getAnyByProductId(7L);
 		
 		org.junit.jupiter.api.Assertions.assertAll(
-				()-> Assertions.assertThat(response).isNotNull()
+				()-> Assertions.assertThat(response).isNotNull(),
+				()-> Assertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK)
+				);
+	}
+
+	@Test
+	void MsOrdersClientImpl_getAnyByProductId_ReturnesponseEntityBooleanFalseError() {
+		
+		Mockito.when(msOrdersClient.getAnyByProductId(Mockito.anyLong())).thenThrow(new RuntimeException());
+		
+		ResponseEntity<Boolean> response = msOrdersClientImpl.getAnyByProductId(7L);
+		
+		org.junit.jupiter.api.Assertions.assertAll(
+				()-> Assertions.assertThat(response).isNotNull(),
+				()-> Assertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND)
 				);
 	}
 
