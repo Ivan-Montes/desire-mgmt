@@ -87,19 +87,33 @@ class GlobalExceptionHandlerTest {
 	}
 
 	@Test
-	void GlobalExceptionHandler_jakartaValidationConstraintViolationExceptionReturnResponseEntity() {
+	void GlobalExceptionHandler_jakartaValidationConstraintViolationException_ReturnResponseEntity() {
 		
-	ConstraintViolationException ex = Mockito.mock(ConstraintViolationException.class);
-	Mockito.when(ex.getLocalizedMessage()).thenReturn(name);
-	Mockito.when(ex.getMessage()).thenReturn(description);
-	
-	ResponseEntity<ExceptionResponse>responseEntity = globalExceptionHandler.jakartaValidationConstraintViolationException(ex);
+		ConstraintViolationException ex = Mockito.mock(ConstraintViolationException.class);
+		Mockito.when(ex.getLocalizedMessage()).thenReturn(name);
+		Mockito.when(ex.getMessage()).thenReturn(description);
 		
+		ResponseEntity<ExceptionResponse>responseEntity = globalExceptionHandler.jakartaValidationConstraintViolationException(ex);
+			
 		org.junit.jupiter.api.Assertions.assertAll(
 				()-> Assertions.assertThat(responseEntity).isNotNull(),
 				()-> Assertions.assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST)
 				);	
 	}
-	
+
+	@Test
+	void GlobalExceptionHandler_generalException_ReturnResponseEntity() {
+		
+		Exception ex = Mockito.mock(Exception.class);
+		Mockito.when(ex.getLocalizedMessage()).thenReturn(name);
+		Mockito.when(ex.getMessage()).thenReturn(description);
+		
+		ResponseEntity<ExceptionResponse>responseEntity = globalExceptionHandler.generalException(ex);
+			
+		org.junit.jupiter.api.Assertions.assertAll(
+				()-> Assertions.assertThat(responseEntity).isNotNull(),
+				()-> Assertions.assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST)
+				);
+	}
 
 }
