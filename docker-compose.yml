@@ -12,6 +12,12 @@ services:
       - desire-mgmt-network
     ports:
       - "8888:8888"
+    healthcheck:
+      test: "${CONFIGSERVER_HEALTHCHECK_TEST:-wget --no-verbose --tries=1 --spider http://config-server:8888/actuator/health || exit 1}"
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
     restart: on-failure:3
     
   ms-eureka-server:
@@ -20,12 +26,19 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: prod
     networks:
-      - desire-mgmt-network
+     - desire-mgmt-network
     ports:
       - "8761:8761"
     restart: on-failure:3
+    healthcheck:
+      test: "${EUREKA_HEALTHCHECK_TEST:-wget --no-verbose --tries=1 --spider http://eureka-server:8761/actuator/health || exit 1}"
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
     depends_on:
-      - ms-config-server
+      ms-config-server:
+        condition: service_healthy
   
   ms-api-gateway:
     build: ./api-gateway
@@ -33,16 +46,15 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: prod
     networks:
-      - desire-mgmt-network
+     - desire-mgmt-network
     ports:
       - "8080:8080"
     restart: on-failure:3
     depends_on:
-      - ms-config-server
-      - ms-eureka-server
-      - ms-products-apirest
-      - ms-orders-apirest
-      - ms-customers-apirest
+      ms-config-server:
+        condition: service_healthy
+      ms-eureka-server:
+        condition: service_healthy
   
   ms-prometheus-server:
     image: prom/prometheus:latest
@@ -51,19 +63,13 @@ services:
       - ./prometheus/config:/etc/prometheus
     command: --config.file=/etc/prometheus/prometheus.yml --log.level=debug
     networks:
-      - desire-mgmt-network
+     - desire-mgmt-network
     ports:
       - "9090:9090"
     restart: on-failure:3
     depends_on:
-      - ms-config-server
-      - ms-eureka-server
-      - ms-products-db      
-      - ms-products-apirest
-      - ms-orders-db
-      - ms-orders-apirest
-      - ms-customers-db
-      - ms-customers-apirest      
+      ms-eureka-server:
+        condition: service_healthy     
   
   ms-grafana-server:
     image: grafana/grafana:latest
@@ -77,20 +83,12 @@ services:
       - grafana_storage01:/var/lib/grafana
       - grafana_storage02:/etc/grafana 
     networks:
-      - desire-mgmt-network
+     - desire-mgmt-network
     ports:
       - "3000:3000"    
     restart: on-failure:3
     depends_on:
-      - ms-config-server
-      - ms-eureka-server
-      - ms-products-db      
-      - ms-products-apirest
-      - ms-orders-db
-      - ms-orders-apirest
-      - ms-customers-db
-      - ms-customers-apirest    
-      - ms-prometheus-server    
+      - ms-prometheus-server 
           
   ms-products-db:
     image: postgres:latest
@@ -100,7 +98,7 @@ services:
       POSTGRES_USER: root
       POSTGRES_DB: productsDb
     networks:
-      - desire-mgmt-network
+     - desire-mgmt-network
     ports:
       - "5432:5432"
      
@@ -112,7 +110,7 @@ services:
       POSTGRES_USER: root
       POSTGRES_DB: ordersDb
     networks:
-      - desire-mgmt-network
+     - desire-mgmt-network
     ports:
       - "5433:5432"
       
@@ -124,55 +122,91 @@ services:
       POSTGRES_USER: root
       POSTGRES_DB: customersDb
     networks:
-      - desire-mgmt-network
+     - desire-mgmt-network
     ports:
       - "5434:5432"
            
-  ms-products-apirest:
+  ms-products-api:
     build: ./ms-products
     container_name: ms-products
     environment:
       SPRING_PROFILES_ACTIVE: prod
     networks:
-      - desire-mgmt-network
+     - desire-mgmt-network
     restart: on-failure:3
     depends_on:
-      - ms-config-server
-      - ms-eureka-server
-      - ms-products-db
+      ms-config-server:
+        condition: service_healthy
+      ms-eureka-server:
+        condition: service_healthy
+      ms-products-db:
+        condition: service_started
       
-  ms-orders-apirest:
+  ms-orders-api:
     build:  ./ms-orders
     container_name: ms-orders
     environment:
       SPRING_PROFILES_ACTIVE: prod
     networks:
-      - desire-mgmt-network
+     - desire-mgmt-network
     restart: on-failure:3
     depends_on:
-      - ms-config-server
-      - ms-eureka-server
-      - ms-orders-db
+      ms-config-server:
+        condition: service_healthy
+      ms-eureka-server:
+        condition: service_healthy
+      ms-orders-db:
+        condition: service_started
   
-  ms-customers-apirest:
+  ms-customers-api:
     build: ./ms-customers
     container_name: ms-customers
     environment:
       SPRING_PROFILES_ACTIVE: prod
     networks:
-      - desire-mgmt-network
+     - desire-mgmt-network
     restart: on-failure:3
+    healthcheck:
+      test: "wget --no-verbose --tries=1 --spider http://api-gateway:8080/customers/actuator/health || exit 1"
+      interval: 20s
+      timeout: 10s
+      retries: 7
+      start_period: 45s
     depends_on:
-      - ms-config-server
-      - ms-eureka-server
-      - ms-customers-db
-          
+      ms-config-server:
+        condition: service_healthy
+      ms-eureka-server:
+        condition: service_healthy
+      ms-customers-db:
+        condition: service_started
+
+  ms-ui:
+    build: ./ms-ui
+    container_name: ms-ui
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+    networks:
+     - desire-mgmt-network
+    ports:
+      - "8081:8081"
+    restart: on-failure:3
+    depends_on:  
+      ms-products-api:
+        condition: service_started
+      ms-orders-api:
+        condition: service_started
+      ms-customers-api:
+        condition: service_healthy
+    
 networks:
   desire-mgmt-network:
-
+    name: desire-mgmt-network
+    ipam:
+      config:
+        - subnet: 172.33.0.0/16
+          gateway: 172.33.0.1
+                    
 volumes:
   grafana_storage01: {}
   grafana_storage02: {}
-  
-    
-    
+      
