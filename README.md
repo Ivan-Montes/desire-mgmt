@@ -50,9 +50,9 @@ But if you just want to run it from your IDE, please visit the project folder fo
 
 The microservice ms-ui operates as the presentation layer, displaying a dashboard on port 8081 to facilitate interaction. It is the recommended option and you could use it as the main access point to the infrastructure using your default browser. 
 	
-	```
-	http://localhost:8081
-	```
+   ```
+   http://localhost:8081
+   ```
   
 In other hand, Prometheus interface is reachable at port 9090 and Grafana is accessible at 3000 instead. Initial credentials are both "admin". Main datasource and two dashboards are already loaded thanks to docker-compose settings. More servers are available at 8761 and 8888 for eureka-server and config-server respectively.
 
