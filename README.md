@@ -1,20 +1,18 @@
 # desire-mgmt
 
-:warning::warning::construction::construction:  Microservices in a multimodule Maven project with servers, REST API, and MVC system
+Microservices in a multimodule Maven project with servers, REST API, and MVC system
 
-**Pending**
-- MVC ms-ui for presentation layer [8081]
-
-**Complete**
-- Eureka-server [8761]
-- Microservice ms-products with its own PostgreSQL database
+**Features**
+- Eureka server [8761]
 - Cloud config server [8888]
+- API Gateway [8080] with centralized OpenApi Swagger
+- Microservice ms-products with its own PostgreSQL database
 - Microservice ms-orders with private PostgreSQL database
-- Feign Communications between microservices ms-products and ms-orders with resilience4j circuit breaker
 - Microservice ms-customer with a exclusive PostgreSQL database
-- Feign Communications between microservices ms-customer and ms-orders with resilience4j circuit breaker
-- API Gateway [8080]
 - Prometheus [9090] + Grafana [3000]
+- Feign Communications between microservices with resilience4j circuit breaker
+- Dashboard on ms-ui [8081] for MVC presentation layer
+
 
 ## Table of contents
 
@@ -48,21 +46,38 @@ But if you just want to run it from your IDE, please visit the project folder fo
 
 ## Usage
 
-Main microservices have dynamic ports, you could know more about the API in future releases from the MVC ms-ui. In DEV/IDE environment you could visit their own swagger-ui on http://${hostname}:${port}/swagger-ui/index.html to . For example:
+- From the presentation layer
+
+The microservice ms-ui operates as the presentation layer, displaying a dashboard on port 8081 to facilitate interaction. It is the recommended option and you could use it as the main access point to the infrastructure using your default browser. 
+	
+	```
+	http://localhost:8081
+	```
+  
+In other hand, Prometheus interface is reachable at port 9090 and Grafana is accessible at 3000 instead. Initial credentials are both "admin". Main datasource and two dashboards are already loaded thanks to docker-compose settings. More servers are available at 8761 and 8888 for eureka-server and config-server respectively.
+
+	
+- API Rest
+
+Endpoints have dynamic ports but Api Gateway responds on 8080 port, so you could use a program like SoapUI or Postman and call them with the following nomenclature http://${hostname}:8080/api/${entity}. For instance:
 
    ```
-    http://localhost:33333/swagger-ui/index.html
+    ** Get a List of products **
+		http://localhost:8080/api/products
+
+	**  Get a address according to an Id **
+		http://localhost:8080/api/addresses/5
    ```
 
-Api Gateway responds on 8080 port, so you could call them directly using the URL http://${hostname}:8080/api/${entity} as well. For instance:
+It`s recommended to visit swagger-ui to know more about microservices, however the best aproach to using the REST API is through the Api Gateway. The feature is centralized on the api-gateway server, so you could navigate to http://${hostname}:8080/swagger-ui/index.html and then change the selection on the superior dropdown menu. Some examples of urls are:
 
    ```
-    http://localhost:8080/api/addresses
+    http://localhost:8080/addresses/swagger-ui/index.html 
+    http://localhost:8080/categories/swagger-ui/index.html
+    http://localhost:8080/orderdetails/swagger-ui/index.html
    ```
- 
-Prometheus interface is reachable at port 9090 and Grafana is accessible at 3000 instead. Initial credentials are both "admin". Main datasource and two dashboards are already loaded thanks to docker-compose settings.
 
-Other servers are available at 8761 and 8888 for eureka-server and config-server respectively.
+In this context, unexpected behaviors may occur due to the different network settings when you use Swagger requests directly from the Swagger-ui, rather than going through the Api Gateway or using tools like SoapUI or Postman. For preventing some of them, CORS and CSRF are disabled in Spring Security settings.
 
 
 ## Features
@@ -75,6 +90,9 @@ Other servers are available at 8761 and 8888 for eureka-server and config-server
 
 #### :large_orange_diamond: Feign Communications between microservices with resilience4j circuit breaker fallback
 
+#### :large_orange_diamond: Dashboard on port 8081 and OpenApi Swagger included for API description
+
+#### :large_orange_diamond: Dynamic web pages with the Thymeleaf template engine
 
 
 ## Maintainers
@@ -86,7 +104,9 @@ Just me, [Iván](https://github.com/Ivan-Montes) :sweat_smile:
 
 [GPLv3 license](https://choosealicense.com/licenses/gpl-3.0/)
 
+
 ---
+
 
 [![Java](https://badgen.net/static/JavaSE/17/orange)](https://www.java.com/es/)
 [![Maven](https://badgen.net/badge/icon/maven?icon=maven&label&color=red)](https://https://maven.apache.org/)
