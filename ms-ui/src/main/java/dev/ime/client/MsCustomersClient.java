@@ -24,8 +24,8 @@ public interface MsCustomersClient {
 
 	@GetMapping("/api/customers")    
 	ResponseEntity<List<CustomerDto>> getAllCustomerPaged(
-			@RequestParam( value="page", required = false) Integer page,
-			@RequestParam( value="size", required = false) Integer size);
+			@RequestParam(required = false) Integer page,
+			@RequestParam(required = false) Integer size);
 	
 	@GetMapping("/api/customers/{id}")
 	ResponseEntity<CustomerDto> getCustomerById(@PathVariable Long id);
@@ -52,8 +52,8 @@ public interface MsCustomersClient {
 
 	@GetMapping("/api/addresses")    
 	ResponseEntity<List<AddressDto>> getAllAddressPaged(
-			@RequestParam( value="page", required = false) Integer page,
-			@RequestParam( value="size", required = false) Integer size);
+			@RequestParam(required = false) Integer page,
+			@RequestParam(required = false) Integer size);
 	
 	@GetMapping("/api/addresses/{id}")
 	ResponseEntity<AddressDto> getAddressById(@PathVariable Long id);

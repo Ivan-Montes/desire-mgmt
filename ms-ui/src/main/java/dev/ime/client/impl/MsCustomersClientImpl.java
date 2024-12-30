@@ -22,8 +22,7 @@ import jakarta.validation.Valid;
 @Component
 public class MsCustomersClientImpl implements MsCustomersClient{
 
-	private final MsCustomersClient msCustomersClient;	
-	
+	private final MsCustomersClient msCustomersClient;		
 	
 	public MsCustomersClientImpl(MsCustomersClient msCustomersClient) {
 		super();

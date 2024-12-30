@@ -24,8 +24,8 @@ public interface MsProductsClient {
 	
 	@GetMapping("/api/products")    
 	ResponseEntity<List<ProductDto>> getAllProductPaged(
-			@RequestParam( value="page", required = false) Integer page,
-			@RequestParam( value="size", required = false) Integer size);
+			@RequestParam(required = false) Integer page,
+			@RequestParam(required = false) Integer size);
 
 	@GetMapping("/api/products/{id}")  
 	ResponseEntity<ProductDto> getProductById(@PathVariable Long id);
@@ -49,8 +49,8 @@ public interface MsProductsClient {
 
 	@GetMapping("/api/categories")    
 	ResponseEntity<List<CategoryDto>> getAllCategoryPaged(
-			@RequestParam( value="page", required = false) Integer page,
-			@RequestParam( value="size", required = false) Integer size);
+			@RequestParam(required = false) Integer page,
+			@RequestParam(required = false) Integer size);
 	
 	@GetMapping("/api/categories/{id}")  
 	ResponseEntity<CategoryDto> getCategoryById(@PathVariable Long id);
