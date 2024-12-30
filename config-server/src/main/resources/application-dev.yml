@@ -5,10 +5,11 @@ info:
         
 management:
   endpoints:
-    enabled-by-default: true
     web:
       exposure:
         include: "*" 
+    access:
+      default: unrestricted
   endpoint:
     health:
       show-details: always  

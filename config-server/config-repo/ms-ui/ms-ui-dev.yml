@@ -1,14 +1,15 @@
 
 management:
   endpoints:
-    enabled-by-default: true
+    access:
+      default: unrestricted
     web:
       exposure:
         include: "*" 
   endpoint:
     health:
-      show-details: always 
-        
+      show-details: always  
+   
 info:
   app:
     profile: dev

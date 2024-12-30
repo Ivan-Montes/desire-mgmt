@@ -1,15 +1,16 @@
-# Enable /actuator/
+
 management:
   endpoints:
-    enabled-by-default: true
+    access:
+      default: unrestricted
     web:
       exposure:
         include: "*" 
   endpoint:
     health:
-      show-details: always   
-        
-# Basic data for /actuator/info
+      show-details: always    
+
 info:
   app:
     profile: dev
+	

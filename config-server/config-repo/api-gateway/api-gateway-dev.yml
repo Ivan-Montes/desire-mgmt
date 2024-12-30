@@ -1,7 +1,8 @@
 
 management:
   endpoints:
-    enabled-by-default: true
+    access:
+      default: unrestricted
     web:
       exposure:
         include: "*" 
@@ -12,3 +13,4 @@ management:
 info:
   app:
     profile: dev
+	
