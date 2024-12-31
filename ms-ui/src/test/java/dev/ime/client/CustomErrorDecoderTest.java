@@ -17,8 +17,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.fasterxml.jackson.core.exc.StreamReadException;
-import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dev.ime.exceptionresponse.ExceptionResponse;
@@ -29,7 +27,6 @@ import feign.Response.Body;
 
 @ExtendWith(MockitoExtension.class)
 class CustomErrorDecoderTest {
-
 
 	@Mock
 	private  ObjectMapper objectMapper;	
@@ -63,7 +60,7 @@ class CustomErrorDecoderTest {
 	
 	@SuppressWarnings("unchecked")
 	@Test
-	void CustomErrorDecoder_decode_ReturnBasicExceptionAfterCatch() throws StreamReadException, DatabindException, IOException {		
+	void CustomErrorDecoder_decode_ReturnBasicExceptionAfterCatch() throws IOException {		
 
 		Body body = Mockito.mock(Body.class);		
 		Mockito.when(body.asInputStream()).thenReturn(null);
@@ -81,7 +78,7 @@ class CustomErrorDecoderTest {
 	
 	@SuppressWarnings("unchecked")
 	@Test
-	void CustomErrorDecoder_decode_ReturnBasicExceptionByNullResponse() throws StreamReadException, DatabindException, IOException {
+	void CustomErrorDecoder_decode_ReturnBasicExceptionByNullResponse() throws IOException {
 		
 
 		Body body = Mockito.mock(Body.class);	
@@ -101,7 +98,7 @@ class CustomErrorDecoderTest {
 	
 	@SuppressWarnings("unchecked")
 	@Test
-	void CustomErrorDecoder_decode_ReturnBasicException() throws StreamReadException, DatabindException, IOException {
+	void CustomErrorDecoder_decode_ReturnBasicException() throws IOException {
 		
 		
 		Body body = Mockito.mock(Body.class);	
@@ -118,7 +115,7 @@ class CustomErrorDecoderTest {
 
 	@SuppressWarnings("unchecked")
 	@Test
-	void CustomErrorDecoder_decode_ReturnResourceNotFoundException() throws StreamReadException, DatabindException, IOException {
+	void CustomErrorDecoder_decode_ReturnResourceNotFoundException() throws IOException {
 		
 		exResponse = new ExceptionResponse(uuid, SomeConstants.EX_RESOURCE_NOT_FOUND, description, errors);
 		Body body = Mockito.mock(Body.class);	
@@ -135,7 +132,7 @@ class CustomErrorDecoderTest {
 
 	@SuppressWarnings("unchecked")
 	@Test
-	void CustomErrorDecoder_decode_ReturnEntityException() throws StreamReadException, DatabindException, IOException {
+	void CustomErrorDecoder_decode_ReturnEntityException() throws IOException {
 		
 		exResponse = new ExceptionResponse(uuid, SomeConstants.EX_ENTITY_ASSOCIATED, description, errors);
 		Body body = Mockito.mock(Body.class);	
@@ -152,7 +149,7 @@ class CustomErrorDecoderTest {
 
 	@SuppressWarnings("unchecked")
 	@Test
-	void CustomErrorDecoder_decode_ReturnDateException() throws StreamReadException, DatabindException, IOException {
+	void CustomErrorDecoder_decode_ReturnDateException() throws IOException {
 		
 		exResponse = new ExceptionResponse(uuid, SomeConstants.EX_DATE_BAD, description, errors);
 		Body body = Mockito.mock(Body.class);	
@@ -169,7 +166,7 @@ class CustomErrorDecoderTest {
 
 	@SuppressWarnings("unchecked")
 	@Test
-	void CustomErrorDecoder_decode_ReturnAttrException() throws StreamReadException, DatabindException, IOException {
+	void CustomErrorDecoder_decode_ReturnAttrException() throws IOException {
 		
 		exResponse = new ExceptionResponse(uuid, SomeConstants.EX_ATTR_UNIQUE, description, errors);
 		Body body = Mockito.mock(Body.class);	
