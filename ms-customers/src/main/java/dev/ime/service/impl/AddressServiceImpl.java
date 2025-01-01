@@ -12,7 +12,6 @@ import dev.ime.dto.AddressDto;
 import dev.ime.entity.Address;
 import dev.ime.entity.Customer;
 import dev.ime.exception.ResourceNotFoundException;
-import dev.ime.mapper.impl.AddressMapper;
 import dev.ime.repository.AddressRepository;
 import dev.ime.repository.CustomerRepository;
 import dev.ime.service.AddressSpecificService;
@@ -23,14 +22,11 @@ import dev.ime.tool.SomeConstants;
 public class AddressServiceImpl implements GenericService<Address,AddressDto>, AddressSpecificService{
 	
 	private final AddressRepository addressRepo;
-	private final AddressMapper addressMapper;
 	private final CustomerRepository customerRepo;
 	
 	
-	public AddressServiceImpl(AddressRepository addressRepo, AddressMapper addressMapper,
-			CustomerRepository customerRepo) {
+	public AddressServiceImpl(AddressRepository addressRepo, CustomerRepository customerRepo) {
 		this.addressRepo = addressRepo;
-		this.addressMapper = addressMapper;
 		this.customerRepo = customerRepo;
 	}
 
@@ -52,26 +48,36 @@ public class AddressServiceImpl implements GenericService<Address,AddressDto>, A
 	@Override
 	public Optional<Address> create(AddressDto entity) {
 		
-		Customer c = customerRepo.findById(entity.customerId()).orElseThrow( ()-> new ResourceNotFoundException( Map.of( SomeConstants.CUSTOMERID, String.valueOf(entity.customerId())) ) );
-		Address a = addressMapper.fromDto(entity);
-		a.setCustomer(c);
-		return Optional.ofNullable( addressRepo.save( a ));
+		Customer customerFound = searchCustomerById(entity.customerId());
+		Address a = updateFields(new Address(), entity, customerFound);		
 		
+		return Optional.ofNullable( addressRepo.save( a ));		
 	}
 
+	private Address updateFields(Address address, AddressDto entity, Customer customer ) {
+		
+		address.setLocation(entity.location());
+		address.setCity(entity.city());
+		address.setCountry(entity.country());
+		address.setEmail(entity.email());
+		address.setCustomer(customer);
+		
+		return address;		
+	}
+	
 	@Override
 	public Optional<Address> update(Long id, AddressDto entity) {
 		
 		Address a = addressRepo.findById(id).orElseThrow( ()-> new ResourceNotFoundException( Map.of(SomeConstants.ADDRESSID, String.valueOf(id) ) ) );
-		Customer c = customerRepo.findById(entity.customerId()).orElseThrow( ()-> new ResourceNotFoundException( Map.of( SomeConstants.CUSTOMERID, String.valueOf(entity.customerId())) ) );
+		Customer customerFound = searchCustomerById(entity.customerId());
+				
+		return Optional.ofNullable( addressRepo.save( updateFields(a, entity, customerFound) ));
+	}
+
+	private Customer searchCustomerById(Long customerId) {
 		
-		a.setLocation(entity.location());
-		a.setCity(entity.city());
-		a.setCountry(entity.country());
-		a.setEmail(entity.email());
-		a.setCustomer(c);
+		return customerRepo.findById(customerId).orElseThrow( ()-> new ResourceNotFoundException( Map.of( SomeConstants.CUSTOMERID, String.valueOf(customerId)) ) );
 		
-		return Optional.ofNullable( addressRepo.save( a ));
 	}
 
 	@Override
@@ -87,10 +93,10 @@ public class AddressServiceImpl implements GenericService<Address,AddressDto>, A
 	public Boolean setCustomer(Long addressId, Long customerId) {
 		
 		Address a = addressRepo.findById(addressId).orElseThrow( ()-> new ResourceNotFoundException( Map.of(SomeConstants.ADDRESSID, String.valueOf(addressId) ) ) );
-		Customer c = customerRepo.findById(customerId).orElseThrow( ()-> new ResourceNotFoundException( Map.of( SomeConstants.CUSTOMERID, String.valueOf(customerId) ) ) );
+		Customer customerFound = searchCustomerById(customerId);
 
-		a.setCustomer(c);
-		c.getAddresses().add(a);
+		a.setCustomer(customerFound);
+		customerFound.getAddresses().add(a);
 		
 		return Optional.ofNullable(addressRepo.save(a)).isPresent();
 	}

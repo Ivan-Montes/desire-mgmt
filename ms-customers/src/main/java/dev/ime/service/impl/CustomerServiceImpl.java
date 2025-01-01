@@ -13,7 +13,6 @@ import dev.ime.entity.Address;
 import dev.ime.entity.Customer;
 import dev.ime.exception.EntityAssociatedException;
 import dev.ime.exception.ResourceNotFoundException;
-import dev.ime.mapper.impl.CustomerMapper;
 import dev.ime.repository.AddressRepository;
 import dev.ime.repository.CustomerRepository;
 import dev.ime.service.CustomerSpecificService;
@@ -24,13 +23,10 @@ import dev.ime.tool.SomeConstants;
 public class CustomerServiceImpl implements GenericService<Customer, CustomerDto>, CustomerSpecificService{
 
 	private final CustomerRepository customerRepo;
-	private final CustomerMapper customerMapper;
 	private final AddressRepository addressRepo;
 	
-	public CustomerServiceImpl(CustomerRepository customerRepo, CustomerMapper customerMapper,
-			AddressRepository addressRepo) {
+	public CustomerServiceImpl(CustomerRepository customerRepo, AddressRepository addressRepo) {
 		this.customerRepo = customerRepo;
-		this.customerMapper = customerMapper;
 		this.addressRepo = addressRepo;
 	}
 
@@ -50,14 +46,20 @@ public class CustomerServiceImpl implements GenericService<Customer, CustomerDto
 	}
 
 	@Override
-	public Optional<Customer> create(CustomerDto entity) {
-		return Optional.ofNullable( customerRepo.save(customerMapper.fromDto(entity)));
+	public Optional<Customer> create(CustomerDto entity) {	
+		
+		Customer customer = new Customer();
+		customer.setCompanyName(entity.companyName());
+		customer.setContactName(entity.contactName());
+		
+		return Optional.ofNullable( customerRepo.save(customer));
+		
 	}
 
 	@Override
 	public Optional<Customer> update(Long id, CustomerDto entity) {
 		
-		Customer c = customerRepo.findById(id).orElseThrow( ()-> new ResourceNotFoundException( Map.of( SomeConstants.CUSTOMERID, String.valueOf(id)) ) );
+		Customer c = searchCustomerById(id);
 		
 		c.setCompanyName(entity.companyName());
 		c.setContactName(entity.contactName());
@@ -69,7 +71,7 @@ public class CustomerServiceImpl implements GenericService<Customer, CustomerDto
 	@Override
 	public Integer delete(Long id) {
 		
-		Customer c = customerRepo.findById(id).orElseThrow( ()-> new ResourceNotFoundException( Map.of( SomeConstants.CUSTOMERID, String.valueOf(id)) ) );
+		Customer c = searchCustomerById(id);
 		
 		if ( c.getAddresses().isEmpty() ) {
 			
@@ -87,13 +89,19 @@ public class CustomerServiceImpl implements GenericService<Customer, CustomerDto
 	@Override
 	public Boolean addAddress(Long customerId, Long addressId) {
 		
-		Customer c = customerRepo.findById(customerId).orElseThrow( ()-> new ResourceNotFoundException( Map.of( SomeConstants.CUSTOMERID, String.valueOf(customerId) ) ) );
+		Customer c = searchCustomerById(customerId);
 		Address a = addressRepo.findById(addressId).orElseThrow( ()-> new ResourceNotFoundException( Map.of( SomeConstants.ADDRESSID, String.valueOf(addressId) ) ) );
 		
 		c.getAddresses().add(a);
 		a.setCustomer(c);
 		
 		return Optional.ofNullable( customerRepo.save(c) ).isPresent();
+	}
+
+	private Customer searchCustomerById(Long customerId) {
+		
+		return customerRepo.findById(customerId).orElseThrow( ()-> new ResourceNotFoundException( Map.of( SomeConstants.CUSTOMERID, String.valueOf(customerId) ) ) );
+		
 	}
 
 }
