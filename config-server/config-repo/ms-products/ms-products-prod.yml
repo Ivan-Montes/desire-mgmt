@@ -1,7 +1,7 @@
 
 spring:
   datasource:
-    url: jdbc:postgresql://postgresdb01:5432/productsDb   
+    url: jdbc:postgresql://ms-products-db:5432/productsDb   
         
   
 eureka:

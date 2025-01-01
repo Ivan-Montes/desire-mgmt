@@ -1,7 +1,7 @@
 
 spring:
   datasource:
-    url: jdbc:postgresql://postgresdb03:5432/customersDb   
+    url: jdbc:postgresql://ms-customers-db:5432/customersDb   
         
   
 eureka:
