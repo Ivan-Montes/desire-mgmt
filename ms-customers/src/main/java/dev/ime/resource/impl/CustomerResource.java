@@ -49,8 +49,8 @@ public class CustomerResource implements GenericResource<CustomerDto>, CustomerS
 	@Operation(summary="Get a List of all Customer", description="Get a List of all Customer, @return an object Response with a List of DTO's")
 	@Override
 	public ResponseEntity<List<CustomerDto>> getAll(
-			@RequestParam( value="page", required = false) Integer page, 
-			@RequestParam( value="size", required = false) Integer size) {
+			@RequestParam(required = false) Integer page, 
+			@RequestParam(required = false) Integer size) {
 		
 		List<Customer> list;
 		

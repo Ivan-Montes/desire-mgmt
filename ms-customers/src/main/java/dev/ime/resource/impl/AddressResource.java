@@ -45,8 +45,8 @@ public class AddressResource implements GenericResource<AddressDto>, AddressSpec
 	@Operation(summary="Get a List of all Address", description="Get a List of all Address, @return an object Response with a List of DTO's")
 	@Override
 	public ResponseEntity<List<AddressDto>> getAll(
-			@RequestParam( value="page", required = false) Integer page, 
-			@RequestParam( value="size", required = false) Integer size) {
+			@RequestParam(required = false) Integer page, 
+			@RequestParam(required = false) Integer size) {
 		
 		List<Address> list;
 		
