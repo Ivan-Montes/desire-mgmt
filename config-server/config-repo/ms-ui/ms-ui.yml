@@ -1,3 +1,9 @@
+
+spring:
+  threads:
+    virtual:
+      enabled: true  
+
 eureka:
   instance:
     instance-id: ${spring.application.name}:${random.uuid}

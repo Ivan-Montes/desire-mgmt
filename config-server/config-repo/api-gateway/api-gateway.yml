@@ -88,6 +88,9 @@ spring:
           uri: lb://MS-CUSTOMERS
           predicates:
             - Path=/api/addresses/** 
+  threads:
+    virtual:
+      enabled: true    
                        
 # Above Dropdown for select ms API             
 springdoc:

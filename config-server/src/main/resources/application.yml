@@ -14,7 +14,11 @@ spring:
           searchLocations: config-repo, config-repo/{application}
   profiles:
   # config-server in local active
-    active: native    
+    active: native
+  threads:
+    virtual:
+      enabled: true
+      
 server:
   port: 8888 
      
@@ -36,7 +40,7 @@ management:
     web:
       exposure:
         include: info, health, prometheus     
-        
+
 info:
   app:
     name: ${spring.application.name}

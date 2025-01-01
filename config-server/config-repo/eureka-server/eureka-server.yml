@@ -1,4 +1,9 @@
 
+spring:
+  threads:
+    virtual:
+      enabled: true
+
 management:
   info:
     env:

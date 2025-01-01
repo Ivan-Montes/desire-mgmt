@@ -15,7 +15,9 @@ spring:
     init:
     # For any script-based initialization
       mode: always
-  
+  threads:
+    virtual:
+      enabled: true    
 
 eureka:
   instance:
