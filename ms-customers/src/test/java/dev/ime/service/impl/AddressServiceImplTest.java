@@ -20,7 +20,6 @@ import dev.ime.dto.AddressDto;
 import dev.ime.entity.Address;
 import dev.ime.entity.Customer;
 import dev.ime.exception.ResourceNotFoundException;
-import dev.ime.mapper.impl.AddressMapper;
 import dev.ime.repository.AddressRepository;
 import dev.ime.repository.CustomerRepository;
 
@@ -29,8 +28,7 @@ class AddressServiceImplTest {
 
 	@Mock
 	private AddressRepository addressRepo;
-	@Mock
-	private AddressMapper addressMapper;
+	
 	@Mock
 	private CustomerRepository customerRepo;
 	
@@ -153,7 +151,6 @@ class AddressServiceImplTest {
 	void AddressServiceImpl_create_ReturnOptAddress() {
 		
 		Mockito.when(customerRepo.findById(Mockito.anyLong())).thenReturn(Optional.ofNullable(customerTest));
-		Mockito.when(addressMapper.fromDto(Mockito.any(AddressDto.class))).thenReturn(addressTest);
 		Mockito.when(addressRepo.save(Mockito.any(Address.class))).thenReturn(addressTest);
 		
 		Optional<Address>optAddr = addressService.create(addressDto);
@@ -168,7 +165,6 @@ class AddressServiceImplTest {
 				()-> Assertions.assertThat(optAddr.get().getEmail()).isEqualTo(email)
 				);
 		Mockito.verify(customerRepo, Mockito.times(1)).findById(Mockito.anyLong());
-		Mockito.verify(addressMapper, Mockito.times(1)).fromDto(Mockito.any(AddressDto.class));
 		Mockito.verify(addressRepo, Mockito.times(1)).save(Mockito.any(Address.class));
 	}
 	

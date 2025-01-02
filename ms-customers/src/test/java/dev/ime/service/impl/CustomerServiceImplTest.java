@@ -21,7 +21,6 @@ import dev.ime.entity.Address;
 import dev.ime.entity.Customer;
 import dev.ime.exception.EntityAssociatedException;
 import dev.ime.exception.ResourceNotFoundException;
-import dev.ime.mapper.impl.CustomerMapper;
 import dev.ime.repository.AddressRepository;
 import dev.ime.repository.CustomerRepository;
 
@@ -31,8 +30,6 @@ class CustomerServiceImplTest {
 
 	@Mock
 	private CustomerRepository customerRepo;
-	@Mock
-	private CustomerMapper customerMapper;
 	@Mock
 	private AddressRepository addressRepo;
 	
@@ -136,7 +133,6 @@ class CustomerServiceImplTest {
 	@Test
 	void CustomerServiceImpl_create_ReturnOptCustomer() {
 		
-		Mockito.when(customerMapper.fromDto(Mockito.any(CustomerDto.class))).thenReturn(customerTest);
 		Mockito.when(customerRepo.save(Mockito.any(Customer.class))).thenReturn(customerTest);
 		
 		Optional<Customer>optCus = customerService.create(customerDtoTest);
@@ -148,7 +144,6 @@ class CustomerServiceImplTest {
 				()-> Assertions.assertThat(optCus.get().getCompanyName()).isEqualTo(companyName),
 				()-> Assertions.assertThat(optCus.get().getContactName()).isEqualTo(contactName)
 				);
-		Mockito.verify(customerMapper, Mockito.times(1)).fromDto(Mockito.any(CustomerDto.class));
 		Mockito.verify(customerRepo, Mockito.times(1)).save(Mockito.any(Customer.class));
 	}
 
