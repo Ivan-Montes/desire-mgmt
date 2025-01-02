@@ -12,7 +12,6 @@ import dev.ime.dto.OrderDetailDto;
 import dev.ime.entity.Order;
 import dev.ime.entity.OrderDetail;
 import dev.ime.exception.ResourceNotFoundException;
-import dev.ime.mapper.impl.OrderDetailMapper;
 import dev.ime.repository.OrderDetailRepository;
 import dev.ime.repository.OrderRepository;
 import dev.ime.service.GenericService;
@@ -25,15 +24,13 @@ public class OrderDetailServiceImpl implements GenericService<OrderDetail, Order
 
 	private final OrderDetailRepository orderDetailRepo;
 	private final OrderRepository orderRepo;
-	private final OrderDetailMapper orderDetailMapper;
 	private final Checker checker;		
 	
 	public OrderDetailServiceImpl(OrderDetailRepository orderDetailRepo, OrderRepository orderRepo,
-			OrderDetailMapper orderDetailMapper, Checker checker) {
+			Checker checker) {
 		super();
 		this.orderDetailRepo = orderDetailRepo;
 		this.orderRepo = orderRepo;
-		this.orderDetailMapper = orderDetailMapper;
 		this.checker = checker;
 	}
 
@@ -55,29 +52,37 @@ public class OrderDetailServiceImpl implements GenericService<OrderDetail, Order
 	@Override
 	public Optional<OrderDetail> create(OrderDetailDto dto) {
 		
-		Order o = orderRepo.findById(dto.orderId()).orElseThrow( () -> new ResourceNotFoundException(Map.of(SomeConstants.ORDERID, String.valueOf(dto.orderId()) ) ) );
+		Order orderFound = searchOrderById(dto.orderId());
 		
-		if ( !checker.checkProductId(dto.productId() ) ) throw new ResourceNotFoundException( Map.of(SomeConstants.PRODUCTID, String.valueOf(dto.productId() ) ) );
-		OrderDetail od = orderDetailMapper.fromDto(dto);		
-		od.setOrder(o);
+		if ( !checkProductId(dto.productId() ) ) throw new ResourceNotFoundException( Map.of(SomeConstants.PRODUCTID, String.valueOf(dto.productId() ) ) );
 		
-		return Optional.ofNullable(orderDetailRepo.save(od));
+		return Optional.ofNullable(orderDetailRepo.save(updateOrderDetailFields(new OrderDetail(), dto, orderFound)));
 	}
 
+	private boolean checkProductId(Long productId) {
+		return checker.checkProductId(productId);
+	}
+	
+	private OrderDetail updateOrderDetailFields(OrderDetail orderDetail, OrderDetailDto dto, Order order) {
+		
+		orderDetail.setQuantity(dto.quantity());
+		orderDetail.setDiscount(dto.discount());
+		orderDetail.setProductId(dto.productId());
+		orderDetail.setOrder(order);
+		
+		return orderDetail;
+		
+	}
+	
 	@Override
 	public Optional<OrderDetail> update(Long id, OrderDetailDto dto) {
 		
-		OrderDetail od = orderDetailRepo.findById(id).orElseThrow( ()-> new ResourceNotFoundException(Map.of( SomeConstants.ORDERDETAILID, String.valueOf(id) ) ) );
-		Order o = orderRepo.findById(dto.orderId()).orElseThrow( () -> new ResourceNotFoundException(Map.of(SomeConstants.ORDERID, String.valueOf(dto.orderId()) ) ) );
+		OrderDetail orderDetail = searchOrderDetailById(id);
+		Order orderFound = searchOrderById(dto.orderId());
 		
-		if ( !checker.checkProductId(dto.productId() ) ) throw new ResourceNotFoundException( Map.of(SomeConstants.PRODUCTID, String.valueOf(dto.productId() ) ) );
+		if ( !checkProductId(dto.productId() ) ) throw new ResourceNotFoundException( Map.of(SomeConstants.PRODUCTID, String.valueOf(dto.productId() ) ) );
 		
-		od.setQuantity(dto.quantity());
-		od.setDiscount(dto.discount());
-		od.setProductId(dto.productId());
-		od.setOrder(o);
-		
-		return Optional.ofNullable( orderDetailRepo.save(od) );
+		return Optional.ofNullable( orderDetailRepo.save(updateOrderDetailFields(orderDetail, dto, orderFound)) );
 	}
 
 	@Override
@@ -92,13 +97,25 @@ public class OrderDetailServiceImpl implements GenericService<OrderDetail, Order
 	@Override
 	public Boolean setOrder(Long orderDetailId, Long orderId) {
 		
-		OrderDetail od = orderDetailRepo.findById(orderDetailId).orElseThrow( ()-> new ResourceNotFoundException(Map.of( SomeConstants.ORDERDETAILID, String.valueOf(orderDetailId) ) ) );
-		Order o = orderRepo.findById(orderId).orElseThrow( () -> new ResourceNotFoundException(Map.of(SomeConstants.ORDERID, String.valueOf(orderId) ) ) );
-		od.setOrder(o);
-		o.getOrderDetails().add(od);
+		OrderDetail od = searchOrderDetailById(orderDetailId);
+		Order orderFound = searchOrderById(orderId);
+		od.setOrder(orderFound);
+		orderFound.getOrderDetails().add(od);
 		Optional<OrderDetail> opt =  Optional.ofNullable( orderDetailRepo.save( od ));
 		
 		return opt.isPresent();
+	}
+
+	private OrderDetail searchOrderDetailById(Long orderDetailId) {
+		
+		return orderDetailRepo.findById(orderDetailId).orElseThrow( ()-> new ResourceNotFoundException(Map.of( SomeConstants.ORDERDETAILID, String.valueOf(orderDetailId) ) ) );
+		
+	}
+
+	private Order searchOrderById(Long orderId) {
+		
+		return orderRepo.findById(orderId).orElseThrow( () -> new ResourceNotFoundException(Map.of(SomeConstants.ORDERID, String.valueOf(orderId) ) ) );
+		
 	}
 
 	@Override

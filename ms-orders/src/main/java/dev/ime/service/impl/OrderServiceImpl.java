@@ -13,7 +13,6 @@ import dev.ime.entity.*;
 import dev.ime.exception.DateBadFormatException;
 import dev.ime.exception.EntityAssociatedException;
 import dev.ime.exception.ResourceNotFoundException;
-import dev.ime.mapper.impl.OrderMapper;
 import dev.ime.repository.OrderDetailRepository;
 import dev.ime.repository.OrderRepository;
 import dev.ime.service.GenericService;
@@ -26,15 +25,13 @@ import dev.ime.tool.Transformer;
 public class OrderServiceImpl implements GenericService<Order,OrderDto>, OrderSpecificService{
 
 	private final OrderRepository orderRepo;
-	private final OrderMapper orderMapper;
 	private final OrderDetailRepository orderDetailRepo;
 	private final Checker checker;
 	private final Transformer transformer;	
 	
-	public OrderServiceImpl(OrderRepository orderRepo, OrderMapper orderMapper, OrderDetailRepository orderDetailRepo, Checker checker, Transformer transformer) {
+	public OrderServiceImpl(OrderRepository orderRepo, OrderDetailRepository orderDetailRepo, Checker checker, Transformer transformer) {
 		super();
 		this.orderRepo = orderRepo;
-		this.orderMapper = orderMapper;
 		this.orderDetailRepo = orderDetailRepo;
 		this.checker = checker;
 		this.transformer = transformer;
@@ -58,54 +55,75 @@ public class OrderServiceImpl implements GenericService<Order,OrderDto>, OrderSp
 	@Override
 	public Optional<Order> create(OrderDto dto) {
 		
+		validateOrderDto(dto);
+		
+		return Optional.ofNullable(orderRepo.save(updateOrderFields(new Order(), dto)));
+	}
+
+	private void validateOrderDto(OrderDto dto) {
+		
 		if ( !checker.localDateValid( dto.orderDate() ) ) throw new DateBadFormatException( Map.of(SomeConstants.DATEFORMAT, String.valueOf(dto.orderDate() ) ) ); 
 		
 		if ( !checker.checkCustomerId(dto.customerId() ) ) throw new ResourceNotFoundException( Map.of(SomeConstants.CUSTOMERID, String.valueOf(dto.customerId() ) ) );
-		
-		Order o = orderMapper.fromDto(dto);
-		return Optional.ofNullable(orderRepo.save(o));
+	
 	}
 
+	private Order updateOrderFields(Order order, OrderDto dto) {
+	
+		order.setCustomerId(dto.customerId());
+		order.setOrderDate(transformer.fromStringToDateTimeOnErrorZeroes( dto.orderDate() ));
+		
+		return order;
+		
+	}
+	
 	@Override
 	public Optional<Order> update(Long id, OrderDto dto) {
 		
-		Order o = orderRepo.findById(id).orElseThrow( () -> new ResourceNotFoundException(Map.of(SomeConstants.ORDERID, String.valueOf(id) ) ) );
+		Order order = searchOrderById(id);
 
-		if ( !checker.localDateValid( dto.orderDate() ) ) throw new DateBadFormatException( Map.of(SomeConstants.DATEFORMAT, String.valueOf(dto.orderDate() ) ) ); 
+		validateOrderDto(dto);
+
+		return Optional.ofNullable( orderRepo.save(updateOrderFields(order, dto)));
+	}
+
+	private Order searchOrderById(Long id) {
 		
-		if ( !checker.checkCustomerId(dto.customerId() ) ) throw new ResourceNotFoundException( Map.of(SomeConstants.CUSTOMERID, String.valueOf(dto.customerId() ) ) );
-		
-		o.setCustomerId(dto.customerId());
-		o.setOrderDate(transformer.fromStringToDateTimeOnErrorZeroes( dto.orderDate() ));
-		
-		return Optional.ofNullable( orderRepo.save(o));
+		return orderRepo.findById(id).orElseThrow( () -> new ResourceNotFoundException(Map.of(SomeConstants.ORDERID, String.valueOf(id) ) ) );
+	
 	}
 
 	@Override
 	public Integer delete(Long id) {
 		
-		Order o =  orderRepo.findById(id).orElseThrow( () -> new ResourceNotFoundException( Map.of( SomeConstants.ORDERID, String.valueOf(id) )  ) );
+		Order o = searchOrderById(id);
 		
 		if (  o.getOrderDetails().isEmpty() ) {
 			
 			orderRepo.deleteById(id);
 			return orderRepo.findById(id).isEmpty()?0:1;
 			
-		}else {
-				
+		}else {				
 			throw new EntityAssociatedException( Map.of( SomeConstants.ORDERID, String.valueOf(id) ) );
 		}	
 	}
 
 	@Override
 	public Boolean addOrderDetail(Long orderId, Long orderDetailId) {
-		Order o = orderRepo.findById(orderId).orElseThrow( () -> new ResourceNotFoundException(Map.of(SomeConstants.ORDERID, String.valueOf(orderId) ) ) );
-		OrderDetail od = orderDetailRepo.findById(orderDetailId).orElseThrow( () -> new ResourceNotFoundException(Map.of(SomeConstants.ORDERDETAILID, String.valueOf(orderDetailId) ) ) );
-		od.setOrder(o);
-		o.getOrderDetails().add(od);
-		Optional<Order> opt =  Optional.ofNullable( orderRepo.save( o ));
 		
-		return opt.isPresent();
+		Order order = searchOrderById(orderId);
+		OrderDetail orderDetail = searchOrderDetailById(orderDetailId);
+		
+		orderDetail.setOrder(order);
+		order.getOrderDetails().add(orderDetail);		
+		
+		return Optional.ofNullable( orderRepo.save( order )).isPresent();
+	}
+
+	private OrderDetail searchOrderDetailById(Long orderDetailId) {
+		
+		return orderDetailRepo.findById(orderDetailId).orElseThrow( () -> new ResourceNotFoundException(Map.of(SomeConstants.ORDERDETAILID, String.valueOf(orderDetailId) ) ) );
+	
 	}
 
 }
