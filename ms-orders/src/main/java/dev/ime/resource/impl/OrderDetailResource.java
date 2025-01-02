@@ -45,8 +45,8 @@ public class OrderDetailResource implements GenericResource<OrderDetailDto>, Ord
 	@Operation(summary="Get a List of all OrderDetail", description="Get a List of all OrderDetail, @return an object Response with a List of DTO's")
 	@Override
 	public ResponseEntity<List<OrderDetailDto>> getAll(
-			@RequestParam( name = "page", required = false ) Integer page, 
-			@RequestParam( name = "size", required = false ) Integer size) {
+			@RequestParam(required = false ) Integer page, 
+			@RequestParam(required = false ) Integer size) {
 
 		List<OrderDetail>list;
 		

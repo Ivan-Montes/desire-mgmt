@@ -51,8 +51,8 @@ public class OrderResource implements GenericResource<OrderDto>, OrderSpecificRe
 	@Operation(summary="Get a List of all Order", description="Get a List of all Order, @return an object Response with a List of DTO's")
 	@Override
 	public ResponseEntity<List<OrderDto>> getAll(
-			@RequestParam( value="page", required = false) Integer page, 
-			@RequestParam( value="size", required = false) Integer size) {
+			@RequestParam(required = false) Integer page, 
+			@RequestParam(required = false) Integer size) {
 		
 		List<Order>list;
 		
