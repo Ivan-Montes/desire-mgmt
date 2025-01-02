@@ -12,7 +12,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -29,10 +29,10 @@ import dev.ime.service.impl.AddressServiceImpl;
 @AutoConfigureMockMvc(addFilters = false)
 class AddressResourceTest {
 
-	@MockBean
+	@MockitoBean
 	private AddressServiceImpl addressService;
 	
-	@MockBean
+	@MockitoBean
 	private AddressMapper addressMapper;
 	
 	@Autowired
@@ -41,7 +41,7 @@ class AddressResourceTest {
 	@Autowired
     private ObjectMapper objectMapper;
 
-	@MockBean
+	@MockitoBean
 	private Logger logger;
 	
 	private final String path = "/api/addresses";
