@@ -13,7 +13,6 @@ import dev.ime.entity.Category;
 import dev.ime.entity.Product;
 import dev.ime.exception.AttributeUniqueException;
 import dev.ime.exception.ResourceNotFoundException;
-import dev.ime.mapper.impl.ProductMapper;
 import dev.ime.repository.CategoryRepository;
 import dev.ime.repository.ProductRepository;
 import dev.ime.service.GenericService;
@@ -25,13 +24,11 @@ import dev.ime.tool.SomeConstants;
 public class ProductServiceImpl implements GenericService<Product, ProductDto>, ProductSpecificService{
 
 	private final ProductRepository productRepo;
-	private final ProductMapper productMapper;
 	private final CategoryRepository categoryRepo;
 	private final Checker checker;
 	
-	public ProductServiceImpl(ProductRepository productRepo, ProductMapper productMapper, CategoryRepository categoryRepo, Checker checker) {
+	public ProductServiceImpl(ProductRepository productRepo, CategoryRepository categoryRepo, Checker checker) {
 		this.productRepo = productRepo;
-		this.productMapper = productMapper;
 		this.categoryRepo = categoryRepo;
 		this.checker = checker;
 	}
@@ -55,34 +52,45 @@ public class ProductServiceImpl implements GenericService<Product, ProductDto>, 
 	public Optional<Product> create(ProductDto entity) {
 		
 		if ( !productRepo.findByName(entity.name()).isEmpty() ) throw new AttributeUniqueException(Map.of(SomeConstants.NAMEATTR, entity.name()));
-		Product p = productMapper.fromDto(entity);		
-		Category cat =  categoryRepo.findById(entity.categoryId()).orElseThrow( () -> new ResourceNotFoundException( Map.of( SomeConstants.CATEGORYID, String.valueOf(entity.categoryId()) ) ) );
-		p.setCategory(cat);
+		Category categoryFound =  categoryRepo.findById(entity.categoryId()).orElseThrow( () -> new ResourceNotFoundException( Map.of( SomeConstants.CATEGORYID, String.valueOf(entity.categoryId()) ) ) );
+		Product p = updateProductFields(new Product(), entity, categoryFound);
 		
 		return Optional.ofNullable(productRepo.save(p));
 	}
 
+	private Product updateProductFields(Product product, ProductDto entity, Category category) {
+		
+		product.setName(entity.name());
+		product.setUnitInStock(entity.unitInStock());
+		product.setUnitPrice(entity.unitPrice());
+		product.setDiscontinued(entity.discontinued());			
+		product.setCategory(category);
+		
+		return product;
+		
+	}
+	
 	@Override
 	public Optional<Product> update(Long id, ProductDto entity) {
 		
-		Product pro = productRepo.findById(id).orElseThrow( () -> new ResourceNotFoundException( Map.of( SomeConstants.PRODUCTID, String.valueOf(id) ) ) );
-		Category cat =  categoryRepo.findById(entity.categoryId()).orElseThrow( () -> new ResourceNotFoundException( Map.of( SomeConstants.CATEGORYID, String.valueOf(entity.categoryId()) ) ) );
+		Product product = searchProductById(id);
+		Category categoryFound = searchCategoryById(entity.categoryId());		
 		List<Product>list = productRepo.findByName(entity.name());
 		boolean checkList = list.stream().anyMatch( p -> p.getId().equals(id));
 		
-		if ( list.isEmpty() || checkList ) {
+		if ( list.isEmpty() || checkList ) {			
 			
-			pro.setName(entity.name());
-			pro.setUnitInStock(entity.unitInStock());
-			pro.setUnitPrice(entity.unitPrice());
-			pro.setDiscontinued(entity.discontinued());			
-			pro.setCategory(cat);
-			
-			return Optional.ofNullable(productRepo.save(pro));
+			return Optional.ofNullable(productRepo.save(updateProductFields(product, entity, categoryFound)));
 			
 		}else{
 			throw new AttributeUniqueException(Map.of(SomeConstants.NAMEATTR, entity.name()));
 		}
+		
+	}
+
+	private Product searchProductById(Long id) {
+		
+		return productRepo.findById(id).orElseThrow( () -> new ResourceNotFoundException( Map.of( SomeConstants.PRODUCTID, String.valueOf(id) ) ) );
 		
 	}
 
@@ -101,13 +109,19 @@ public class ProductServiceImpl implements GenericService<Product, ProductDto>, 
 	@Override
 	public Boolean changeCategory(Long productId, Long categoryId) {
 		
-		Product pro = productRepo.findById(productId).orElseThrow( () -> new ResourceNotFoundException( Map.of( SomeConstants.PRODUCTID, String.valueOf(productId) ) ) );
-		Category cat = categoryRepo.findById(categoryId).orElseThrow( () -> new ResourceNotFoundException( Map.of( SomeConstants.CATEGORYID, String.valueOf(categoryId) ) ) );		
+		Product pro = searchProductById(productId);
+		Category cat = searchCategoryById(categoryId);		
 		pro.setCategory(cat);
 		cat.getProducts().add(pro);
 		Optional<Product> opt  = Optional.ofNullable(productRepo.save(pro));
 		
 		return opt.isPresent();
+	}
+
+	private Category searchCategoryById(Long categoryId) {
+		
+		return categoryRepo.findById(categoryId).orElseThrow( () -> new ResourceNotFoundException( Map.of( SomeConstants.CATEGORYID, String.valueOf(categoryId) ) ) );
+		
 	}
 
 
