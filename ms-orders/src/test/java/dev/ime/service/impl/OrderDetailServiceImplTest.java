@@ -21,7 +21,6 @@ import dev.ime.dto.OrderDetailDto;
 import dev.ime.entity.Order;
 import dev.ime.entity.OrderDetail;
 import dev.ime.exception.ResourceNotFoundException;
-import dev.ime.mapper.impl.OrderDetailMapper;
 import dev.ime.repository.OrderDetailRepository;
 import dev.ime.repository.OrderRepository;
 import dev.ime.tool.Checker;
@@ -35,8 +34,6 @@ class OrderDetailServiceImplTest {
 	private OrderDetailRepository orderDetailRepo;
 	@Mock
 	private OrderRepository orderRepo;
-	@Mock
-	private OrderDetailMapper orderDetailMapper;
 	@Mock
 	private Checker checker;
 	@InjectMocks
@@ -143,7 +140,6 @@ class OrderDetailServiceImplTest {
 		
 		Mockito.when(orderRepo.findById(Mockito.anyLong())).thenReturn(Optional.of(orderTest));
 		Mockito.when(checker.checkProductId(Mockito.anyLong())).thenReturn(true);
-		Mockito.when(orderDetailMapper.fromDto(Mockito.any(OrderDetailDto.class))).thenReturn(orderDetailTest);
 		Mockito.when(orderDetailRepo.save(Mockito.any(OrderDetail.class))).thenReturn(orderDetailTest);
 		
 		Optional<OrderDetail>optOrdDet = orderDetailService.create(orderDetailDto);
@@ -155,7 +151,6 @@ class OrderDetailServiceImplTest {
 				);
 		Mockito.verify(orderRepo, Mockito.times(1)).findById(Mockito.anyLong());
 		Mockito.verify(checker, Mockito.times(1)).checkProductId(Mockito.anyLong());
-		Mockito.verify(orderDetailMapper, Mockito.times(1)).fromDto(Mockito.any(OrderDetailDto.class));
 		Mockito.verify(orderDetailRepo, Mockito.times(1)).save(Mockito.any(OrderDetail.class));
 	}
 

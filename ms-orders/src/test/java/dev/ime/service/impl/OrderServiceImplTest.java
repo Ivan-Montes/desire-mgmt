@@ -24,7 +24,6 @@ import dev.ime.entity.OrderDetail;
 import dev.ime.exception.DateBadFormatException;
 import dev.ime.exception.EntityAssociatedException;
 import dev.ime.exception.ResourceNotFoundException;
-import dev.ime.mapper.impl.OrderMapper;
 import dev.ime.repository.OrderDetailRepository;
 import dev.ime.repository.OrderRepository;
 import dev.ime.tool.Checker;
@@ -37,13 +36,12 @@ class OrderServiceImplTest {
 	@Mock
 	private OrderRepository orderRepo;
 	@Mock
-	private OrderMapper orderMapper;
-	@Mock
 	private OrderDetailRepository orderDetailRepo;
 	@Mock
 	private Checker checker;
 	@Mock
 	private Transformer transformer;	
+	
 	@InjectMocks
 	private OrderServiceImpl orderService;
 
@@ -147,7 +145,6 @@ class OrderServiceImplTest {
 		
 		Mockito.when(checker.localDateValid(Mockito.anyString())).thenReturn(Boolean.TRUE);
 		Mockito.when(checker.checkCustomerId(Mockito.anyLong())).thenReturn(Boolean.TRUE);
-		Mockito.when(orderMapper.fromDto(Mockito.any(OrderDto.class))).thenReturn(orderTest);
 		Mockito.when(orderRepo.save(Mockito.any(Order.class))).thenReturn(orderTest);
 		
 		Optional<Order>optOr = orderService.create(orderDtoTest);
@@ -159,7 +156,6 @@ class OrderServiceImplTest {
 				);
 		Mockito.verify(checker, Mockito.times(1)).localDateValid(Mockito.anyString());
 		Mockito.verify(checker, Mockito.times(1)).checkCustomerId(Mockito.anyLong());
-		Mockito.verify(orderMapper, Mockito.times(1)).fromDto(Mockito.any(OrderDto.class));
 		Mockito.verify(orderRepo, Mockito.times(1)).save(Mockito.any(Order.class));
 	}
 
