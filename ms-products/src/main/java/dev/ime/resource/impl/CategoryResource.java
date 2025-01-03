@@ -44,8 +44,8 @@ public class CategoryResource implements GenericResource<CategoryDto>, CategoryS
 	@Override
 	@Operation(summary="Get a List of all categories", description="Get a List of all categories, @return an object Response with a List of DTO's")
 	public ResponseEntity<List<CategoryDto>> getAll(
-			 @RequestParam( value="page", required = false) Integer page, 
-			@RequestParam( value="size", required = false) Integer size) {
+			@RequestParam(required = false) Integer page, 
+			@RequestParam(required = false) Integer size) {
 		
 		List<Category>list;
 		

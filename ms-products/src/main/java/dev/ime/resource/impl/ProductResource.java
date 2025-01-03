@@ -45,8 +45,8 @@ public class ProductResource implements GenericResource<ProductDto>, ProductSpec
 	@Override
 	@Operation(summary="Get a List of all products", description="Get a List of all products, @return an object Response with a List of DTO's")
 	public ResponseEntity<List<ProductDto>> getAll(
-			@RequestParam( value="page", required = false) Integer page,
-			@RequestParam( value="size", required = false) Integer size) {
+			@RequestParam(required = false) Integer page,
+			@RequestParam(required = false) Integer size) {
 		
 		List<Product>list;
 		
