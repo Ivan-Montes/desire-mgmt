@@ -32,14 +32,9 @@ import dev.ime.tool.Checker;
 class ProductServiceImplTest {
 
 	@Mock
-	private ProductRepository productRepo;
-	
+	private ProductRepository productRepo;		
 	@Mock
-	private ProductMapper productMapper;
-	
-	@Mock
-	private CategoryRepository categoryRepo;
-	
+	private CategoryRepository categoryRepo;	
 	@Mock
 	private Checker checker;
 	
@@ -169,7 +164,6 @@ class ProductServiceImplTest {
 	void ProductServiceImpl_create_ReturnResourceNotFoundException() {
 		
 		Mockito.when(productRepo.findByName(Mockito.anyString())).thenReturn(products);
-		Mockito.when(productMapper.fromDto(Mockito.any(ProductDto.class))).thenReturn(proTest);
 		Mockito.when(categoryRepo.findById(Mockito.anyLong())).thenReturn(Optional.empty());
 
 		Exception ex = org.junit.jupiter.api.Assertions.assertThrows(ResourceNotFoundException.class, ()-> productService.create(productDto));
@@ -180,7 +174,6 @@ class ProductServiceImplTest {
 				);
 		
 		Mockito.verify(productRepo, Mockito.times(1)).findByName(Mockito.anyString());
-		Mockito.verify(productMapper, Mockito.times(1)).fromDto(Mockito.any(ProductDto.class));
 		Mockito.verify(categoryRepo, Mockito.times(1)).findById(Mockito.anyLong());
 	}
 	
@@ -189,7 +182,6 @@ class ProductServiceImplTest {
 	void ProductServiceImpl_create_ReturnOptProduct() {
 		
 		Mockito.when(productRepo.findByName(Mockito.anyString())).thenReturn(products);
-		Mockito.when(productMapper.fromDto(Mockito.any(ProductDto.class))).thenReturn(proTest);
 		Mockito.when(categoryRepo.findById(Mockito.anyLong())).thenReturn(Optional.of(catTest));
 		Mockito.when(productRepo.save(Mockito.any(Product.class))).thenReturn(proTest);
 		
@@ -202,7 +194,6 @@ class ProductServiceImplTest {
 				()-> Assertions.assertThat(optPro.get().getName()).isEqualTo(proName)
 				);
 		Mockito.verify(productRepo, Mockito.times(1)).findByName(Mockito.anyString());
-		Mockito.verify(productMapper, Mockito.times(1)).fromDto(Mockito.any(ProductDto.class));
 		Mockito.verify(categoryRepo, Mockito.times(1)).findById(Mockito.anyLong());
 		Mockito.verify(productRepo, Mockito.times(1)).save(Mockito.any(Product.class));
 	}

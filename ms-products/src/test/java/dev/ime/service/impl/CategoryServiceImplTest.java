@@ -32,11 +32,10 @@ import dev.ime.repository.ProductRepository;
 class CategoryServiceImplTest {
 
 	@Mock
-	private CategoryRepository categoryRepo;
-	@Mock
-	private CategoryMapper categoryMapper;
+	private CategoryRepository categoryRepo;	
 	@Mock
 	private ProductRepository productRepo;
+	
 	@InjectMocks
 	private CategoryServiceImpl categoryService;
 	
@@ -155,7 +154,6 @@ class CategoryServiceImplTest {
 	void CategoryServiceImpl_create_ReturnOptCategory() {
 
 		Mockito.when(categoryRepo.findByName(Mockito.anyString())).thenReturn(categories);
-		Mockito.when(categoryMapper.fromDto(Mockito.any(CategoryDto.class))).thenReturn(catTest);
 		Mockito.when(categoryRepo.save(Mockito.any(Category.class))).thenReturn(catTest);
 		
 		Optional<Category>optCat = categoryService.create(categoryDto);
@@ -167,7 +165,6 @@ class CategoryServiceImplTest {
 				()-> Assertions.assertThat(optCat.get().getName()).isEqualTo(catName)
 				);
 		Mockito.verify(categoryRepo, Mockito.times(1)).findByName(Mockito.anyString());
-		Mockito.verify(categoryMapper, Mockito.times(1)).fromDto(Mockito.any(CategoryDto.class));
 		Mockito.verify(categoryRepo, Mockito.times(1)).save(Mockito.any(Category.class));
 	}
 	
