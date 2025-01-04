@@ -37,8 +37,8 @@ public class ProductController implements GenericMvcController<ProductMvcDto>{
 	@Override
 	@GetMapping
 	public String getAll(Model model, 
-			@RequestParam( value="page", required = false) Integer page,
-			@RequestParam( value="size", required = false) Integer size) {
+			@RequestParam(required = false) Integer page,
+			@RequestParam(required = false) Integer size) {
 		
 		List<ProductDto>list;
 		
