@@ -49,7 +49,7 @@ class AddressServiceTest {
 	private final String country = "Veneto";
 	private final String email = "ven@ven.it";
 	private final Long customerId = 15L;
-	private AddressDto addressDto;
+	private AddressDto addressTestDto;
 	private AddressMvcDto addressMvcDtoVoid;
 	
 	@BeforeEach
@@ -57,9 +57,9 @@ class AddressServiceTest {
 
 		addressDtoList = new ArrayList<>();
 
-		addressDto = new AddressDto(addressId, location, city, country, email, customerId);
+		addressTestDto = new AddressDto(addressId, location, city, country, email, customerId);
 		addressMvcDtoVoid = new AddressMvcDto();
-		responseEntityWithAddressDto = new ResponseEntity<>(addressDto, HttpStatus.OK);
+		responseEntityWithAddressDto = new ResponseEntity<>(addressTestDto, HttpStatus.OK);
 		responseEntityWithAddressDtoException = new ResponseEntity<>(new AddressDto(), HttpStatus.OK);
 		responseEntityBooleanTrue = new ResponseEntity<>(true, HttpStatus.OK);
 	}
@@ -68,7 +68,7 @@ class AddressServiceTest {
 	@Test
 	void AddressServiceTest_getAll_ReturnListAddress() {
 		
-		addressDtoList.add(addressDto);
+		addressDtoList.add(addressTestDto);
 		Mockito.when(msCustomersClient.getAllAddress()).thenReturn(responseListAddressDto);
 		Mockito.when(responseListAddressDto.getBody()).thenReturn(addressDtoList);
 		
@@ -89,7 +89,7 @@ class AddressServiceTest {
 	@Test
 	void AddressServiceTest_getAllPaged_ReturnListAddress() {
 		
-		addressDtoList.add(addressDto);
+		addressDtoList.add(addressTestDto);
 		Mockito.when(msCustomersClient.getAllAddressPaged(Mockito.anyInt(),Mockito.anyInt())).thenReturn(responseListAddressDto);
 		Mockito.when(responseListAddressDto.getBody()).thenReturn(addressDtoList);
 		
@@ -140,8 +140,8 @@ class AddressServiceTest {
 	@Test
 	void AddressServiceTest_create_ReturnAddressDto() {
 
-		Mockito.when(msCustomersClient.create(Mockito.any(AddressDto.class))).thenReturn(new ResponseEntity<>(addressDto, HttpStatus.CREATED));
-		Mockito.when(addressMvcMapper.fromMvcDtoToDto(Mockito.any(AddressMvcDto.class))).thenReturn(addressDto);
+		Mockito.when(msCustomersClient.create(Mockito.any(AddressDto.class))).thenReturn(new ResponseEntity<>(addressTestDto, HttpStatus.CREATED));
+		Mockito.when(addressMvcMapper.fromMvcDtoToDto(Mockito.any(AddressMvcDto.class))).thenReturn(addressTestDto);
 		
 		AddressDto addressDto = addressService.create(new AddressMvcDto());
 		
@@ -160,7 +160,7 @@ class AddressServiceTest {
 	void AddressServiceTest_create_ReturnResourceNotFoundException() {
 
 		Mockito.when(msCustomersClient.create(Mockito.any(AddressDto.class))).thenReturn(new ResponseEntity<>(new AddressDto(), HttpStatus.CREATED));
-		Mockito.when(addressMvcMapper.fromMvcDtoToDto(Mockito.any(AddressMvcDto.class))).thenReturn(addressDto);
+		Mockito.when(addressMvcMapper.fromMvcDtoToDto(Mockito.any(AddressMvcDto.class))).thenReturn(addressTestDto);
 		
 		Exception ex = org.junit.jupiter.api.Assertions.assertThrows(ResourceNotFoundException.class, ()-> addressService.create(addressMvcDtoVoid));
 		
@@ -173,8 +173,8 @@ class AddressServiceTest {
 	@Test
 	void AddressServiceTest_update_ReturnAddressDto() {
 
-		Mockito.when(msCustomersClient.update(Mockito.anyLong(), Mockito.any(AddressDto.class))).thenReturn(new ResponseEntity<>(addressDto, HttpStatus.OK));
-		Mockito.when(addressMvcMapper.fromMvcDtoToDto(Mockito.any(AddressMvcDto.class))).thenReturn(addressDto);
+		Mockito.when(msCustomersClient.update(Mockito.anyLong(), Mockito.any(AddressDto.class))).thenReturn(new ResponseEntity<>(addressTestDto, HttpStatus.OK));
+		Mockito.when(addressMvcMapper.fromMvcDtoToDto(Mockito.any(AddressMvcDto.class))).thenReturn(addressTestDto);
 		
 		AddressDto addressDto = addressService.update(3l, new AddressMvcDto());
 		
@@ -192,7 +192,7 @@ class AddressServiceTest {
 	void AddressServiceTest_update_ReturnResourceNotFoundException() {
 
 		Mockito.when(msCustomersClient.update(Mockito.anyLong(),Mockito.any(AddressDto.class))).thenReturn(new ResponseEntity<>(new AddressDto(), HttpStatus.OK));
-		Mockito.when(addressMvcMapper.fromMvcDtoToDto(Mockito.any(AddressMvcDto.class))).thenReturn(addressDto);
+		Mockito.when(addressMvcMapper.fromMvcDtoToDto(Mockito.any(AddressMvcDto.class))).thenReturn(addressTestDto);
 		
 		Exception ex = org.junit.jupiter.api.Assertions.assertThrows(ResourceNotFoundException.class, ()-> addressService.update(4l, addressMvcDtoVoid));
 		
