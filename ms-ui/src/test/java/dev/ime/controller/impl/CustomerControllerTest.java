@@ -9,7 +9,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -26,17 +26,17 @@ class CustomerControllerTest {
 	@Autowired
 	private MockMvc mockMvc;
 	
-	@MockBean
+	@MockitoBean
 	private CustomerService customerService;
 
-	@MockBean
+	@MockitoBean
 	private GlobalExceptionHandler globalExceptionHandler;
 	
-	@MockBean
+	@MockitoBean
 	private Logger logger;
 	
-	private final String PATH = "/customers";
-	private final String REDIRECT_CUSTOMERS = "redirect:" + PATH;
+	private static final String PATH = "/customers";
+	private static final String REDIRECT_CUSTOMERS = "redirect:" + PATH;
 
 	private final Long customerId = 66L;
 	private final String companyName = "Amegakure";

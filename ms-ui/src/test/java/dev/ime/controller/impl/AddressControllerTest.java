@@ -9,7 +9,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -28,20 +28,20 @@ class AddressControllerTest {
 	@Autowired
 	private MockMvc mockMvc;	
 
-	@MockBean
+	@MockitoBean
 	private AddressService addressService;
 	
-	@MockBean
+	@MockitoBean
 	private CustomerService customerService;	
 
-	@MockBean
+	@MockitoBean
 	private GlobalExceptionHandler globalExceptionHandler;
 	
-	@MockBean
+	@MockitoBean
 	private Logger logger;
 
-	private final String PATH = "/addresses";
-	private final String REDIRECT_ADDRESSES = "redirect:" + PATH;
+	private static final String PATH = "/addresses";
+	private static final String REDIRECT_ADDRESSES = "redirect:" + PATH;
 
 	private final Long addressId = 5L;
 	private final String location = "San Marco 1";

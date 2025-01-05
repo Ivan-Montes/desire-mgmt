@@ -9,7 +9,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -25,17 +25,17 @@ class CategoryControllerTest {
 	@Autowired
 	private MockMvc mockMvc;
 
-	@MockBean
+	@MockitoBean
 	private CategoryService categoryService;
 
-	@MockBean
+	@MockitoBean
 	private GlobalExceptionHandler globalExceptionHandler;
 	
-	@MockBean
+	@MockitoBean
 	private Logger logger;
 
-	private final String PATH = "/categories";
-	private final String REDIRECT_CATEGORIES = "redirect:" + PATH;
+	private static final String PATH = "/categories";
+	private static final String REDIRECT_CATEGORIES = "redirect:" + PATH;
 
 	private final Long categoryId = 61L;
 	private final String name = "Tesoros sagrados";
