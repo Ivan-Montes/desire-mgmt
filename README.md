@@ -1,16 +1,17 @@
+
 # desire-mgmt
 
 Microservices in a multimodule Maven project with servers, REST API, and MVC system
 
-**Features**
+**Components**
 - Eureka server [8761]
 - Cloud config server [8888]
 - API Gateway [8080] with centralized OpenApi Swagger
 - Microservice ms-products with its own PostgreSQL database
 - Microservice ms-orders with private PostgreSQL database
 - Microservice ms-customer with a exclusive PostgreSQL database
-- Prometheus [9090] + Grafana [3000]
-- Feign Communications between microservices with resilience4j circuit breaker
+- [Prometheus](https://prometheus.io/) [9090] + [Grafana](https://grafana.com/) [3000]
+- [Feign](https://docs.spring.io/spring-cloud-openfeign/docs/current/reference/html/) Communications between microservices with [resilience4j](https://resilience4j.readme.io/docs/getting-started) circuit breaker
 - Dashboard on ms-ui [8081] for MVC presentation layer
 
 
@@ -29,19 +30,30 @@ Microservices in a multimodule Maven project with servers, REST API, and MVC sys
 
 1. Inside the main folder, you could find the docker-compose.yml file.
 
-1. From there use the command line to run these orders
-    ```
-    mvn clean package
-    docker-compose up -d
-    ```
-   The Config-server starts quickly in a Docker environment, but then takes some time to properly serve the configuration files, which allows the rest of the microservices to start.
+1. From there use the command line to start the project in dev or production mode
+
+```    
+    **Developer mode**  
+    docker-compose -f docker-compose-dev.yml up -d
+
+    **Production mode**
+    mvn clean package -DskipTests
+    docker-compose -f docker-compose-prod.yml up -d
+```
+
+The dev environment is ready to be used with your IDE. The first microservices you should start are the config-server and then the eureka-server. In production, it uses the Dockerfile archive to build an image of the project, so you will not need an IDE
+   
+Config-server starts quickly in a Docker environment, but then takes some time to properly serve the configuration files, which allows the rest of the microservices to start.
    
 1. You could stop all microservices and erase containers/volumes with this order
-    ```
-    docker-compose down --rmi local -v
-    ```
 
-But if you just want to run it from your IDE, please visit the project folder for the databases for a correct initialization
+```
+    **Developer mode**
+    docker-compose -f docker-compose-dev.yml down --rmi local -v
+      
+    **Production mode**
+    docker-compose -f docker-compose-prod.yml down --rmi local -v  
+```
 
 
 ## Usage
@@ -54,7 +66,7 @@ The microservice ms-ui operates as the presentation layer, displaying a dashboar
    http://localhost:8081
    ```
   
-In other hand, Prometheus interface is reachable at port 9090 and Grafana is accessible at 3000 instead. Initial credentials are both "admin". Main datasource and two dashboards are already loaded thanks to docker-compose settings. More servers are available at 8761 and 8888 for eureka-server and config-server respectively.
+In other hand, [Prometheus](https://prometheus.io/) interface is reachable at port 9090 and [Grafana](https://grafana.com/) is accessible at 3000 instead. Initial credentials are both "admin". Main datasource and two dashboards are already loaded thanks to docker-compose settings. More servers are available at 8761 and 8888 for eureka-server and config-server respectively.
 
 	
 - API Rest
@@ -84,9 +96,7 @@ In this context, unexpected behaviors may occur due to the different network set
 
 #### :large_orange_diamond: JUnit test in business logic classes
 
-#### :large_orange_diamond: Multiple profiles system for dev, pro and test environment
-
-#### :large_orange_diamond: Include docker-compose.yml and Dockerfile for easy containerization
+#### :large_orange_diamond: Include two Docker Compose YAML files for easy environment changes
 
 #### :large_orange_diamond: Feign Communications between microservices with resilience4j circuit breaker fallback
 
@@ -108,7 +118,7 @@ Just me, [Iván](https://github.com/Ivan-Montes) :sweat_smile:
 ---
 
 
-[![Java](https://badgen.net/static/JavaSE/17/orange)](https://www.java.com/es/)
+[![Java](https://badgen.net/static/JavaSE/21/orange)](https://www.java.com/es/)
 [![Maven](https://badgen.net/badge/icon/maven?icon=maven&label&color=red)](https://https://maven.apache.org/)
 [![Spring](https://img.shields.io/badge/spring-blue?logo=Spring&logoColor=white)](https://spring.io)
 [![GitHub](https://badgen.net/badge/icon/github?icon=github&label)](https://github.com)
