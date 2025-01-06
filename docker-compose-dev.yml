@@ -1,0 +1,84 @@
+
+name: desire-mgmt-dev
+
+services:  
+  
+  ms-prometheus-server:
+    image: 	prom/prometheus:v3.0.1
+    container_name: prometheus-server
+    volumes:
+      - ./prometheus/config:/etc/prometheus
+    command: --config.file=/etc/prometheus/prometheus-dev.yml --log.level=debug
+    networks:
+     - desire-mgmt-network
+    ports:
+      - "9090:9090"
+    restart: on-failure:3 
+  
+  ms-grafana-server:
+    image: grafana/grafana:11.4.0
+    container_name: grafana-server 
+    user: '0'
+    volumes:
+      - ./grafana/datasources/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
+      - ./grafana/dashboards/dashboard.yml:/etc/grafana/provisioning/dashboards/dashboard.yml
+      - ./grafana/dashboards/3662_rev2.json:/etc/grafana/provisioning/dashboards/3662_rev2.json
+      - ./grafana/dashboards/prometheus_stats.json:/etc/grafana/provisioning/dashboards/prometheus_stats.json
+      - grafana_storage01:/var/lib/grafana
+      - grafana_storage02:/etc/grafana 
+    networks:
+     - desire-mgmt-network
+    ports:
+      - "3000:3000"    
+    restart: on-failure:3
+    depends_on:
+      - ms-prometheus-server 
+          
+  ms-products-db:
+    image: postgres:17.1-alpine
+    container_name: ms-products-db
+    environment:
+      POSTGRES_PASSWORD: ${SQLDB_PASS}
+      POSTGRES_USER: root
+      POSTGRES_DB: productsDb
+    networks:
+     - desire-mgmt-network
+    ports:
+      - "5432:5432"
+     
+  ms-orders-db:
+    image: postgres:17.1-alpine
+    container_name: ms-orders-db
+    environment:
+      POSTGRES_PASSWORD: ${SQLDB_PASS}
+      POSTGRES_USER: root
+      POSTGRES_DB: ordersDb
+    networks:
+     - desire-mgmt-network
+    ports:
+      - "5433:5432"
+      
+  ms-customers-db:
+    image: postgres:17.1-alpine
+    container_name: ms-customers-db
+    environment:
+      POSTGRES_PASSWORD: ${SQLDB_PASS}
+      POSTGRES_USER: root
+      POSTGRES_DB: customersDb
+    networks:
+     - desire-mgmt-network
+    ports:
+      - "5434:5432"
+    
+networks:
+  desire-mgmt-network:
+    name: desire-mgmt-network
+    ipam:
+      config:
+        - subnet: 172.19.33.0/24
+          gateway: 172.19.33.1
+                    
+volumes:
+  grafana_storage01: {}
+  grafana_storage02: {}
+      
